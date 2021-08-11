@@ -142,4 +142,9 @@ body {
   .quizzes-list {
     justify-content: center;
   }
+
+  .quizzes-list > li {
+    max-width: 340px;
+    width: 95%;
+  }
 }
