@@ -71,8 +71,57 @@ body {
 }
 
 .community-quizzes {
-  background-color: olive;
   width: 1051px;
-  height: 390px;
+  height: 400px;
   margin: 0 auto;
+}
+
+.community-quizzes > h1 {
+  font-weight: 700;
+  size: 20px;
+  margin-bottom: 15px;
+}
+.quizzes-list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.quizzes-list > li {
+  position: relative;
+  width: 340px;
+  height: 181px;
+  cursor: pointer;
+}
+
+.quizzes-list img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+/* the gradient is positioned on top of the img */
+.gradient {
+  position: absolute;
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 0, 0, 0.5) 64%,
+    #000000 100%
+  );
+  border-radius: 5px;
+}
+
+.quizzes-list p {
+  color: #ffffff;
+  font-size: 19px;
+  bottom: 10px;
+  margin: 0 30px 10px 10px;
+  line-height: 22px;
 }
