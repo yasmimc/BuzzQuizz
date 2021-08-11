@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<!-- CSS IMPORT  -->
-	<link rel="stylesheet" href="css/reset.css">
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="icon" type="image/png" href="assets/favicon.png"> 
-	<title>BuzzQuizz</title>
-</head>
-<body>
-	<header class="top">
-		<h6 class="title">BuzzQuizz</h6>
-	</header>
+    <!-- CSS IMPORT  -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <title>BuzzQuizz</title>
+  </head>
+  <body>
+    <header class="top">
+      <h6 class="title">BuzzQuizz</h6>
+    </header>
 
-	<main class="container">
-	
-	</main>
-	
-	<!-- SCRIPTS IMPORT  -->
-	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-	<script src="scripts/scripts.js"></script>
-</body>
+    <main class="container">
+      <div class="user-quizzes">
+        <div class="empty">
+          <p>Você não criou nenhum quizz ainda :(</p>
+          <button class="create-quizz">Criar Quizz</button>
+        </div>
+      </div>
+      <div class="community-quizzes"></div>
+    </main>
+
+    <!-- SCRIPTS IMPORT  -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="scripts/scripts.js"></script>
+  </body>
 </html>
