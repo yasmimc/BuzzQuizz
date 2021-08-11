@@ -34,7 +34,7 @@ body {
 }
 
 .user-quizzes {
-  width: 60%;
+  width: 1051px;
   min-width: 340px;
   height: 181px;
   margin: 90px auto 35px auto;
@@ -73,7 +73,7 @@ body {
 }
 
 .community-quizzes {
-  width: 60%;
+  width: 1051px;
   min-width: 340px;
   height: auto;
   margin: 0 auto;
@@ -128,4 +128,18 @@ body {
   bottom: 10px;
   margin: 0 30px 10px 10px;
   line-height: 22px;
+}
+
+@media (max-width: 1120px) {
+  .user-quizzes {
+    width: 60%;
+  }
+
+  .community-quizzes {
+    width: 60%;
+  }
+
+  .quizzes-list {
+    justify-content: center;
+  }
 }
