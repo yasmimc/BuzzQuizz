@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: Roboto;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.top {
+    display: flex;
+    height: 69px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #EC362D;
+    box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.title {
+    margin: auto;
+    font-size: 37px;
+    font-weight: 700;
+    line-height: 43px;
+    color: #ffffff;
+}
+
+.container {
+    width: 100%;
+}
+  
