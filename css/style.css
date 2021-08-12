@@ -9,7 +9,7 @@ body {
 }
 
 .hidden {
-	display: none;
+  display: none;
 }
 
 .top {
@@ -41,12 +41,35 @@ body {
   width: 1051px;
   min-width: 340px;
   height: 181px;
-  margin: 90px auto 35px auto;
+  margin: 120px auto 35px auto;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px dashed #d5d5d5;
   border-radius: 5px;
+}
+
+.user-quizzes.filled {
+  flex-direction: column;
+  border: none;
+  align-items: flex-start;
+}
+
+.session-title {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  size: 20px;
+  padding: 25px 0 10px;
+}
+
+.session-title button {
+  border: none;
+  background-color: transparent;
+  font-size: 35px;
+  color: #ec362d;
+  cursor: pointer;
+  margin-bottom: -5px;
 }
 
 .user-quizzes .empty {
@@ -83,17 +106,11 @@ body {
   margin: 0 auto;
 }
 
-.community-quizzes > h1 {
-  font-weight: 700;
-  size: 20px;
-  margin-bottom: 15px;
-}
 .quizzes-list {
   width: 100%;
   height: auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
 }
 
 .quizzes-list > li {
@@ -102,6 +119,11 @@ body {
   height: 181px;
   cursor: pointer;
   margin-bottom: 15px;
+}
+
+/* targets only the middle item in the row */
+.quizzes-list > li:nth-child(3n + 2) {
+  margin: 0 15px;
 }
 
 .quizzes-list img {
