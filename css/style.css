@@ -117,6 +117,7 @@ body {
   height: 100%;
   bottom: 0;
   left: 0;
+  right: 0;
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0) 0%,
@@ -127,11 +128,13 @@ body {
 }
 
 .quizzes-list p {
+  width: 100%;
   color: #ffffff;
   font-size: 19px;
   bottom: 10px;
-  margin: 0 30px 10px 10px;
+  padding: 0 10px 10px 10px;
   line-height: 22px;
+  word-wrap: break-word;
 }
 
 @media (max-width: 1120px) {
@@ -149,6 +152,5 @@ body {
 
   .quizzes-list > li {
     max-width: 340px;
-    width: 95%;
   }
 }
