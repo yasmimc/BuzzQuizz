@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- CSS IMPORT  -->
-    <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="css/reset.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/style3.css"/>
+    <link rel="icon" type="image/png" href="assets/favicon.png"/>
     <title>BuzzQuizz</title>
   </head>
   <body>
@@ -16,8 +17,9 @@
       <h6 class="title">BuzzQuizz</h6>
     </header>
 
-    <div class="screen-1">
-		<main class="container">
+	<main class="container">
+		
+		<div class=" screen-1 hiden">
 			<div class="user-quizzes">
 			  <div class="empty">
 				<p>Você não criou nenhum quizz ainda :(</p>
@@ -77,11 +79,25 @@
 				</li>
 			  </ul>
 			</div>
-		  </main>
-	</div>
+		</div>
+
+		<div class="screen-3">
+			<div class="basic-quiz-info">
+				<h1>Comece pelo começo</h1>
+				<div class="infomation">
+					<input type="text" placeholder="Título do seu quizz">
+					<input type="text" placeholder="URL da imagem do seu quizz">
+					<input type="text" placeholder="Quantidade de perguntas do quizz">
+					<input type="text" placeholder="Quantidade de níveis do quizz">
+				</div>
+				<button class="create-questions">Prosseguir pra criar perguntas</button>
+			</div>
+		</div>
+	</main>
 
     <!-- SCRIPTS IMPORT  -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="scripts/scripts.js"></script>
+	<script src="scripts/scripts3.js"></script>
   </body>
 </html>
