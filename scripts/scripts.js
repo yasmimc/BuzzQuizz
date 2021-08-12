@@ -14,15 +14,17 @@ function getQuizzes() {
   promise.catch(handleError);
 }
 
+// insert quizzes into the list of community quizzes
 function renderQuizzes(response) {
   const quizzes = response.data;
 
   communityQuizzes.innerHTML = "";
 
   for (let i = 0; quizzes.length > i; i++) {
+    // function "selectQuizzes" inside li is not implemented yet (screen 2)
     communityQuizzes.innerHTML += `
-        <li onclick="renderQuizz(this);">
-				  <img src="${quizzes[i].image}" />
+        <li onclick="selectQuizz(this);">
+				  <img src="${quizzes[i].image}" />                                                                                                     
 				  <div class="gradient">
 					<p>
 					  ${quizzes[i].title}

@@ -8,10 +8,6 @@ body {
   box-sizing: border-box;
 }
 
-.hidden {
-  display: none;
-}
-
 .top {
   display: flex;
   height: 69px;
@@ -40,8 +36,13 @@ body {
 .user-quizzes {
   width: 1051px;
   min-width: 340px;
+  margin: 100px auto 20px auto;
+  box-sizing: initial;
+}
+
+.empty {
   height: 181px;
-  margin: 120px auto 35px auto;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,7 +50,7 @@ body {
   border-radius: 5px;
 }
 
-.user-quizzes.filled {
+.filled {
   flex-direction: column;
   border: none;
   align-items: flex-start;
@@ -72,7 +73,7 @@ body {
   margin-bottom: -5px;
 }
 
-.user-quizzes .empty {
+.empty .content {
   width: 280px;
   height: 110px;
   display: flex;
@@ -157,6 +158,10 @@ body {
   padding: 0 10px 10px 10px;
   line-height: 22px;
   word-wrap: break-word;
+}
+
+.hidden {
+  display: none;
 }
 
 @media (max-width: 1120px) {
