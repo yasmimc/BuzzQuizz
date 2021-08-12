@@ -8,6 +8,10 @@ body {
   box-sizing: border-box;
 }
 
+.hidden {
+	display: none;
+}
+
 .top {
   display: flex;
   height: 69px;
@@ -30,7 +34,7 @@ body {
 
 .container {
   width: 100%;
-  margin-top: 8%;
+  margin-top: 69px;
 }
 
 .user-quizzes {

@@ -1,0 +1,33 @@
+.selected-quizz {
+	height: 227px;
+	background-image: url("../assets/hogwarts.jpg");
+	background-size: cover;
+	background-position: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.selected-quizz .banner {
+	background-color: black;
+	height: inherit;
+	width: 100%;
+	opacity: 60%;
+	position: relative;
+}
+
+.selected-quizz h1 {
+	color:  #FFFFFF;
+	font-size: 39px;
+	position: absolute;
+}
+
+@media (max-width: 1120px) {
+	.selected-quizz {
+		height: 142px;
+	}
+
+	.selected-quizz h1 {
+		font-size: 19px;
+	}
+}
