@@ -180,4 +180,8 @@ body {
   .quizzes-list > li {
     max-width: 340px;
   }
+
+  .quizzes-list > li:nth-child(3n + 2) {
+    margin: 0 0 15px 0;
+  }
 }
