@@ -4,7 +4,6 @@
 
 .selected-quizz {
 	height: 227px;
-	background-image: url("../assets/hogwarts.jpg");
 	background-size: cover;
 	background-position: center;
 	display: flex;
