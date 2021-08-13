@@ -41,7 +41,8 @@ function handleError(error) {
 function selectQuizz(quizzID) {
   const promise = axios.get(`${URL_QUIZZES}/${quizzID}`);
 
-  //promise.then(load)
+  //promise.then(load);
+  promise.catch(handleError);
 }
 
 getQuizzes();

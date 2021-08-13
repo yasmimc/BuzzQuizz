@@ -10,12 +10,14 @@ function showQuizzScreen() {
 //showQuizzScreen();
 
 // QUIZZ FOR TEST:
-const friends = axios.get(
-  "https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes/1"
-);
-friends.then(load);
+// const friends = axios.get(
+//   "https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes/1"
+// );
+// friends.then(load);
 
 function load(selectedQuizz) {
+  console.log(selectedQuizz);
+  showQuizzScreen();
   const quizzContent = quizzScreen.querySelector(".container");
 
   //Load background image
