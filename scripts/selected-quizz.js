@@ -38,7 +38,22 @@ function load(selectedQuizz){
 		// Load each question 
 		let question = questions[i].querySelector("h1");
 		question.innerHTML = quizzQuestions[i].title;
-		// question.style.backgroundColor = `${quizzQuestions[i].color}`;
+		question.style.backgroundColor = `${quizzQuestions[i].color}`;
+
+		//Load each answer 
+		let options = questions[i].querySelectorAll("button");
+		console.log(options)
+		let answers = quizzQuestions[i].answers;
+
+		for (let j = 0; j < answers.length; j++) {
+			console.log(answers[j]);
+			console.log(options[j].innerHTML)
+
+			options[j].innerHTML = 
+			`<img src="${answers[j].image}">
+			<p>${answers[j].text}</p>`
+		}
+		
 	}
 
 
