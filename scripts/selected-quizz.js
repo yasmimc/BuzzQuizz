@@ -51,10 +51,19 @@ function loadQuizzQuestions(quizzContent, selectedQuizz) {
 		for (let j = 0; j < answers.length; j++) {
 			//Load each answer			
 			options.innerHTML +=
-				`<button class="option" value="${i}">
+			`<button class="option" id="${j}" onclick="selectAnswer(this)">
 				<img src="${answers[j].image}">
 				<p>${answers[j].text}</p>
 			</button>`;
+		}
+	}
+}
+
+function selectAnswer(selectedOption){
+	const questions = selectedOption.parentNode.querySelectorAll(".option");
+	for (let i = 0; i < questions.length; i++) {
+		if( questions[i] !== selectedOption){
+			questions[i].classList.add("blur")
 		}
 	}
 }

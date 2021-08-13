@@ -127,6 +127,10 @@
 		font-size: 13px;
 		font-weight: 700;
 	}
+
+	.quizz button.option.blur {
+		opacity: 30%;
+	}
 } 
 
 @media (max-width: 469px){
