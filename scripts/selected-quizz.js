@@ -38,6 +38,7 @@ function load(selectedQuizz){
 		// Load each question 
 		let question = questions[i].querySelector("h1");
 		question.innerHTML = quizzQuestions[i].title;
+		// question.style.backgroundColor = `${quizzQuestions[i].color}`;
 	}
 
 

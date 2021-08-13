@@ -1,3 +1,7 @@
+.screen-2 .container {
+	background-color: #FAFAFA;
+}
+
 .selected-quizz {
 	height: 227px;
 	background-image: url("../assets/hogwarts.jpg");
@@ -22,8 +26,6 @@
 	position: absolute;
 }
 
-
-
 .quizz-container {
 	display: flex;
 	justify-content: center;
@@ -31,28 +33,28 @@
 }
 
 .quizz {	
-	background-color: blue;
 	display: flex;
 	flex-direction: column;
 	width: 759px;
 }
 
 .quizz .question {
-	background-color: chocolate;
+	background-color: #FFFFFF;
 	margin-bottom: 42px;	
-	height: 676px;
-	padding: 27px 3px;
-
+	padding: 27px 36px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
 }
 
 .quizz .question h1 {
+	width: 100%;
 	background-color: lightblue;
 	height: 138px;
 	font-size: 23px;
 	font-weight: 700;
 	text-align: center;
 	color: #FFFFFF;
-
+	padding: 0 30px;
+	margin-bottom: 20px;
 
 	display: flex;
 	justify-content: center;
@@ -62,26 +64,28 @@
 .quizz .options {
 	display: flex;
 	flex-wrap: wrap;
-	background-color: red;
-	justify-content: center;
+	justify-content: space-between;
+
 }
 
 .quizz button {
-	background-color: pink;
-	width: 325px;
-	margin: 20px 15px;
+	background-color: inherit;
+	width: 330px;
 	border: none;
 	display: flex;
 	flex-direction: column;
+	object-fit: cover;
+	padding: 0;
 }
 
 .quizz button img {
-	height: 175px;
+	width: 100%;
 }
 
 .quizz button p {
 	font-size: 20px;
 	font-weight: 700;
+	margin-top: 10px;
 }
 
 @media (max-width: 1120px) {
@@ -91,5 +95,32 @@
 
 	.selected-quizz h1 {
 		font-size: 19px;
+	}
+
+	.quizz {
+		width: 400px;
+	}
+
+	.quizz .question {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 18px;
+	}
+
+	.quizz .question h1 {
+		height: 89px;
+		font-size: 19px;
+		margin-bottom: 13px;
+
+	}
+
+	.quizz button{
+		width: 175px;		
+	}
+
+	.quizz button p {
+		font-size: 13px;
+		font-weight: 700;
 	}
 } 
