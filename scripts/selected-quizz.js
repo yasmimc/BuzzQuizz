@@ -7,7 +7,7 @@ function showQuizzScreen() {
   quizzScreen.classList.remove("hidden");
 }
 
-showQuizzScreen();
+//showQuizzScreen();
 
 // QUIZZ FOR TEST:
 const friends = axios.get(

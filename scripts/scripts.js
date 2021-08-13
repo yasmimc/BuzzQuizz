@@ -1,7 +1,7 @@
 // global variables
 // using version 2 of URL because it has more quizzes
 URL_QUIZZES =
-  "https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes";
+  "https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes";
 const communityQuizzes = document.querySelector(
   ".community-quizzes .quizzes-list"
 );
@@ -23,7 +23,7 @@ function renderQuizzes(response) {
   for (let i = 0; quizzes.length > i; i++) {
     // function "selectQuizzes" inside li is not implemented yet (screen 2)
     communityQuizzes.innerHTML += `
-        <li onclick="selectQuizz(this);">
+        <li onclick="selectQuizz(${quizzes[i].id});">
 				  <img src="${quizzes[i].image}" />                                                                                                     
 				  <div class="gradient">
 					<p>
@@ -36,6 +36,12 @@ function renderQuizzes(response) {
 
 function handleError(error) {
   alert(error.response.data);
+}
+
+function selectQuizz(quizzID) {
+  const promise = axios.get(`${URL_QUIZZES}/${quizzID}`);
+
+  //promise.then(load)
 }
 
 getQuizzes();
