@@ -9,8 +9,6 @@ function showQuizzScreen() {
 	quizzScreen.classList.remove("hidden");
 }
 
-// showQuizzScreen();
-
 // QUIZZ FOR TEST:
 const friends = axios.get(
 	"https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes/1"
@@ -29,21 +27,20 @@ function loadQuizzTitle(quizzContent, selectedQuizz) {
 	title.innerHTML = `${quizzTitle}`;
 }
 
-function loadQuizzQuestions(quizzContent, selectedQuizz){
-	//Load questions
+function loadQuizzQuestions(quizzContent, selectedQuizz) {
 	const quizzQuestions = selectedQuizz.data.questions;
 	const quizz = quizzContent.querySelector(".quizz");
-	const questions = quizz.querySelectorAll(".question");
 
 	for (let i = 0; i < quizzQuestions.length; i++) {
 		// Load each question
-		let question = questions[i].querySelector("h1");
-		question.innerHTML = quizzQuestions[i].title;
-		question.style.backgroundColor = `${quizzQuestions[i].color}`;
+		quizz.innerHTML +=
+			`<div class="question"> 
+			<h1 style="background-color: ${quizzQuestions[i].color}">${quizzQuestions[i].title}</h1>
+			<div class="options">
+			</div>
+		</div>`
 
-		//Load each answer
-		let options = questions[i].querySelectorAll("button");
-		console.log(options);
+		let options = quizz.lastChild.querySelector(".options");
 		let answers = quizzQuestions[i].answers;
 
 		//Randomize answers
@@ -52,9 +49,12 @@ function loadQuizzQuestions(quizzContent, selectedQuizz){
 		});
 
 		for (let j = 0; j < answers.length; j++) {
-
-			options[j].innerHTML = `<img src="${answers[j].image}">
-			<p>${answers[j].text}</p>`;
+			//Load each answer			
+			options.innerHTML +=
+				`<button class="option" value="${i}">
+				<img src="${answers[j].image}">
+				<p>${answers[j].text}</p>
+			</button>`;
 		}
 	}
 }
@@ -66,5 +66,5 @@ function load(selectedQuizz) {
 	loadBackgroundImg(quizzContent, selectedQuizz);
 	loadQuizzTitle(quizzContent, selectedQuizz);
 	loadQuizzQuestions(quizzContent, selectedQuizz);
-	
+
 }

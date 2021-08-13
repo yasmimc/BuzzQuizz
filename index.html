@@ -1,140 +1,95 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- CSS IMPORT  -->
-    <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/loading.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/selected-quizz.css" />
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="icon" type="image/png" href="assets/favicon.png" />
+	<!-- CSS IMPORT  -->
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/loading.css" />
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/selected-quizz.css" />
 
-    <title>BuzzQuizz</title>
-  </head>
+	<link rel="icon" type="image/png" href="assets/favicon.png" />
 
-  <body>
-    <header class="top">
-      <h6 class="title">BuzzQuizz</h6>
-    </header>
+	<title>BuzzQuizz</title>
+</head>
 
-    <div class="screen-1">
-      <main class="container">
-        <div class="user-quizzes">
-          <div class="empty">
-            <div class="content">
-              <p>Você não criou nenhum quizz ainda :(</p>
-              <button class="create-quizz">Criar Quizz</button>
-            </div>
-          </div>
-          <!-- this session is hidden unless user has quizzes-->
-          <div class="filled hidden">
-            <div class="session-title">
-              Seus Quizzes
-              <button><ion-icon name="add-circle"></ion-icon></button>
-            </div>
-            <ul class="quizzes-list">
-              <!-- user quizzes go here -->
-            </ul>
-          </div>
-        </div>
-        <div class="community-quizzes">
-          <h1 class="session-title">Todos os Quizzes</h1>
-          <ul class="quizzes-list">
-            <!-- community quizzes go here -->
-          </ul>
-        </div>
-      </main>
-    </div>
+<body>
+	<header class="top">
+		<h6 class="title">BuzzQuizz</h6>
+	</header>
 
-    <div class="screen-2 hidden">
-      <main class="container">
-        <div class="selected-quizz">
-          <div class="banner"></div>
-          <h1></h1>
-        </div>
-        <div class="quizz-container">
-          <div class="quizz">
-            <div class="question">
-              <h1></h1>
-              <div class="options">
-                <button class="option" value="1"></button>
-                <button class="option" value="2"></button>
-                <button class="option" value="3"></button>
-                <button class="option" value="4"></button>
-              </div>
-            </div>
+	<div class="screen-1">
+		<main class="container">
+			<div class="user-quizzes">
+				<div class="empty">
+					<div class="content">
+						<p>Você não criou nenhum quizz ainda :(</p>
+						<button class="create-quizz">Criar Quizz</button>
+					</div>
+				</div>
+				<!-- this session is hidden unless user has quizzes-->
+				<div class="filled hidden">
+					<div class="session-title">
+						Seus Quizzes
+						<button>
+							<ion-icon name="add-circle"></ion-icon>
+						</button>
+					</div>
+					<ul class="quizzes-list">
+						<!-- user quizzes go here -->
+					</ul>
+				</div>
+			</div>
+			<div class="community-quizzes">
+				<h1 class="session-title">Todos os Quizzes</h1>
+				<ul class="quizzes-list">
+					<!-- community quizzes go here -->
+				</ul>
+			</div>
+		</main>
+	</div>
 
-            <div class="question">
-              <h1></h1>
-              <div class="options">
-                <button class="option" value="1"></button>
-                <button class="option" value="2"></button>
-                <button class="option" value="3"></button>
-                <button class="option" value="4"></button>
-              </div>
-            </div>
+	<div class="screen-2 hidden">
+		<main class="container">
+			<div class="selected-quizz">
+				<div class="banner"></div>
+				<h1></h1>
+			</div>
+			<div class="quizz-container">
+				<div class="quizz">
+				</div>
+			</div>
+		</main>
+	</div>
 
-            <div class="question">
-              <h1></h1>
-              <div class="options">
-                <button class="option" value="1"></button>
-                <button class="option" value="2"></button>
-                <button class="option" value="3"></button>
-                <button class="option" value="4"></button>
-              </div>
-            </div>
+	<!-- loading screen -->
+	<div class="loading hidden">
+		<div class="loadingio-spinner-spinner-x788ti4ehi8">
+			<div class="ldio-4zr0xrl34fx">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+	</div>
+	<!-- SCRIPTS IMPORT  -->
+	<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="scripts/selected-quizz.js"></script>
+	<script src="scripts/scripts.js"></script>
+</body>
 
-            <div class="question">
-              <h1></h1>
-              <div class="options">
-                <button class="option" value="1"></button>
-                <button class="option" value="2"></button>
-                <button class="option" value="3"></button>
-                <button class="option" value="4"></button>
-              </div>
-            </div>
-
-            <div class="question">
-              <h1></h1>
-              <div class="options">
-                <button class="option" value="1"></button>
-                <button class="option" value="2"></button>
-                <button class="option" value="3"></button>
-                <button class="option" value="4"></button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
-
-    <!-- loading screen -->
-    <div class="loading hidden">
-      <div class="loadingio-spinner-spinner-x788ti4ehi8">
-        <div class="ldio-4zr0xrl34fx">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    </div>
-    <!-- SCRIPTS IMPORT  -->
-    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="scripts/selected-quizz.js"></script>
-    <script src="scripts/scripts.js"></script>
-  </body>
 </html>
