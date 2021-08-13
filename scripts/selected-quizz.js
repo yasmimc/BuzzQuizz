@@ -65,6 +65,7 @@ function selectAnswer(selectedOption){
 		if( questions[i] !== selectedOption){
 			questions[i].classList.add("blur")
 		}
+		questions[i].removeAttribute("onclick");
 	}
 }
 
