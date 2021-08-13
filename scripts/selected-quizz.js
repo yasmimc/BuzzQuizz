@@ -1,8 +1,10 @@
 const quizzScreen = document.querySelector(".screen-2");
 
 function showQuizzScreen() {
+  const loading = document.querySelector(".loading");
   const quizzesScreen = document.querySelector(".screen-1");
   quizzesScreen.classList.add("hidden");
+  //loading.classList.add("hidden");
   // const quizzScreen = document.querySelector(".screen-2");
   quizzScreen.classList.remove("hidden");
 }
@@ -16,6 +18,7 @@ const friends = axios.get(
 friends.then(load);
 
 function load(selectedQuizz) {
+  //showQuizzScreen();
   const quizzContent = quizzScreen.querySelector(".container");
 
   //Load background image
