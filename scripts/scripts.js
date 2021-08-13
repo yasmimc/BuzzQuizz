@@ -41,8 +41,16 @@ function handleError(error) {
 function selectQuizz(quizzID) {
   const promise = axios.get(`${URL_QUIZZES}/${quizzID}`);
 
-  //promise.then(load);
-  promise.catch(handleError);
+  // showLoadingScreen();
+  // promise.then(load);
+  // promise.catch(handleError);
 }
 
+function showLoadingScreen() {
+  const homeScreen = document.querySelector(".screen-1");
+  const loading = document.querySelector(".loading");
+
+  homeScreen.classList.add("hidden");
+  loading.classList.remove("hidden");
+}
 getQuizzes();
