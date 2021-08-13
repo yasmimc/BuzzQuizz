@@ -47,6 +47,11 @@ function load(selectedQuizz) {
     console.log(options);
     let answers = quizzQuestions[i].answers;
 
+	//Randomize answers
+	answers.sort(function(){
+		return Math.random() - 0.5; 
+	})
+
     for (let j = 0; j < answers.length; j++) {
       console.log(answers[j]);
       console.log(options[j].innerHTML);
