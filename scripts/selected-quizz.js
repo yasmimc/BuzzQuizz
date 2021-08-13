@@ -27,6 +27,8 @@ function loadQuizzTitle(quizzContent, selectedQuizz) {
 	title.innerHTML = `${quizzTitle}`;
 }
 
+const correctAnswers = [];
+
 function loadQuizzQuestions(quizzContent, selectedQuizz) {
 	const quizzQuestions = selectedQuizz.data.questions;
 	const quizz = quizzContent.querySelector(".quizz");
@@ -34,7 +36,7 @@ function loadQuizzQuestions(quizzContent, selectedQuizz) {
 	for (let i = 0; i < quizzQuestions.length; i++) {
 		// Load each question
 		quizz.innerHTML +=
-			`<div class="question"> 
+			`<div class="question" id="${i}"> 
 			<h1 style="background-color: ${quizzQuestions[i].color}">${quizzQuestions[i].title}</h1>
 			<div class="options">
 			</div>
@@ -55,17 +57,41 @@ function loadQuizzQuestions(quizzContent, selectedQuizz) {
 				<img src="${answers[j].image}">
 				<p>${answers[j].text}</p>
 			</button>`;
+
+			//Save correct answer in a global variable
+			if(answers[j].isCorrectAnswer){
+				let correctAnswer = {
+					question: i,
+					correctOption: j
+				};
+				correctAnswers.push(correctAnswer);
+			}
 		}
 	}
 }
 
 function selectAnswer(selectedOption){
-	const questions = selectedOption.parentNode.querySelectorAll(".option");
-	for (let i = 0; i < questions.length; i++) {
-		if( questions[i] !== selectedOption){
-			questions[i].classList.add("blur")
+	const options = selectedOption.parentNode.querySelectorAll(".option");
+	for (let i = 0; i < options.length; i++) {
+		//Add blur to the unselected options
+		if( options[i] !== selectedOption){
+			options[i].classList.add("blur")
 		}
-		questions[i].removeAttribute("onclick");
+		//Removed on click on all options
+		options[i].removeAttribute("onclick");
+
+		//Change the colors of the answer texts
+		const question = selectedOption.parentNode.parentNode.id;
+		const correctAnswer = correctAnswers[question].correctOption;
+
+		if(Number(options[i].id) === correctAnswer){
+			let text = options[i].querySelector("p");
+			text.style.color = 'green';
+		}
+		else {
+			let text = options[i].querySelector("p");
+			text.style.color = 'red';
+		}
 	}
 }
 
@@ -76,5 +102,4 @@ function load(selectedQuizz) {
 	loadBackgroundImg(quizzContent, selectedQuizz);
 	loadQuizzTitle(quizzContent, selectedQuizz);
 	loadQuizzQuestions(quizzContent, selectedQuizz);
-
 }
