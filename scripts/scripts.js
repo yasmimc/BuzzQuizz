@@ -1,5 +1,4 @@
 // global variables
-// using version 2 of URL because it has more quizzes
 URL_QUIZZES =
   "https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes";
 const communityQuizzes = document.querySelector(
