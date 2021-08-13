@@ -71,11 +71,9 @@ function loadQuizzQuestions(quizzContent, selectedQuizz) {
 }
 
 function scrollToNextQuestion(id){
-	console.log(id)
 	const questions = quizzScreen.querySelectorAll('.question');
 	const nextId = Number(id)+1;
 	const nextQuestion = questions[nextId];
-	console.log(nextQuestion)
 	nextQuestion.scrollIntoView({behavior: "smooth", block: "center", inline: "start"});
 }
 
