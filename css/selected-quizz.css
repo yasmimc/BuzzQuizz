@@ -128,3 +128,9 @@
 		font-weight: 700;
 	}
 } 
+
+@media (max-width: 469px){
+	.quizz .options {
+		justify-content: center;
+	}
+}
