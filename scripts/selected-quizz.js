@@ -70,6 +70,15 @@ function loadQuizzQuestions(quizzContent, selectedQuizz) {
 	}
 }
 
+function scrollToNextQuestion(id){
+	console.log(id)
+	const questions = quizzScreen.querySelectorAll('.question');
+	const nextId = Number(id)+1;
+	const nextQuestion = questions[nextId];
+	console.log(nextQuestion)
+	nextQuestion.scrollIntoView({behavior: "smooth", block: "center", inline: "start"});
+}
+
 function selectAnswer(selectedOption){
 	const options = selectedOption.parentNode.querySelectorAll(".option");
 	for (let i = 0; i < options.length; i++) {
@@ -81,8 +90,8 @@ function selectAnswer(selectedOption){
 		options[i].removeAttribute("onclick");
 
 		//Change the colors of the answer texts
-		const question = selectedOption.parentNode.parentNode.id;
-		const correctAnswer = correctAnswers[question].correctOption;
+		const question = selectedOption.parentNode.parentNode;
+		const correctAnswer = correctAnswers[question.id].correctOption;
 
 		if(Number(options[i].id) === correctAnswer){
 			let text = options[i].querySelector("p");
@@ -92,6 +101,9 @@ function selectAnswer(selectedOption){
 			let text = options[i].querySelector("p");
 			text.style.color = 'red';
 		}
+
+		//Scroll to next question after 2 seconds
+		setTimeout(scrollToNextQuestion, 2000, question.id);
 	}
 }
 
