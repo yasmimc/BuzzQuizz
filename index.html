@@ -22,15 +22,16 @@
 		<h6 class="title">BuzzQuizz</h6>
 	</header>
 
-	<div class="screen-1 hidden">-->
+	<div class="screen-1">
 		<main class="container">
 			<div class="user-quizzes">
 				<div class="empty">
 					<div class="content">
 						<p>Você não criou nenhum quizz ainda :(</p>
-						<button class="create-quizz">Criar Quizz</button>
+						<button class="create-quizz" onclick="createQuiz();">Criar Quizz</button>
 					</div>
 				</div>
+				
 				<!-- this session is hidden unless user has quizzes-->
 				<div class="filled hidden">
 					<div class="session-title">
@@ -67,7 +68,7 @@
 	</div>
 
 	<!-- loading screen -->
-	<div class="loading hidden hidden">
+	<div class="loading hidden">
 		<div class="loadingio-spinner-spinner-x788ti4ehi8">
 			<div class="ldio-4zr0xrl34fx">
 				<div></div>
@@ -90,16 +91,6 @@
 
 		<div class="screen-3">
 			<div class="create-questions-first-page hidden">
-				<h1>Comece pelo começo</h1>
-				<div class="basic-quiz-info">
-					<div class="box-information">
-						<input type="text" class="input-title-quiz" placeholder="Título do seu quizz">
-						<input type="url" class="input-image-quiz" placeholder="URL da imagem do seu quizz">
-						<input type="text" class="input-amount-questions" placeholder="Quantidade de perguntas do quizz">
-						<input type="text" class="input-amount-levels" placeholder="Quantidade de níveis do quizz">
-					</div>
-				</div>
-				<button onclick="validateInformation();">Prosseguir pra criar perguntas</button>
 			</div>
 	
 			<div class="create-questions-second-page hidden">
@@ -112,14 +103,6 @@
 			
 			<div class="create-questions-fourth-page hidden">
 				<h1>Seu quizz está pronto!</h1>	
-				<!--
-				<div class="box-image">
-					<img src="assets/simpsons.jpg" alt="" />
-						<span class="gradient"><p>Acerte os personagens corretos dos Simpsons e prove seu amor!</p></span>
-				</div>
-				<button class="access-quiz">Acessar Quizz</button>
-				<button class="back-home">Voltar pra home</button>
-				-->
 			</div>
 			
 		</div>
@@ -129,7 +112,7 @@
 	<!-- SCRIPTS IMPORT  -->
 	<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-	<script src="scripts/selected-quizz.js"></script>
+	<!--<script src="scripts/selected-quizz.js"></script>-->
 	<script src="scripts/scripts.js"></script>
 	<script src="scripts/create-quizz.js"></script>
 </body>

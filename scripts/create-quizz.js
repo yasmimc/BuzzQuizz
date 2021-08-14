@@ -8,6 +8,20 @@ let amountQuestions = 1;
 let amountLevels = 1;
 
 function createQuiz() {
+    document.querySelector(".screen-1").classList.add("hidden");
+    const screenInfos = document.querySelector(".create-questions-first-page");
+    screenInfos.classList.remove("hidden");
+
+    screenInfos.innerHTML += `<h1>Comece pelo começo</h1>
+                                <div class="basic-quiz-info">
+                                    <div class="box-information">
+                                        <input type="text" class="input-title-quiz" placeholder="Título do seu quizz">
+                                        <input type="url" class="input-image-quiz" placeholder="URL da imagem do seu quizz">
+                                        <input type="text" class="input-amount-questions" placeholder="Quantidade de perguntas do quizz">
+                                        <input type="text" class="input-amount-levels" placeholder="Quantidade de níveis do quizz">
+                                    </div>
+                                </div>
+                                <button onclick="validateInformation();">Prosseguir pra criar perguntas</button>`
     alert("funcionando");
 }
 
@@ -288,3 +302,28 @@ function saveId() {
     ids.push({id: idQuiz});
     localStorage.setItem("ids", JSON.stringify(ids));
 }
+
+function t() {
+    const finalPage = document.querySelector(".create-questions-fourth-page");
+    finalPage.classList.remove("hidden");
+
+    finalPage.innerHTML = `<h1>Seu quizz está pronto!</h1>	
+                            <div class="box-image">
+                                <img src="assets/simpsons.jpg" alt="" />
+                                <span class="gradient"><p>sasasa</p></span>
+                            </div>
+                            <button class="access-quiz onclick="acessQuiz();">Acessar Quizz</button>
+                            <button class="back-home" onclick="backHome();">Voltar pra home</button>`
+    document.querySelector(".box-image img").src = "assets/simpsons.jpg";
+    saveId();
+}
+
+
+function backHome() {
+    const finalPage = document.querySelector(".create-questions-fourth-page");
+    finalPage.classList.add("hidden");
+    document.querySelector(".screen-1").classList.remove("hidden");
+}
+//t();
+
+getQuizzes();
