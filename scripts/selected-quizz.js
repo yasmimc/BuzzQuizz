@@ -103,9 +103,7 @@ function markQuestionAsAnswerd(selectedOption){
 	}
 
 	const lastQuestion = quizzScreen.querySelector(".quizz").lastChild;
-	console.log(selectedOption)
 	if(question === lastQuestion){
-		console.log("nao vou scrollar")
 		return;
 	}
 	//Scroll to next question after 2 seconds
@@ -120,18 +118,29 @@ function saveLevels(selectedQuizz){
 	selectedQuizz.data.levels.forEach(level => {
 		levels.push(level);
 	});
-	console.log(levels.reverse())
 }
 
 function showResult(totalQuestions){
 	const resultPercent = hits/totalQuestions*100;
-	console.log(resultPercent)
 
-	const result = levels.reverse().find( level => {
+	const result = levels.find( level => {
 		return resultPercent>=level.minValue;
 	})
 
-	console.log(result)
+	const quizz = quizzScreen.querySelector(".quizz");
+
+	quizz.innerHTML += 
+	`<div class="result"> 
+		<h1 style="background-color: red">${resultPercent}% de acerto: ${result.title}</h1>
+		<div class="content">
+			<img src="${result.image}">
+			<p>${result.text}</p>
+		</div>
+		</div>
+	</div>`;
+	
+	quizz.lastElementChild.scrollIntoView({behavior: "smooth", block: "center", inline: "start"});
+	
 }
 
 function selectAnswer(selectedOption){
@@ -149,9 +158,8 @@ function selectAnswer(selectedOption){
 	answerdQuestions++;
 
 	if(answerdQuestions === totalQuestions){
-		showResult(totalQuestions);
+		setTimeout(showResult, 2000, totalQuestions);
 	}
-
 }
 
 function load(selectedQuizz) {
