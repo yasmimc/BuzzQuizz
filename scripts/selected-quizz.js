@@ -80,6 +80,7 @@ let answerdQuestions = 0;
 
 function markQuestionAsAnswerd(selectedOption){
 	const options = selectedOption.parentNode.querySelectorAll(".option");
+	const question = selectedOption.parentNode.parentNode;
 	for (let i = 0; i < options.length; i++) {
 		//Add blur to the unselected options
 		if( options[i] !== selectedOption){
@@ -88,8 +89,7 @@ function markQuestionAsAnswerd(selectedOption){
 		//Removed on click on all options
 		options[i].removeAttribute("onclick");
 
-		//Change the colors of the answer texts
-		const question = selectedOption.parentNode.parentNode;
+		//Change the colors of the answer texts		
 		const correctAnswer = correctAnswers[question.id].correctOption;
 
 		if(Number(options[i].id) === correctAnswer){
@@ -99,14 +99,40 @@ function markQuestionAsAnswerd(selectedOption){
 		else {
 			let text = options[i].querySelector("p");
 			text.style.color = 'red';
-		}
-
-		//Scroll to next question after 2 seconds
-		setTimeout(scrollToNextQuestion, 2000, question.id);
+		}		
 	}
+
+	const lastQuestion = quizzScreen.querySelector(".quizz").lastChild;
+	console.log(selectedOption)
+	if(question === lastQuestion){
+		console.log("nao vou scrollar")
+		return;
+	}
+	//Scroll to next question after 2 seconds
+	setTimeout(scrollToNextQuestion, 2000, question.id);
 }
 
 let hits = 0;
+
+const levels = [];
+
+function saveLevels(selectedQuizz){
+	selectedQuizz.data.levels.forEach(level => {
+		levels.push(level);
+	});
+	console.log(levels.reverse())
+}
+
+function showResult(totalQuestions){
+	const resultPercent = hits/totalQuestions*100;
+	console.log(resultPercent)
+
+	const result = levels.reverse().find( level => {
+		return resultPercent>=level.minValue;
+	})
+
+	console.log(result)
+}
 
 function selectAnswer(selectedOption){
 	markQuestionAsAnswerd(selectedOption);
@@ -123,7 +149,7 @@ function selectAnswer(selectedOption){
 	answerdQuestions++;
 
 	if(answerdQuestions === totalQuestions){
-		console.log("cabou")
+		showResult(totalQuestions);
 	}
 
 }
@@ -135,4 +161,6 @@ function load(selectedQuizz) {
 	loadBackgroundImg(quizzContent, selectedQuizz);
 	loadQuizzTitle(quizzContent, selectedQuizz);
 	loadQuizzQuestions(quizzContent, selectedQuizz);
+
+	saveLevels(selectedQuizz);
 }
