@@ -76,8 +76,9 @@ function scrollToNextQuestion(id){
 	const nextQuestion = questions[nextId];
 	nextQuestion.scrollIntoView({behavior: "smooth", block: "center", inline: "start"});
 }
+let answerdQuestions = 0;
 
-function selectAnswer(selectedOption){
+function markQuestionAsAnswerd(selectedOption){
 	const options = selectedOption.parentNode.querySelectorAll(".option");
 	for (let i = 0; i < options.length; i++) {
 		//Add blur to the unselected options
@@ -103,6 +104,28 @@ function selectAnswer(selectedOption){
 		//Scroll to next question after 2 seconds
 		setTimeout(scrollToNextQuestion, 2000, question.id);
 	}
+}
+
+let hits = 0;
+
+function selectAnswer(selectedOption){
+	markQuestionAsAnswerd(selectedOption);
+	
+	const isCorrect = selectedOption.querySelector("p").getAttribute("style") === "color: green;"
+
+	const totalQuestions = quizzScreen.querySelectorAll(".question").length;
+
+	if(isCorrect){
+		hits++;
+	}
+	
+	//Count as answerd
+	answerdQuestions++;
+
+	if(answerdQuestions === totalQuestions){
+		console.log("cabou")
+	}
+
 }
 
 function load(selectedQuizz) {
