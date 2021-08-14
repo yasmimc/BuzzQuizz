@@ -1,16 +1,17 @@
-let quizObject = {title : "", image : "", questions : [], levels : []}
+let quizObject = {title : "", image : "", questions : [], levels : []};
+let idQuiz;
 let urlImageQuiz = "";
 let titleQuiz = ""
 let questionsQuiz = [];
 let levelsQuiz = [];
 let amountQuestions = 1;
-let amountLevels = 2;
+let amountLevels = 1;
 
 function createQuiz() {
     alert("funcionando");
 }
 
-function validateInformation(element) {
+function validateInformation() {
     titleQuiz = document.querySelector(".input-title-quiz").value;
     urlImageQuiz = document.querySelector(".input-image-quiz").value;
     amountQuestions = Number(document.querySelector(".input-amount-questions").value);
@@ -241,9 +242,38 @@ function validateLevels() {
    if(minHit){
     console.log("sucesso")
     quizObject.levels = levelsQuiz;
+    document.querySelector(".create-questions-third-page").classList.add("hidden");
+    saveQuiz();
    }else {
     console.log("err")
     levelsQuiz = []
    }
 }
-renderBoxLevel();
+
+function saveQuiz() {
+    console.log(quizObject)
+    const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes", quizObject)
+
+    request.then(renderFinalPage);
+    request.catch(errorSaveQuizz);
+}
+
+function errorSaveQuizz() {
+    alert("erro ao postar quiz");
+}
+
+function renderFinalPage(response) {
+    console.log(response)
+    idQuiz = response.data.id;
+    const finalPage = document.querySelector(".create-questions-fourth-page");
+    finalPage.classList.remove("hidden");
+
+    finalPage.innerHTML = `<h1>Seu quizz está pronto!</h1>	
+                            <div class="box-image">
+                                <img src="assets/simpsons.jpg" alt="" />
+                                <span class="gradient"><p>${titleQuiz}</p></span>
+                            </div>
+                            <button class="access-quiz onclick="acessQuiz(${idQuiz});">Acessar Quizz</button>
+                            <button class="back-home" onclick="backHome();">Voltar pra home</button>`
+    document.querySelector(".box-image img").src = `${quizObject.image}`;
+}
