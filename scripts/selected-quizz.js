@@ -41,13 +41,7 @@ function markQuestionAsAnswerd(selectedOption) {
 	setTimeout(scrollToNextQuestion, 2000, thisQuestion);
 }
 
-function restartBtn() {
-	//Reinicialize global variables
-	correctAnswers = [];
-	hits = 0;
-	answerdQuestions = 0;
-	levels = [];
-
+function clearQuizzScreen(){
 	quizzScreen.innerHTML =
 		`<main class="container ">
 		<div class="selected-quizz">
@@ -59,6 +53,16 @@ function restartBtn() {
 			</div>
 		</div>
 	</main>`;
+}
+
+function restartBtn() {
+	//Reinicialize global variables
+	correctAnswers = [];
+	hits = 0;
+	answerdQuestions = 0;
+	levels = [];
+
+	clearQuizzScreen();
 	load(thisQuizz);
 	quizzScreen.scrollIntoView(true);
 }
@@ -69,6 +73,7 @@ function homeBtn() {
 	//loading.classList.add("hidden");
 	quizzesScreen.classList.remove("hidden");
 	quizzesScreen.scrollIntoView(true);
+	clearQuizzScreen();
 }
 
 function renderizeResultBox(result, resultPercent) {
