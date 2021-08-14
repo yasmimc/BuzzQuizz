@@ -145,12 +145,14 @@ function showResult(totalQuestions){
 	</div>
 	<button class="restart-btn" onclick="restartBtn();">
 		Reiniciar Quizz
+	</button>
+	<button class="home-btn" onclick="restartBtn();">
+		Voltar pra home
 	</button>`;
 	
-	
+	const resultBox = quizz.querySelector(".result");
 
-	quizz.lastElementChild.scrollIntoView({behavior: "smooth", block: "center", inline: "start"});
-	
+	resultBox.scrollIntoView({behavior: "smooth", block: "center", inline: "start"});
 }
 
 function selectAnswer(selectedOption){
