@@ -41,11 +41,48 @@ function renderBoxQuestion(amountQuestions) {
     for(let i = 1; i <= amountQuestions; ++i) {
         let questionBox = `	<div class="box-question">
                                 <span>Pergunta ${i}</span>
-                                <span class="create-icon" onclick="SelectedQuestion(this, ${i})"><ion-icon name="create-outline"></ion-icon></span>
+                                <span class="create-icon" onclick="selectedQuestion(this, ${i})"><ion-icon name="create-outline"></ion-icon></span>
                             </div>`
         screenQuestion.innerHTML += questionBox;
     }
 
     let button = `<button >Prosseguir pra criar níveis</button>`
     screenQuestion.innerHTML += button;
+}
+
+function selectedQuestion(element, questionNumber){ 
+    const questionBox = element.parentNode;
+    questionBox.classList.add("questions-info");
+    questionBox.classList.remove("box-question");
+    questionBox.innerHTML = `<div class="box-information">
+                                <div class="question-information">
+                                    <h2>Pergunta ${questionNumber}</h2>
+                                    <input type="text" placeholder="Texto da pergunta">
+                                    <input type="text" placeholder="Cor de fundo da pergunta">
+                                </div>
+
+                                <div class="rigth-answer">
+                                    <h2>Resposta correta</h2>
+                                    <input type="text" placeholder="Texto da pergunta">
+                                    <input type="text" placeholder="Cor de fundo da pergunta">
+                                </div>
+
+                                <div class="wrong-answers">
+                                    <h2>Respostas incorretas</h2>
+                                    <div class="wrong-option1">
+                                        <input type="text" placeholder="Resposta incorreta 1">
+                                        <input type="text" placeholder="URL da imagem 1">
+                                    </div>
+
+                                    <div class="wrong-option2">
+                                        <input type="text" placeholder="Resposta incorreta 2">
+                                        <input type="text" placeholder="URL da imagem 2">
+                                    </div>
+
+                                    <div class="wrong-option3">
+                                        <input type="text" placeholder="Resposta incorreta 3">
+                                        <input type="text" placeholder="URL da imagem 3">
+                                    </div>
+                                </div>
+                            </div>`
 }
