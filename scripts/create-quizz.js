@@ -1,18 +1,16 @@
-let quizObject = {title : "", image : "", questions : [], levels : []};
+let quizObject;
 let idQuiz;
 let urlImageQuiz = "";
-let titleQuiz = ""
+let titleQuiz = "";
 let questionsQuiz = [];
 let levelsQuiz = [];
 let amountQuestions = 0;
 let amountLevels = 0;
 
 function createQuiz() {
-
     document.querySelector(".screen-1").classList.add("hidden");
     const screenInfos = document.querySelector(".create-questions-first-page");
     screenInfos.classList.remove("hidden");
-
     screenInfos.innerHTML += `<h1>Comece pelo começo</h1>
                                 <div class="basic-quiz-info">
                                     <div class="box-information">
@@ -22,7 +20,7 @@ function createQuiz() {
                                         <input type="text" class="input-amount-levels" placeholder="Quantidade de níveis do quizz">
                                     </div>
                                 </div>
-                                <button onclick="validateInformation();">Prosseguir pra criar perguntas</button>`
+                                <button onclick="validateInformation();">Prosseguir pra criar perguntas</button>`;
 }
 
 function validateInformation() {
@@ -50,14 +48,16 @@ function validateInformation() {
     }
 }
 
-function checkUrl(urlString){
-    let pattern = new RegExp('^(https?:\\/\\/)?'+
-                            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+
-                            '((\\d{1,3}\\.){3}\\d{1,3}))'+
-                            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ 
-                            '(\\?[;&a-z\\d%_.~+=-]*)?'+
-                            '(\\#[-a-z\\d_]*)?$','i');
-    return !!pattern.test(urlString);
+function checkUrl(urlString) {
+  let pattern = new RegExp( "^(https?:\\/\\/)?" +
+                            "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+                            "((\\d{1,3}\\.){3}\\d{1,3}))" +
+                            "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+                            "(\\?[;&a-z\\d%_.~+=-]*)?" +
+                            "(\\#[-a-z\\d_]*)?$",
+                            "i"
+                        );
+  return !!pattern.test(urlString);
 }
 
 function renderBoxQuestion() {
@@ -71,20 +71,20 @@ function renderBoxQuestion() {
         let questionBox = `	<div class="box-question">
                                 <span>Pergunta ${i}</span>
                                 <span class="create-icon" onclick="selectedQuestion(this, ${i})"><ion-icon name="create-outline"></ion-icon></span>
-                            </div>`
-        screenQuestion.innerHTML += questionBox;
-    }
+                            </div>`;
+    screenQuestion.innerHTML += questionBox;
+  }
 
-    let button = `<button onclick="validateQuestions();">Prosseguir pra criar níveis</button>`
-    screenQuestion.innerHTML += button;
+  let button = `<button onclick="validateQuestions();">Prosseguir pra criar níveis</button>`;
+  screenQuestion.innerHTML += button;
 }
 
-function selectedQuestion(element, questionNumber){ 
-    const questionBox = element.parentNode;
-    questionBox.classList.add("questions-info");
-    questionBox.classList.remove("box-question");
-    questionBox.innerHTML = "";
-    questionBox.innerHTML = `<div class="box-information">
+function selectedQuestion(element, questionNumber) {
+  const questionBox = element.parentNode;
+  questionBox.classList.add("questions-info");
+  questionBox.classList.remove("box-question");
+  questionBox.innerHTML = "";
+  questionBox.innerHTML = `<div class="box-information">
                                 <div class="question-information">
                                     <h2>Pergunta ${questionNumber}</h2>
                                     <input type="text" class="question${questionNumber} title-question${questionNumber}" placeholder="Texto da pergunta">
@@ -110,7 +110,7 @@ function selectedQuestion(element, questionNumber){
                                         <input type="url" class="question${questionNumber} url-wrong-answer3" placeholder="URL da imagem 3">
                                     </div>
                                 </div>
-                            </div>`
+                            </div>`;
 }
 
 function validateQuestions() {
@@ -152,7 +152,6 @@ function validateQuestions() {
             questionsQuiz.push({ title: titleQuestion, color: colorQuestion, answers: answers});
             answers = [];
         }
-
     }
 
     if(validQuestions) {
@@ -163,15 +162,14 @@ function validateQuestions() {
         validQuestions = true;
         alert("informações inválidas, tente novamente");
     }
-
 }
 
-function checkColor(color){
-    if(color.length === 7){
-        let pattern = new RegExp(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/igm);
-        return !!pattern.test(color);
-    }
-    return false;
+function checkColor(color) {
+  if (color.length === 7) {
+    let pattern = new RegExp(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/gim);
+    return !!pattern.test(color);
+  }
+  return false;
 }
 
 function renderBoxLevel() {
@@ -185,20 +183,20 @@ function renderBoxLevel() {
         let questionBox = `	<div class="box-question">
                                 <span>Nível ${i}</span>
                                 <span class="create-icon" onclick="selectedLevel(this, ${i})"><ion-icon name="create-outline"></ion-icon></span>
-                            </div>`
-        screenQuestion.innerHTML += questionBox;
-    }
+                            </div>`;
+    screenQuestion.innerHTML += questionBox;
+  }
 
-    let button = `<button onclick="validateLevels();">Finalizar Quizz</button>`
-    screenQuestion.innerHTML += button;
+  let button = `<button onclick="validateLevels();">Finalizar Quizz</button>`;
+  screenQuestion.innerHTML += button;
 }
 
-function selectedLevel(element, levelNumber){ 
-    const questionBox = element.parentNode;
-    questionBox.classList.add("questions-info");
-    questionBox.classList.remove("box-question");
-    questionBox.innerHTML = "";
-    questionBox.innerHTML = `<div class="box-information">
+function selectedLevel(element, levelNumber) {
+  const questionBox = element.parentNode;
+  questionBox.classList.add("questions-info");
+  questionBox.classList.remove("box-question");
+  questionBox.innerHTML = "";
+  questionBox.innerHTML = `<div class="box-information">
                                 <div class="level-information">
                                     <h2>Nível ${levelNumber}</h2>
                                     <input type="text" class="title-level${levelNumber}"placeholder="Título do nível">
@@ -210,29 +208,38 @@ function selectedLevel(element, levelNumber){
 }
 
 function validateLevels() {
-    let validLevel; 
-    let minHit = false;
-    for(let i = 1; i <= amountLevels; ++i) {
-        validLevel = true; 
-        const titleLevel = document.querySelector(`.title-level${i}`).value;
-        const minValue = Number(document.querySelector(`.hit-level${i}`).value);
-        const urlLevelImage = document.querySelector(`.url-level${i}`).value;
-        const descriptionLevel = document.querySelector(`.description-level${i}`).value;
+  let validLevel;
+  let minHit = false;
+  for (let i = 1; i <= amountLevels; ++i) {
+    validLevel = true;
+    const titleLevel = document.querySelector(`.title-level${i}`).value;
+    const minValue = Number(document.querySelector(`.hit-level${i}`).value);
+    const urlLevelImage = document.querySelector(`.url-level${i}`).value;
+    const descriptionLevel = document.querySelector(
+      `.description-level${i}`
+    ).value;
 
-        if(titleLevel.length < 10 || minValue < 0 || minValue > 100 || !checkUrl(urlLevelImage) || descriptionLevel.length < 30) validLevel = false;
-        
-        if(validLevel) {
-            let level = {
-                title: titleLevel,
-                image: urlLevelImage,
-                text: descriptionLevel,
-                minValue: minValue
-            }
-            levelsQuiz.push(level)
-        }
+    if (
+      titleLevel.length < 10 ||
+      minValue < 0 ||
+      minValue > 100 ||
+      !checkUrl(urlLevelImage) ||
+      descriptionLevel.length < 30
+    )
+      validLevel = false;
 
-        if(minValue === 0) minHit = true;
-   }
+    if (validLevel) {
+      let level = {
+        title: titleLevel,
+        image: urlLevelImage,
+        text: descriptionLevel,
+        minValue: minValue,
+      };
+      levelsQuiz.push(level);
+    }
+
+    if (minValue === 0) minHit = true;
+  }
 
    if(minHit){
     console.log("sucesso")
@@ -245,82 +252,7 @@ function validateLevels() {
 
 function saveQuiz() {
 
-    let test =  {
-        title: "Título do quizz",
-        image: "https://http.cat/411.jpg",
-        questions: [
-            {
-                title: "Título da pergunta 1",
-                color: "#123456",
-                answers: [
-                    {
-                        text: "Texto da resposta 1",
-                        image: "https://http.cat/411.jpg",
-                        isCorrectAnswer: true
-                    },
-                    {
-                        text: "Texto da resposta 2",
-                        image: "https://http.cat/412.jpg",
-                        isCorrectAnswer: false
-                    }
-                ]
-            },
-            {
-                title: "Título da pergunta 2",
-                color: "#123456",
-                answers: [
-                    {
-                        text: "Texto da resposta 1",
-                        image: "https://http.cat/411.jpg",
-                        isCorrectAnswer: true
-                    },
-                    {
-                        text: "Texto da resposta 2",
-                        image: "https://http.cat/412.jpg",
-                        isCorrectAnswer: false
-                    }
-                ]
-            },
-            {
-                title: "Título da pergunta 3",
-                color: "#123456",
-                answers: [
-                    {
-                        text: "Texto da resposta 1",
-                        image: "https://http.cat/411.jpg",
-                        isCorrectAnswer: true
-                    },
-                    {
-                        text: "Texto da resposta 2",
-                        image: "https://http.cat/412.jpg",
-                        isCorrectAnswer: false
-                    }
-                ]
-            }
-        ],
-        levels: [
-            {
-                title: "Título do nível 1",
-                image: "https://http.cat/411.jpg",
-                text: "Descrição do nível 1",
-                minValue: 0
-            },
-            {
-                title: "Título do nível 2",
-                image: "https://http.cat/412.jpg",
-                text: "Descrição do nível 2",
-                minValue: 50
-            }
-        ]
-    };
-
-    console.log("test: ", test);
-    console.log("antes: ", quizObject);
-    quizObject.title = test.title;
-    quizObject.image = test.image;
-    quizObject.questions = test.questions;
-    quizObject.levels = test.levels;
-    console.log("depois: ", quizObject);
+    quizObject = {title : titleQuiz, image : urlImageQuiz, questions : questionsQuiz, levels : levelsQuiz};
     const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes", quizObject)
 
     request.then(renderFinalPage);
@@ -328,7 +260,6 @@ function saveQuiz() {
         alert("erro ao postar quiz");
     });
 }
-saveQuiz();
 
 function renderFinalPage(response) {
   
