@@ -89,6 +89,10 @@
 	font-family: 'Roboto', sans-serif;
 }
 
+.quizz button.blur {
+	opacity: 30%;
+}
+
 @media (max-width: 1120px) {
 	.selected-quizz {
 		height: 142px;
@@ -127,10 +131,6 @@
 	.quizz button p {
 		font-size: 13px;
 		font-weight: 700;
-	}
-
-	.quizz button.option.blur {
-		opacity: 30%;
 	}
 } 
 
