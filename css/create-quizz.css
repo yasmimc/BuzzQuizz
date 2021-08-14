@@ -11,7 +11,7 @@
     font-weight: 700;
     line-height: 27px;
     margin-bottom: 48px;
-    margin-top: 15px;
+    margin-top: 70px;
     text-align: center;
 }
 
@@ -65,7 +65,7 @@
 }
 
 .create-questions-second-page > h1{
-    margin-top: 15px;
+    margin-top: 70px;
     font-size: 23px;
     font-weight: 700;
     line-height: 27px;
@@ -140,7 +140,7 @@
 }
 
 .create-questions-third-page > h1{
-    margin-top: 15px;
+    margin-top: 70px;
     font-size: 23px;
     font-weight: 700;
     line-height: 27px;
@@ -171,7 +171,7 @@
 }
 
 .create-questions-fourth-page > h1{
-    margin-top: 15px;
+    margin-top: 70px;
     font-size: 23px;
     font-weight: 700;
     line-height: 27px;
@@ -358,9 +358,4 @@ input:focus{
         font-size: 18px;
         line-height: 21px;
     }
-
-}
-
-.hiden {
-    display: none;
 }
