@@ -8,6 +8,9 @@ let amountQuestions = 2;
 let amountLevels = 2;
 
 function createQuiz() {
+
+  document.querySelector(".screen-1").classList.add("hidden");
+  document.querySelector(".screen-3").classList.remove("hidden");
   const screenInfos = document.querySelector(".create-questions-first-page");
   screenInfos.classList.remove("hidden");
   screenInfos.innerHTML += `<h1>Comece pelo começo</h1>
@@ -33,24 +36,16 @@ function validateInformation() {
   );
   let validInformations = true;
 
-  if (title == "" || title.length < 20 || title.length > 65)
-    (validInformations = false),
-      alert("O título deve ter entre 20-65 caracteres");
-  if (!checkUrl(urlImage))
-    (validInformations = false), alert("Informe uma Url válida");
-  if (numberQuestions < 3)
-    (validInformations = false),
-      alert("A quantidade de perguntas deve ser maior que 2");
-  if (numberLevels < 2)
-    (validInformations = false),
-      alert("A quantidade de níveis deve ser maior que 1");
+  if (title == "" || title.length < 20 || title.length > 65) (validInformations = false), alert("O título deve ter entre 20-65 caracteres");
+  if (!checkUrl(urlImage)) validInformations = false, alert("Informe uma Url válida");
+  if (numberQuestions < 3) validInformations = false, alert("A quantidade de perguntas deve ser maior que 2");
+  if (numberLevels < 2) validInformations = false, alert("A quantidade de níveis deve ser maior que 1");
 
   if (validInformations) {
     titleQuiz = title;
     urlImageQuiz = urlImage;
     amountQuestions = numberQuestions;
     amountLevels = numberLevels;
-    alert("informações válidas");
     renderBoxQuestion();
   } else {
     alert("informações inválidas, tente novamente");
