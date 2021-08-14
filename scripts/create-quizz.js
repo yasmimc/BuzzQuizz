@@ -8,7 +8,6 @@ let amountQuestions = 2;
 let amountLevels = 2;
 
 function createQuiz() {
-  changeScreen("screen-3");
   const screenInfos = document.querySelector(".create-questions-first-page");
   screenInfos.classList.remove("hidden");
   screenInfos.innerHTML += `<h1>Comece pelo começo</h1>
@@ -232,9 +231,7 @@ function checkColor(color) {
 }
 
 function renderBoxLevel() {
-  document
-    .querySelector(".create-questions-second-page")
-    .classList.add("hidden");
+  document.querySelector(".create-questions-second-page").classList.add("hidden");
   const screenQuestion = document.querySelector(".create-questions-third-page");
   screenQuestion.classList.remove("hidden");
 
