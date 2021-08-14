@@ -4,8 +4,8 @@ let urlImageQuiz = "";
 let titleQuiz = "";
 let questionsQuiz = [];
 let levelsQuiz = [];
-let amountQuestions = 0;
-let amountLevels = 0;
+let amountQuestions = 2;
+let amountLevels = 2;
 
 function createQuiz() {
     document.querySelector(".screen-1").classList.add("hidden");
@@ -160,6 +160,7 @@ function validateQuestions() {
         haveAnswer2 = false;
         haveAnswer3 = false;
         validQuestions = true;
+        questionsQuiz = [];
         alert("informações inválidas, tente novamente");
     }
 }
@@ -215,26 +216,12 @@ function validateLevels() {
     const titleLevel = document.querySelector(`.title-level${i}`).value;
     const minValue = Number(document.querySelector(`.hit-level${i}`).value);
     const urlLevelImage = document.querySelector(`.url-level${i}`).value;
-    const descriptionLevel = document.querySelector(
-      `.description-level${i}`
-    ).value;
+    const descriptionLevel = document.querySelector(`.description-level${i}`).value;
 
-    if (
-      titleLevel.length < 10 ||
-      minValue < 0 ||
-      minValue > 100 ||
-      !checkUrl(urlLevelImage) ||
-      descriptionLevel.length < 30
-    )
-      validLevel = false;
+    if (titleLevel.length < 10 || minValue < 0 || minValue > 100 || !checkUrl(urlLevelImage) || descriptionLevel.length < 30) validLevel = false;
 
     if (validLevel) {
-      let level = {
-        title: titleLevel,
-        image: urlLevelImage,
-        text: descriptionLevel,
-        minValue: minValue,
-      };
+      let level = { title: titleLevel, image: urlLevelImage, text: descriptionLevel, minValue: minValue};
       levelsQuiz.push(level);
     }
 
@@ -242,11 +229,10 @@ function validateLevels() {
   }
 
    if(minHit){
-    console.log("sucesso")
     saveQuiz();
    }else {
-    console.log("err")
-    levelsQuiz = []
+    alert("Pelo menos um Título deve ter o mínimo de acerto de 0%");
+    levelsQuiz = [];
    }
 }
 
@@ -269,12 +255,13 @@ function renderFinalPage(response) {
 
     console.log(response)
     idQuiz = response.data.id;
-    finalPage.innerHTML = `<h1>Seu quizz está pronto!</h1>	
-                            <div class="box-image">
+    console.log("id: ",idQuiz)
+    finalPage.innerHTML = `<h1>Seu quizz está pronto!</h1>
+                                <div class="box-image">
                                 <img src="assets/simpsons.jpg" alt="" />
                                 <span class="gradient"><p>${quizObject.title}</p></span>
                             </div>
-                            <button class="access-quiz onclick="acessQuiz(${idQuiz});">Acessar Quizz</button>
+                            <button class="access-quiz" onclick="accessQuiz();">Acessar Quizz</button>
                             <button class="back-home" onclick="backHome();">Voltar pra home</button>`
     document.querySelector(".box-image img").src = `${quizObject.image}`;
     saveId();
@@ -294,4 +281,10 @@ function backHome() {
     finalPage.classList.add("hidden");
     document.querySelector(".screen-1").classList.remove("hidden");
     getQuizzes();
+}
+
+function accessQuiz() {
+    const finalPage = document.querySelector(".create-questions-fourth-page");
+    finalPage.classList.add("hidden");
+    selectQuizz(idQuiz);
 }
