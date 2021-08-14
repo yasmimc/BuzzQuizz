@@ -1,12 +1,3 @@
-// QUIZZ FOR TEST:
-const friends = axios.get(
-	"https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes/1"
-);
-friends.then(load);
-//
-//
-//
-
 const quizzScreen = document.querySelector(".screen-2");
 
 function scrollToNextQuestion(thisQuestion) {
@@ -127,8 +118,8 @@ function showQuizzScreen() {
 	const loading = document.querySelector(".loading");
 	const quizzesScreen = document.querySelector(".screen-1");
 	quizzesScreen.classList.add("hidden");
-	//loading.classList.add("hidden");
-	// const quizzScreen = document.querySelector(".screen-2");
+	loading.classList.add("hidden");
+	const quizzScreen = document.querySelector(".screen-2");
 	quizzScreen.classList.remove("hidden");
 }
 
