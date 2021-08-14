@@ -276,4 +276,15 @@ function renderFinalPage(response) {
                             <button class="access-quiz onclick="acessQuiz(${idQuiz});">Acessar Quizz</button>
                             <button class="back-home" onclick="backHome();">Voltar pra home</button>`
     document.querySelector(".box-image img").src = `${quizObject.image}`;
+    saveId();
+}
+
+function saveId() {
+    let ids = [];
+    if(JSON.parse(localStorage.getItem("ids"))){
+       ids  = JSON.parse(localStorage.getItem("ids"));
+    }
+
+    ids.push({id: idQuiz});
+    localStorage.setItem("ids", JSON.stringify(ids));
 }
