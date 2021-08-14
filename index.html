@@ -89,27 +89,28 @@
 
 	<main class="container">
 
-		<div class="screen-3 hidden">
+		<div class="screen-3">
 			<div class="create-questions-first-page">
 				<h1>Comece pelo começo</h1>
 				<div class="basic-quiz-info">
 					<div class="box-information">
 						<input type="text" class="input-title-quiz" placeholder="Título do seu quizz">
-						<input type="text" class="input-image-quiz" placeholder="URL da imagem do seu quizz">
+						<input type="url" class="input-image-quiz" placeholder="URL da imagem do seu quizz">
 						<input type="text" class="input-amount-questions" placeholder="Quantidade de perguntas do quizz">
 						<input type="text" class="input-amount-levels" placeholder="Quantidade de níveis do quizz">
 					</div>
 				</div>
-				<button class="create-questions" onclick="validateInformation(this);">Prosseguir pra criar perguntas</button>
+				<button onclick="validateInformation(this);">Prosseguir pra criar perguntas</button>
 			</div>
 	
 			<div class="create-questions-second-page hidden">
-				<h1>Crie suas perguntas</h1>	
-				<div class="box-question">
+				<h1>Crie suas perguntas</h1>
+				<!--<div class="box-question">
 					<span>Pergunta 1</span>
 					<span class="create-icon"><ion-icon name="create-outline"></ion-icon></span>
-				</div>
-	
+				</div>-->
+				
+				<!--
 				<div class="questions-info">			
 					<div class="box-information">
 						<div class="question-information">
@@ -143,7 +144,7 @@
 						</div>
 					</div>
 				</div>
-				<button >Prosseguir pra criar níveis</button>
+				-->
 			</div>
 	
 			<div class="create-questions-third-page hidden">
@@ -185,6 +186,8 @@
 
 	<!-- SCRIPTS IMPORT  -->
 	<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="scripts/selected-quizz.js"></script>
 	<script src="scripts/scripts.js"></script>

@@ -17,6 +17,8 @@ function validateInformation(element) {
 
     if(validInformations){
         alert("informações válidas");
+        document.querySelector(".create-questions-first-page").classList.add("hidden");
+        renderBoxQuestion(amountQuestions);
     }else{
         alert("informações inválidas, tente novamente");
     }
@@ -30,4 +32,20 @@ function checkUrlImage(urlString){
                             '(\\?[;&a-z\\d%_.~+=-]*)?'+
                             '(\\#[-a-z\\d_]*)?$','i');
     return !!pattern.test(urlString);
+}
+
+function renderBoxQuestion(amountQuestions) {
+    const screenQuestion = document.querySelector(".create-questions-second-page");
+    screenQuestion.classList.remove("hidden");
+    
+    for(let i = 1; i <= amountQuestions; ++i) {
+        let questionBox = `	<div class="box-question">
+                                <span>Pergunta ${i}</span>
+                                <span class="create-icon" onclick="SelectedQuestion(this, ${i})"><ion-icon name="create-outline"></ion-icon></span>
+                            </div>`
+        screenQuestion.innerHTML += questionBox;
+    }
+
+    let button = `<button >Prosseguir pra criar níveis</button>`
+    screenQuestion.innerHTML += button;
 }
