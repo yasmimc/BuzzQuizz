@@ -98,7 +98,7 @@ getQuizzes();
 
 // gets id from local storage
 function getIdList() {
-  let idList = localStorage.getItem("idList");
+  let idList = localStorage.getItem("ids");
 
   if (idList !== null) {
     idList = JSON.parse(idList);
