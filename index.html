@@ -5,147 +5,171 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<!-- CSS IMPORT  -->
-	<link rel="stylesheet" href="css/reset.css" />
-	<link rel="stylesheet" href="css/loading.css" />
-	<link rel="stylesheet" href="css/create-quizz.css"/>
-	<link rel="stylesheet" href="css/style.css" />
-	<link rel="stylesheet" href="css/selected-quizz.css" />
+    <!-- CSS IMPORT  -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/loading.css" />
+    <link rel="stylesheet" href="css/create-quizz.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/selected-quizz.css" />
 
-	<link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
 
-	<title>BuzzQuizz</title>
-</head>
+    <title>BuzzQuizz</title>
+  </head>
 
-<body>
-	<header class="top">
-		<h6 class="title">BuzzQuizz</h6>
-	</header>
+  <body>
+    <header class="top">
+      <h6 class="title">BuzzQuizz</h6>
+    </header>
 
-	<div class="screen-1 hidden">
-		<main class="container">
-			<div class="user-quizzes">
-				<div class="empty">
-					<div class="content">
-						<p>Você não criou nenhum quizz ainda :(</p>
-						<button class="create-quizz">Criar Quizz</button>
-					</div>
-				</div>
-				<!-- this session is hidden unless user has quizzes-->
-				<div class="filled hidden">
-					<div class="session-title">
-						Seus Quizzes
-						<button>
-							<ion-icon name="add-circle"></ion-icon>
-						</button>
-					</div>
-					<ul class="quizzes-list">
-						<!-- user quizzes go here -->
-					</ul>
-				</div>
-			</div>
-			<div class="community-quizzes">
-				<h1 class="session-title">Todos os Quizzes</h1>
-				<ul class="quizzes-list">
-					<!-- community quizzes go here -->
-				</ul>
-			</div>
-		</main>
-	</div>
+    <div class="screen-1">
+      <main class="container">
+        <div class="user-quizzes">
+          <div class="empty">
+            <div class="content">
+              <p>Você não criou nenhum quizz ainda :(</p>
+              <button class="create-quizz">Criar Quizz</button>
+            </div>
+          </div>
+          <!-- this session is hidden unless user has quizzes-->
+          <div class="filled hidden">
+            <div class="session-title">
+              Seus Quizzes
+              <button>
+                <ion-icon name="add-circle"></ion-icon>
+              </button>
+            </div>
+            <ul class="quizzes-list">
+              <!-- user quizzes go here -->
+            </ul>
+          </div>
+        </div>
+        <div class="community-quizzes">
+          <h1 class="session-title">Todos os Quizzes</h1>
+          <ul class="quizzes-list">
+            <!-- community quizzes go here -->
+          </ul>
+        </div>
+      </main>
+    </div>
 
-	<div class="screen-2 hidden">
-		<main class="container ">
-			<div class="selected-quizz">
-				<div class="banner"></div>
-				<h1></h1>
-			</div>
-			<div class="quizz-container">
-				<div class="quizz">
-				</div>
-			</div>
-		</main>
-	</div>
+    <div class="screen-2 hidden">
+      <main class="container">
+        <div class="selected-quizz">
+          <div class="banner"></div>
+          <h1></h1>
+        </div>
+        <div class="quizz-container">
+          <div class="quizz"></div>
+        </div>
+      </main>
+    </div>
 
-	<!-- loading screen -->
-	<div class="loading hidden">
-		<div class="loadingio-spinner-spinner-x788ti4ehi8">
-			<div class="ldio-4zr0xrl34fx">
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-			</div>
-		</div>
-	</div>
+    <!-- loading screen -->
+    <div class="loading hidden">
+      <div class="loadingio-spinner-spinner-x788ti4ehi8">
+        <div class="ldio-4zr0xrl34fx">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
 
-	<main class="container">
+    <main class="container">
+      <div class="screen-3 hidden">
+        <div class="create-questions-first-page hidden">
+          <h1>Comece pelo começo</h1>
+          <div class="basic-quiz-info">
+            <div class="box-information">
+              <input
+                type="text"
+                class="input-title-quiz"
+                placeholder="Título do seu quizz"
+              />
+              <input
+                type="url"
+                class="input-image-quiz"
+                placeholder="URL da imagem do seu quizz"
+              />
+              <input
+                type="text"
+                class="input-amount-questions"
+                placeholder="Quantidade de perguntas do quizz"
+              />
+              <input
+                type="text"
+                class="input-amount-levels"
+                placeholder="Quantidade de níveis do quizz"
+              />
+            </div>
+          </div>
+          <button onclick="validateInformation(this);">
+            Prosseguir pra criar perguntas
+          </button>
+        </div>
 
-		<div class="screen-3 hidden">
-			<div class="create-questions-first-page hidden">
-				<h1>Comece pelo começo</h1>
-				<div class="basic-quiz-info">
-					<div class="box-information">
-						<input type="text" class="input-title-quiz" placeholder="Título do seu quizz">
-						<input type="url" class="input-image-quiz" placeholder="URL da imagem do seu quizz">
-						<input type="text" class="input-amount-questions" placeholder="Quantidade de perguntas do quizz">
-						<input type="text" class="input-amount-levels" placeholder="Quantidade de níveis do quizz">
-					</div>
-				</div>
-				<button onclick="validateInformation(this);">Prosseguir pra criar perguntas</button>
-			</div>
-	
-			<div class="create-questions-second-page hidden">
-				<h1>Crie suas perguntas</h1>
-			</div>
-	
-			<div class="create-questions-third-page hidden">
-				<h1>Agora, decida os níveis</h1>	
-				<div class="box-question">
-					<span>Nível 1</span>
-					<span class="create-icon"><ion-icon name="create-outline"></ion-icon></span>
-				</div>
-	
-				<div class="questions-info">			
-					<div class="box-information">
-						<div class="level-information">
-							<h2>Nível 1</h2>
-							<input type="text" placeholder="Título do nível">
-							<input type="text" placeholder="% de acerto mínima">
-							<input type="text" placeholder="URL da imagem do nível">
-							<input type="text" placeholder="Descrição do nível" class="descricao">
-						</div>
-					</div>
-				</div>
-				<button >Finalizar Quizz</button>
-			</div>
-	
-			<div class="create-questions-fourth-page hidden">
-				<h1>Seu quizz está pronto!</h1>	
-				<div class="box-image">
-					<img src="assets/simpsons.jpg" alt="" />
-						<span class="gradient"><p>Acerte os personagens corretos dos Simpsons e prove seu amor!</p></span>
-				</div>
-				<button class="access-quiz">Acessar Quizz</button>
-				<button class="back-home">Voltar pra home</button>
-			</div>
-			
-		</div>
-	
-	</main>
+        <div class="create-questions-second-page hidden">
+          <h1>Crie suas perguntas</h1>
+        </div>
 
-	<!-- SCRIPTS IMPORT  -->
-	<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-	<script src="scripts/selected-quizz.js"></script>
-	<script src="scripts/scripts.js"></script>
-	<script src="scripts/create-quizz.js"></script>
-</body>
+        <div class="create-questions-third-page hidden">
+          <h1>Agora, decida os níveis</h1>
+          <div class="box-question">
+            <span>Nível 1</span>
+            <span class="create-icon"
+              ><ion-icon name="create-outline"></ion-icon
+            ></span>
+          </div>
+
+          <div class="questions-info">
+            <div class="box-information">
+              <div class="level-information">
+                <h2>Nível 1</h2>
+                <input type="text" placeholder="Título do nível" />
+                <input type="text" placeholder="% de acerto mínima" />
+                <input type="text" placeholder="URL da imagem do nível" />
+                <input
+                  type="text"
+                  placeholder="Descrição do nível"
+                  class="descricao"
+                />
+              </div>
+            </div>
+          </div>
+          <button>Finalizar Quizz</button>
+        </div>
+
+        <div class="create-questions-fourth-page hidden">
+          <h1>Seu quizz está pronto!</h1>
+          <div class="box-image">
+            <img src="assets/simpsons.jpg" alt="" />
+            <span class="gradient"
+              ><p>
+                Acerte os personagens corretos dos Simpsons e prove seu amor!
+              </p></span
+            >
+          </div>
+          <button class="access-quiz">Acessar Quizz</button>
+          <button class="back-home">Voltar pra home</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- SCRIPTS IMPORT  -->
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="scripts/selected-quizz.js"></script>
+    <script src="scripts/scripts.js"></script>
+    <script src="scripts/create-quizz.js"></script>
+  </body>
 </html>
