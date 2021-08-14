@@ -120,6 +120,11 @@ function saveLevels(selectedQuizz){
 	});
 }
 
+function restartBtn(){
+	window.location.reload();
+	quizzScreen.scrollIntoView(true);
+}
+
 function showResult(totalQuestions){
 	const resultPercent =  Math.round(hits/totalQuestions*100);
 
@@ -137,8 +142,13 @@ function showResult(totalQuestions){
 			<p>${result.text}</p>
 		</div>
 		</div>
-	</div>`;
+	</div>
+	<button class="restart-btn" onclick="restartBtn();">
+		Reiniciar Quizz
+	</button>`;
 	
+	
+
 	quizz.lastElementChild.scrollIntoView({behavior: "smooth", block: "center", inline: "start"});
 	
 }
