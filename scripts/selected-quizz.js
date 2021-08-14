@@ -125,6 +125,15 @@ function restartBtn(){
 	quizzScreen.scrollIntoView(true);
 }
 
+function homeBtn(){
+	const quizzesScreen = document.querySelector(".screen-1");
+	quizzScreen.classList.add("hidden");
+
+	//loading.classList.add("hidden");
+	quizzesScreen.classList.remove("hidden");
+	quizzesScreen.scrollIntoView(true);
+}
+
 function showResult(totalQuestions){
 	const resultPercent =  Math.round(hits/totalQuestions*100);
 
@@ -146,7 +155,7 @@ function showResult(totalQuestions){
 	<button class="restart-btn" onclick="restartBtn();">
 		Reiniciar Quizz
 	</button>
-	<button class="home-btn" onclick="restartBtn();">
+	<button class="home-btn" onclick="homeBtn();">
 		Voltar pra home
 	</button>`;
 	
