@@ -15,7 +15,7 @@ function scrollToNextQuestion(thisQuestion) {
 	});
 }
 
-const correctAnswers = [];
+let correctAnswers = [];
 
 function markQuestionAsAnswerd(selectedOption) {
 	const thisQuestion = selectedOption.parentNode.parentNode;
@@ -42,6 +42,12 @@ function markQuestionAsAnswerd(selectedOption) {
 }
 
 function restartBtn() {
+	//Reinicialize global variables
+	correctAnswers = [];
+	hits = 0;
+	answerdQuestions = 0;
+	levels = [];
+
 	quizzScreen.innerHTML =
 		`<main class="container ">
 		<div class="selected-quizz">
@@ -174,7 +180,7 @@ function loadQuizzQuestions(quizzContent, selectedQuizz) {
 	});
 }
 
-const levels = [];
+let levels = [];
 
 function saveLevels(selectedQuizz) {
 	selectedQuizz.data.levels.forEach((level) => {
