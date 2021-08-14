@@ -214,5 +214,11 @@
 	.quizz .result p {
 		font-size: 17px;
 	}
+
+	.quizz .restart-btn {
+		width: 219px;
+		height: 44px;
+		font-size: 18px;
+	}
 } 
 
