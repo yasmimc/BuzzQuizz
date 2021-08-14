@@ -48,7 +48,18 @@ function markQuestionAsAnswerd(selectedOption){
 }
 
 function restartBtn(){
-	window.location.reload();
+	quizzScreen.innerHTML = 
+	`<main class="container ">
+		<div class="selected-quizz">
+			<div class="banner"></div>
+			<h1></h1>
+		</div>
+		<div class="quizz-container">
+			<div class="quizz">
+			</div>
+		</div>
+	</main>`;
+	load(thisQuizz);
 	quizzScreen.scrollIntoView(true);
 }
 
@@ -176,6 +187,12 @@ function saveLevels(selectedQuizz){
 	levels.reverse()
 }
 
+let thisQuizz;
+
+function saveQuizz(selectedQuizz){
+	thisQuizz = selectedQuizz;
+}
+
 function load(selectedQuizz) {
 	showQuizzScreen();
 
@@ -184,4 +201,6 @@ function load(selectedQuizz) {
 	loadQuizzTitle(quizzContent, selectedQuizz);
 	loadQuizzQuestions(quizzContent, selectedQuizz);
 	saveLevels(selectedQuizz);
+
+	saveQuizz(selectedQuizz);
 }
