@@ -8,10 +8,10 @@ let amountQuestions = 2;
 let amountLevels = 2;
 
 function createQuiz() {
-    document.querySelector(".screen-1").classList.add("hidden");
-    const screenInfos = document.querySelector(".create-questions-first-page");
-    screenInfos.classList.remove("hidden");
-    screenInfos.innerHTML += `<h1>Comece pelo começo</h1>
+  changeScreen("screen-3");
+  const screenInfos = document.querySelector(".create-questions-first-page");
+  screenInfos.classList.remove("hidden");
+  screenInfos.innerHTML += `<h1>Comece pelo começo</h1>
                                 <div class="basic-quiz-info">
                                     <div class="box-information">
                                         <input type="text" class="input-title-quiz" placeholder="Título do seu quizz">
@@ -24,51 +24,65 @@ function createQuiz() {
 }
 
 function validateInformation() {
+  const title = document.querySelector(".input-title-quiz").value;
+  const urlImage = document.querySelector(".input-image-quiz").value;
+  const numberQuestions = Number(
+    document.querySelector(".input-amount-questions").value
+  );
+  const numberLevels = Number(
+    document.querySelector(".input-amount-levels").value
+  );
+  let validInformations = true;
 
-    const title = document.querySelector(".input-title-quiz").value;
-    const urlImage = document.querySelector(".input-image-quiz").value;
-    const numberQuestions = Number(document.querySelector(".input-amount-questions").value);
-    const numberLevels = Number(document.querySelector(".input-amount-levels").value);
-    let validInformations = true;
+  if (title == "" || title.length < 20 || title.length > 65)
+    (validInformations = false),
+      alert("O título deve ter entre 20-65 caracteres");
+  if (!checkUrl(urlImage))
+    (validInformations = false), alert("Informe uma Url válida");
+  if (numberQuestions < 3)
+    (validInformations = false),
+      alert("A quantidade de perguntas deve ser maior que 2");
+  if (numberLevels < 2)
+    (validInformations = false),
+      alert("A quantidade de níveis deve ser maior que 1");
 
-    if(title == "" || title.length < 20 || title.length > 65) validInformations = false, alert("O título deve ter entre 20-65 caracteres");
-    if(!checkUrl( urlImage)) validInformations = false, alert("Informe uma Url válida");
-    if(numberQuestions < 3) validInformations = false, alert("A quantidade de perguntas deve ser maior que 2");
-    if(numberLevels < 2) validInformations = false, alert("A quantidade de níveis deve ser maior que 1");
-
-    if(validInformations){
-        titleQuiz = title;
-        urlImageQuiz = urlImage;
-        amountQuestions = numberQuestions;
-        amountLevels = numberLevels;
-        alert("informações válidas");
-        renderBoxQuestion();
-    }else{
-        alert("informações inválidas, tente novamente");
-    }
+  if (validInformations) {
+    titleQuiz = title;
+    urlImageQuiz = urlImage;
+    amountQuestions = numberQuestions;
+    amountLevels = numberLevels;
+    alert("informações válidas");
+    renderBoxQuestion();
+  } else {
+    alert("informações inválidas, tente novamente");
+  }
 }
 
 function checkUrl(urlString) {
-  let pattern = new RegExp( "^(https?:\\/\\/)?" +
-                            "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
-                            "((\\d{1,3}\\.){3}\\d{1,3}))" +
-                            "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
-                            "(\\?[;&a-z\\d%_.~+=-]*)?" +
-                            "(\\#[-a-z\\d_]*)?$",
-                            "i"
-                        );
+  let pattern = new RegExp(
+    "^(https?:\\/\\/)?" +
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+      "((\\d{1,3}\\.){3}\\d{1,3}))" +
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+      "(\\?[;&a-z\\d%_.~+=-]*)?" +
+      "(\\#[-a-z\\d_]*)?$",
+    "i"
+  );
   return !!pattern.test(urlString);
 }
 
 function renderBoxQuestion() {
+  document
+    .querySelector(".create-questions-first-page")
+    .classList.add("hidden");
+  const screenQuestion = document.querySelector(
+    ".create-questions-second-page"
+  );
+  screenQuestion.classList.remove("hidden");
 
-    document.querySelector(".create-questions-first-page").classList.add("hidden");
-    const screenQuestion = document.querySelector(".create-questions-second-page");
-    screenQuestion.classList.remove("hidden");
-    
-    screenQuestion.innerHTML = `<h1>Crie suas perguntas</h1>`;
-    for(let i = 1; i <= amountQuestions; ++i) {
-        let questionBox = `	<div class="box-question">
+  screenQuestion.innerHTML = `<h1>Crie suas perguntas</h1>`;
+  for (let i = 1; i <= amountQuestions; ++i) {
+    let questionBox = `	<div class="box-question">
                                 <span>Pergunta ${i}</span>
                                 <span class="create-icon" onclick="selectedQuestion(this, ${i})"><ion-icon name="create-outline"></ion-icon></span>
                             </div>`;
@@ -114,45 +128,89 @@ function selectedQuestion(element, questionNumber) {
 }
 
 function validateQuestions() {
+  let validQuestions = true;
+  let haveAnswer2 = true;
+  let haveAnswer3 = true;
+  for (let i = 1; i <= amountQuestions; ++i) {
+    const titleQuestion = document.querySelector(
+      `.question${i}.title-question${i}`
+    ).value;
+    const colorQuestion = document.querySelector(
+      `.question${i}.color-question${i}`
+    ).value;
+    const rigthAnswerText = document.querySelector(
+      `.question${i}.text-rigth-answer${i}`
+    ).value;
+    const rigthAnswerUrl = document.querySelector(
+      `.question${i}.url-rigth-answer${i}`
+    ).value;
+    const wrongAnswerText1 = document.querySelector(
+      `.question${i}.text-wrong-answer1`
+    ).value;
+    const wrongAnswerUrl1 = document.querySelector(
+      `.question${i}.url-wrong-answer1`
+    ).value;
+    const wrongAnswerText2 = document.querySelector(
+      `.question${i}.text-wrong-answer2`
+    ).value;
+    const wrongAnswerUrl2 = document.querySelector(
+      `.question${i}.url-wrong-answer2`
+    ).value;
+    const wrongAnswerText3 = document.querySelector(
+      `.question${i}.text-wrong-answer3`
+    ).value;
+    const wrongAnswerUrl3 = document.querySelector(
+      `.question${i}.url-wrong-answer3`
+    ).value;
 
-    let validQuestions = true; 
-    let haveAnswer2 = true;
-    let haveAnswer3 = true;
-    for(let i = 1; i <= amountQuestions; ++i) {
+    if (
+      titleQuestion.length < 20 ||
+      !checkColor(colorQuestion) ||
+      rigthAnswerText === "" ||
+      !checkUrl(rigthAnswerUrl) ||
+      wrongAnswerText1 === "" ||
+      !checkUrl(wrongAnswerUrl1)
+    )
+      validQuestions = false;
 
-        const titleQuestion = document.querySelector(`.question${i}.title-question${i}`).value;
-        const colorQuestion = document.querySelector(`.question${i}.color-question${i}`).value;
-        const rigthAnswerText = document.querySelector(`.question${i}.text-rigth-answer${i}`).value;
-        const rigthAnswerUrl = document.querySelector(`.question${i}.url-rigth-answer${i}`).value;
-        const wrongAnswerText1 = document.querySelector(`.question${i}.text-wrong-answer1`).value;
-        const wrongAnswerUrl1 = document.querySelector(`.question${i}.url-wrong-answer1`).value;
-        const wrongAnswerText2 = document.querySelector(`.question${i}.text-wrong-answer2`).value;
-        const wrongAnswerUrl2 = document.querySelector(`.question${i}.url-wrong-answer2`).value;
-        const wrongAnswerText3 = document.querySelector(`.question${i}.text-wrong-answer3`).value;
-        const wrongAnswerUrl3 = document.querySelector(`.question${i}.url-wrong-answer3`).value;
+    if (wrongAnswerText2 === "") haveAnswer2 = false;
+    if (wrongAnswerText3 === "") haveAnswer3 = false;
 
-        if(titleQuestion.length < 20 || !checkColor(colorQuestion) || rigthAnswerText === "" || !checkUrl(rigthAnswerUrl) || wrongAnswerText1 === "" || !checkUrl(wrongAnswerUrl1)) validQuestions = false;
+    if (haveAnswer2 && !checkUrl(wrongAnswerUrl2)) validQuestions = false;
+    if (haveAnswer3 && !checkUrl(wrongAnswerUrl3)) validQuestions = false;
 
-        if(wrongAnswerText2 === "") haveAnswer2 = false;
-        if(wrongAnswerText3 === "") haveAnswer3 = false;
-
-        if(haveAnswer2 && !checkUrl(wrongAnswerUrl2)) validQuestions = false;
-        if(haveAnswer3 && !checkUrl(wrongAnswerUrl3)) validQuestions = false;
-
-        if(validQuestions) {
-
-            let answers = [];
-            answers.push({ text: rigthAnswerText, image: rigthAnswerUrl, isCorrectAnswer: true},
-                         { text: wrongAnswerText1, image: wrongAnswerUrl1, isCorrectAnswer: false
-                        });
-            
-            if(haveAnswer2) answers.push({ text: wrongAnswerText2, image: wrongAnswerUrl2, isCorrectAnswer: false});
-            if(haveAnswer3) answers.push({ text: wrongAnswerText3, image: wrongAnswerUrl3, isCorrectAnswer: false});
-            
-            questionsQuiz.push({ title: titleQuestion, color: colorQuestion, answers: answers});
-            answers = [];
+    if (validQuestions) {
+      let answers = [];
+      answers.push(
+        { text: rigthAnswerText, image: rigthAnswerUrl, isCorrectAnswer: true },
+        {
+          text: wrongAnswerText1,
+          image: wrongAnswerUrl1,
+          isCorrectAnswer: false,
         }
+      );
+
+      if (haveAnswer2)
+        answers.push({
+          text: wrongAnswerText2,
+          image: wrongAnswerUrl2,
+          isCorrectAnswer: false,
+        });
+      if (haveAnswer3)
+        answers.push({
+          text: wrongAnswerText3,
+          image: wrongAnswerUrl3,
+          isCorrectAnswer: false,
+        });
+
+      questionsQuiz.push({
+        title: titleQuestion,
+        color: colorQuestion,
+        answers: answers,
+      });
+      answers = [];
     }
+  }
 
     if(validQuestions) {
         renderBoxLevel();
@@ -174,14 +232,15 @@ function checkColor(color) {
 }
 
 function renderBoxLevel() {
+  document
+    .querySelector(".create-questions-second-page")
+    .classList.add("hidden");
+  const screenQuestion = document.querySelector(".create-questions-third-page");
+  screenQuestion.classList.remove("hidden");
 
-    document.querySelector(".create-questions-second-page").classList.add("hidden");
-    const screenQuestion = document.querySelector(".create-questions-third-page");
-    screenQuestion.classList.remove("hidden");
-
-    screenQuestion.innerHTML += `<h1>Agora, decida os níveis</h1>`;
-    for(let i = 1; i <= amountLevels; ++i) {
-        let questionBox = `	<div class="box-question">
+  screenQuestion.innerHTML += `<h1>Agora, decida os níveis</h1>`;
+  for (let i = 1; i <= amountLevels; ++i) {
+    let questionBox = `	<div class="box-question">
                                 <span>Nível ${i}</span>
                                 <span class="create-icon" onclick="selectedLevel(this, ${i})"><ion-icon name="create-outline"></ion-icon></span>
                             </div>`;
@@ -237,14 +296,21 @@ function validateLevels() {
 }
 
 function saveQuiz() {
+  quizObject = {
+    title: titleQuiz,
+    image: urlImageQuiz,
+    questions: questionsQuiz,
+    levels: levelsQuiz,
+  };
+  const request = axios.post(
+    "https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes",
+    quizObject
+  );
 
-    quizObject = {title : titleQuiz, image : urlImageQuiz, questions : questionsQuiz, levels : levelsQuiz};
-    const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes", quizObject)
-
-    request.then(renderFinalPage);
-    request.catch((err)=>{
-        alert("erro ao postar quiz");
-    });
+  request.then(renderFinalPage);
+  request.catch((err) => {
+    alert("erro ao postar quiz");
+  });
 }
 
 function renderFinalPage(response) {
@@ -265,22 +331,22 @@ function renderFinalPage(response) {
                             <button class="back-home" onclick="backHome();">Voltar pra home</button>`
     document.querySelector(".box-image img").src = `${quizObject.image}`;
     saveId();
-    console.log(JSON.parse(localStorage.getItem("ids")))
 }
 
 function saveId() {
-    let ids = [];
-    if(JSON.parse(localStorage.getItem("ids"))) ids  = JSON.parse(localStorage.getItem("ids"));    
+  let ids = [];
+  if (JSON.parse(localStorage.getItem("ids")))
+    ids = JSON.parse(localStorage.getItem("ids"));
 
-    ids.push({id: idQuiz});
-    localStorage.setItem("ids", JSON.stringify(ids));
+  ids.push({ id: idQuiz });
+  localStorage.setItem("ids", JSON.stringify(ids));
 }
 
 function backHome() {
-    const finalPage = document.querySelector(".create-questions-fourth-page");
-    finalPage.classList.add("hidden");
-    document.querySelector(".screen-1").classList.remove("hidden");
-    getQuizzes();
+  const finalPage = document.querySelector(".create-questions-fourth-page");
+  finalPage.classList.add("hidden");
+  document.querySelector(".screen-1").classList.remove("hidden");
+  getQuizzes();
 }
 
 function accessQuiz() {
