@@ -121,9 +121,9 @@ function saveLevels(selectedQuizz){
 }
 
 function showResult(totalQuestions){
-	const resultPercent = hits/totalQuestions*100;
+	const resultPercent =  Math.round(hits/totalQuestions*100);
 
-	const result = levels.find( level => {
+	const result = levels.reverse().find( level => {
 		return resultPercent>=level.minValue;
 	})
 
