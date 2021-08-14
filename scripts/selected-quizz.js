@@ -134,15 +134,15 @@ function showQuizzScreen() {
 	quizzScreen.classList.remove("hidden");
 }
 
-function loadBackgroundImg(quizzContent, selectedQuizz) {
+function loadBackgroundImg(selectedQuizz) {
 	const bgImg = selectedQuizz.data.image;
-	const quizzHeader = quizzContent.querySelector(".selected-quizz");
+	const quizzHeader = quizzScreen.querySelector(".selected-quizz");
 	quizzHeader.style.backgroundImage = `url('${bgImg}')`;
 }
 
-function loadQuizzTitle(quizzContent, selectedQuizz) {
+function loadQuizzTitle(selectedQuizz) {
 	const quizzTitle = selectedQuizz.data.title;
-	const title = quizzContent.querySelector("h1");
+	const title = quizzScreen.querySelector("h1");
 	title.innerHTML = `${quizzTitle}`;
 }
 
@@ -171,9 +171,9 @@ function renderizeAnswers(question, questionId, quizz) {
 	});
 }
 
-function loadQuizzQuestions(quizzContent, selectedQuizz) {
+function loadQuizzQuestions(selectedQuizz) {
 	const quizzQuestions = selectedQuizz.data.questions;
-	const quizz = quizzContent.querySelector(".quizz");
+	const quizz = quizzScreen.querySelector(".quizz");
 
 	quizzQuestions.forEach(function (question, questionId) {
 		quizz.innerHTML += `<div class="question" id="${questionId}"> 
@@ -202,12 +202,9 @@ function saveQuizz(selectedQuizz) {
 
 function load(selectedQuizz) {
 	showQuizzScreen();
-
-	const quizzContent = quizzScreen.querySelector(".container");
-	loadBackgroundImg(quizzContent, selectedQuizz);
-	loadQuizzTitle(quizzContent, selectedQuizz);
-	loadQuizzQuestions(quizzContent, selectedQuizz);
+	loadBackgroundImg(selectedQuizz);
+	loadQuizzTitle(selectedQuizz);
+	loadQuizzQuestions(selectedQuizz);
 	saveLevels(selectedQuizz);
-
 	saveQuizz(selectedQuizz);
 }
