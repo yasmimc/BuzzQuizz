@@ -64,7 +64,7 @@ function restartBtn() {
 
 	clearQuizzScreen();
 	load(thisQuizz);
-	quizzScreen.scrollIntoView(true);
+	document.querySelector("html").scrollIntoView(true);
 }
 
 function homeBtn() {
@@ -72,7 +72,7 @@ function homeBtn() {
 	quizzScreen.classList.add("hidden");
 	//loading.classList.add("hidden");
 	quizzesScreen.classList.remove("hidden");
-	quizzesScreen.scrollIntoView(true);
+	document.querySelector("html").scrollIntoView(true);
 	clearQuizzScreen();
 }
 
