@@ -4,10 +4,11 @@ let urlImageQuiz = "";
 let titleQuiz = ""
 let questionsQuiz = [];
 let levelsQuiz = [];
-let amountQuestions = 1;
-let amountLevels = 1;
+let amountQuestions = 0;
+let amountLevels = 0;
 
 function createQuiz() {
+
     document.querySelector(".screen-1").classList.add("hidden");
     const screenInfos = document.querySelector(".create-questions-first-page");
     screenInfos.classList.remove("hidden");
@@ -22,24 +23,27 @@ function createQuiz() {
                                     </div>
                                 </div>
                                 <button onclick="validateInformation();">Prosseguir pra criar perguntas</button>`
-    alert("funcionando");
 }
 
 function validateInformation() {
-    titleQuiz = document.querySelector(".input-title-quiz").value;
-    urlImageQuiz = document.querySelector(".input-image-quiz").value;
-    amountQuestions = Number(document.querySelector(".input-amount-questions").value);
-    amountLevels = Number(document.querySelector(".input-amount-levels").value);
+
+    const title = document.querySelector(".input-title-quiz").value;
+    const urlImage = document.querySelector(".input-image-quiz").value;
+    const numberQuestions = Number(document.querySelector(".input-amount-questions").value);
+    const numberLevels = Number(document.querySelector(".input-amount-levels").value);
     let validInformations = true;
 
-    if(titleQuiz == "" || titleQuiz.length < 20 || titleQuiz.length > 65) validInformations = false, alert("O título deve ter entre 20-65 caracteres");
-    if(!checkUrl( urlImageQuiz)) validInformations = false, alert("Informa uma Url válida");
-    if(amountQuestions < 3) validInformations = false, alert("A quantidade de perguntas deve ser maior que 2");
-    if(amountLevels < 2) validInformations = false, alert("A quantidade de níveis deve ser maior que 1");
+    if(title == "" || title.length < 20 || title.length > 65) validInformations = false, alert("O título deve ter entre 20-65 caracteres");
+    if(!checkUrl( urlImage)) validInformations = false, alert("Informe uma Url válida");
+    if(numberQuestions < 3) validInformations = false, alert("A quantidade de perguntas deve ser maior que 2");
+    if(numberLevels < 2) validInformations = false, alert("A quantidade de níveis deve ser maior que 1");
 
     if(validInformations){
+        titleQuiz = title;
+        urlImageQuiz = urlImage;
+        amountQuestions = numberQuestions;
+        amountLevels = numberLevels;
         alert("informações válidas");
-        document.querySelector(".create-questions-first-page").classList.add("hidden");
         renderBoxQuestion();
     }else{
         alert("informações inválidas, tente novamente");
@@ -57,9 +61,12 @@ function checkUrl(urlString){
 }
 
 function renderBoxQuestion() {
+
+    document.querySelector(".create-questions-first-page").classList.add("hidden");
     const screenQuestion = document.querySelector(".create-questions-second-page");
     screenQuestion.classList.remove("hidden");
     
+    screenQuestion.innerHTML = `<h1>Crie suas perguntas</h1>`;
     for(let i = 1; i <= amountQuestions; ++i) {
         let questionBox = `	<div class="box-question">
                                 <span>Pergunta ${i}</span>
@@ -83,25 +90,21 @@ function selectedQuestion(element, questionNumber){
                                     <input type="text" class="question${questionNumber} title-question${questionNumber}" placeholder="Texto da pergunta">
                                     <input type="text" class="question${questionNumber} color-question${questionNumber}" placeholder="Cor de fundo da pergunta">
                                 </div>
-
                                 <div class="rigth-answer">
                                     <h2>Resposta correta</h2>
                                     <input type="text" class="question${questionNumber} text-rigth-answer${questionNumber}" placeholder="Texto da pergunta">
                                     <input type="url" class="question${questionNumber} url-rigth-answer${questionNumber}" placeholder="URL da imagem">
                                 </div>
-
                                 <div class="wrong-answers">
                                     <h2>Respostas incorretas</h2>
                                     <div class="wrong-option1">
                                         <input type="text" class="question${questionNumber} text-wrong-answer1" placeholder="Resposta incorreta 1">
                                         <input type="url" class="question${questionNumber} url-wrong-answer1" placeholder="URL da imagem 1">
                                     </div>
-
                                     <div class="wrong-option2">
                                         <input type="text" class="question${questionNumber} text-wrong-answer2" placeholder="Resposta incorreta 2">
                                         <input type="url" class="question${questionNumber} url-wrong-answer2" placeholder="URL da imagem 2">
                                     </div>
-
                                     <div class="wrong-option3">
                                         <input type="text" class="question${questionNumber} text-wrong-answer3" placeholder="Resposta incorreta 3">
                                         <input type="url" class="question${questionNumber} url-wrong-answer3" placeholder="URL da imagem 3">
@@ -111,10 +114,12 @@ function selectedQuestion(element, questionNumber){
 }
 
 function validateQuestions() {
+
     let validQuestions = true; 
     let haveAnswer2 = true;
     let haveAnswer3 = true;
     for(let i = 1; i <= amountQuestions; ++i) {
+
         const titleQuestion = document.querySelector(`.question${i}.title-question${i}`).value;
         const colorQuestion = document.querySelector(`.question${i}.color-question${i}`).value;
         const rigthAnswerText = document.querySelector(`.question${i}.text-rigth-answer${i}`).value;
@@ -135,54 +140,28 @@ function validateQuestions() {
         if(haveAnswer3 && !checkUrl(wrongAnswerUrl3)) validQuestions = false;
 
         if(validQuestions) {
+
             let answers = [];
-            answers.push({
-                text: rigthAnswerText,
-                image: rigthAnswerUrl,
-                isCorrectAnswer: true
-            },
-            {
-                text: wrongAnswerText1,
-                image: wrongAnswerUrl1,
-                isCorrectAnswer: false
-            });
+            answers.push({ text: rigthAnswerText, image: rigthAnswerUrl, isCorrectAnswer: true},
+                         { text: wrongAnswerText1, image: wrongAnswerUrl1, isCorrectAnswer: false
+                        });
             
-            if(haveAnswer2) {
-                answers.push({
-                    text: wrongAnswerText2,
-                    image: wrongAnswerUrl2,
-                    isCorrectAnswer: false
-                });
-            }
-
-            if(haveAnswer3) {
-                answers.push({
-                    text: wrongAnswerText3,
-                    image: wrongAnswerUrl3,
-                    isCorrectAnswer: false
-                });
-            }
-
-
-            questionsQuiz.push({
-                title: titleQuestion,
-                color: colorQuestion,
-                answers: answers
-            })
+            if(haveAnswer2) answers.push({ text: wrongAnswerText2, image: wrongAnswerUrl2, isCorrectAnswer: false});
+            if(haveAnswer3) answers.push({ text: wrongAnswerText3, image: wrongAnswerUrl3, isCorrectAnswer: false});
+            
+            questionsQuiz.push({ title: titleQuestion, color: colorQuestion, answers: answers});
             answers = [];
         }
 
     }
 
     if(validQuestions) {
-        quizObject.title = titleQuiz;
-        quizObject.image = urlImageQuiz;
-        quizObject.questions = questionsQuiz;
-        document.querySelector(".create-questions-second-page").classList.add("hidden");
         renderBoxLevel();
     }else {
         haveAnswer2 = false;
         haveAnswer3 = false;
+        validQuestions = true;
+        alert("informações inválidas, tente novamente");
     }
 
 }
@@ -196,9 +175,12 @@ function checkColor(color){
 }
 
 function renderBoxLevel() {
+
+    document.querySelector(".create-questions-second-page").classList.add("hidden");
     const screenQuestion = document.querySelector(".create-questions-third-page");
     screenQuestion.classList.remove("hidden");
-    
+
+    screenQuestion.innerHTML += `<h1>Agora, decida os níveis</h1>`;
     for(let i = 1; i <= amountLevels; ++i) {
         let questionBox = `	<div class="box-question">
                                 <span>Nível ${i}</span>
@@ -225,7 +207,6 @@ function selectedLevel(element, levelNumber){
                                     <input type="text" class="description description-level${levelNumber}"placeholder="Descrição do nível">
                                 </div>
                             </div>`;
-    
 }
 
 function validateLevels() {
@@ -255,8 +236,6 @@ function validateLevels() {
 
    if(minHit){
     console.log("sucesso")
-    quizObject.levels = levelsQuiz;
-    document.querySelector(".create-questions-third-page").classList.add("hidden");
     saveQuiz();
    }else {
     console.log("err")
@@ -265,65 +244,123 @@ function validateLevels() {
 }
 
 function saveQuiz() {
-    console.log(quizObject)
+
+    let test =  {
+        title: "Título do quizz",
+        image: "https://http.cat/411.jpg",
+        questions: [
+            {
+                title: "Título da pergunta 1",
+                color: "#123456",
+                answers: [
+                    {
+                        text: "Texto da resposta 1",
+                        image: "https://http.cat/411.jpg",
+                        isCorrectAnswer: true
+                    },
+                    {
+                        text: "Texto da resposta 2",
+                        image: "https://http.cat/412.jpg",
+                        isCorrectAnswer: false
+                    }
+                ]
+            },
+            {
+                title: "Título da pergunta 2",
+                color: "#123456",
+                answers: [
+                    {
+                        text: "Texto da resposta 1",
+                        image: "https://http.cat/411.jpg",
+                        isCorrectAnswer: true
+                    },
+                    {
+                        text: "Texto da resposta 2",
+                        image: "https://http.cat/412.jpg",
+                        isCorrectAnswer: false
+                    }
+                ]
+            },
+            {
+                title: "Título da pergunta 3",
+                color: "#123456",
+                answers: [
+                    {
+                        text: "Texto da resposta 1",
+                        image: "https://http.cat/411.jpg",
+                        isCorrectAnswer: true
+                    },
+                    {
+                        text: "Texto da resposta 2",
+                        image: "https://http.cat/412.jpg",
+                        isCorrectAnswer: false
+                    }
+                ]
+            }
+        ],
+        levels: [
+            {
+                title: "Título do nível 1",
+                image: "https://http.cat/411.jpg",
+                text: "Descrição do nível 1",
+                minValue: 0
+            },
+            {
+                title: "Título do nível 2",
+                image: "https://http.cat/412.jpg",
+                text: "Descrição do nível 2",
+                minValue: 50
+            }
+        ]
+    };
+
+    console.log("test: ", test);
+    console.log("antes: ", quizObject);
+    quizObject.title = test.title;
+    quizObject.image = test.image;
+    quizObject.questions = test.questions;
+    quizObject.levels = test.levels;
+    console.log("depois: ", quizObject);
     const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes", quizObject)
 
     request.then(renderFinalPage);
-    request.catch(errorSaveQuizz);
+    request.catch((err)=>{
+        alert("erro ao postar quiz");
+    });
 }
-
-function errorSaveQuizz() {
-    alert("erro ao postar quiz");
-}
+saveQuiz();
 
 function renderFinalPage(response) {
-    console.log(response)
-    idQuiz = response.data.id;
+  
+    document.querySelector(".create-questions-third-page").classList.add("hidden");
     const finalPage = document.querySelector(".create-questions-fourth-page");
     finalPage.classList.remove("hidden");
 
+    console.log(response)
+    idQuiz = response.data.id;
     finalPage.innerHTML = `<h1>Seu quizz está pronto!</h1>	
                             <div class="box-image">
                                 <img src="assets/simpsons.jpg" alt="" />
-                                <span class="gradient"><p>${titleQuiz}</p></span>
+                                <span class="gradient"><p>${quizObject.title}</p></span>
                             </div>
                             <button class="access-quiz onclick="acessQuiz(${idQuiz});">Acessar Quizz</button>
                             <button class="back-home" onclick="backHome();">Voltar pra home</button>`
     document.querySelector(".box-image img").src = `${quizObject.image}`;
     saveId();
+    console.log(JSON.parse(localStorage.getItem("ids")))
 }
 
 function saveId() {
     let ids = [];
-    if(JSON.parse(localStorage.getItem("ids"))){
-       ids  = JSON.parse(localStorage.getItem("ids"));
-    }
+    if(JSON.parse(localStorage.getItem("ids"))) ids  = JSON.parse(localStorage.getItem("ids"));    
 
     ids.push({id: idQuiz});
     localStorage.setItem("ids", JSON.stringify(ids));
 }
 
-function t() {
-    const finalPage = document.querySelector(".create-questions-fourth-page");
-    finalPage.classList.remove("hidden");
-
-    finalPage.innerHTML = `<h1>Seu quizz está pronto!</h1>	
-                            <div class="box-image">
-                                <img src="assets/simpsons.jpg" alt="" />
-                                <span class="gradient"><p>sasasa</p></span>
-                            </div>
-                            <button class="access-quiz onclick="acessQuiz();">Acessar Quizz</button>
-                            <button class="back-home" onclick="backHome();">Voltar pra home</button>`
-    document.querySelector(".box-image img").src = "assets/simpsons.jpg";
-    saveId();
-}
-
-
 function backHome() {
     const finalPage = document.querySelector(".create-questions-fourth-page");
     finalPage.classList.add("hidden");
     document.querySelector(".screen-1").classList.remove("hidden");
+    getQuizzes();
 }
-//t();
-
-getQuizzes();
