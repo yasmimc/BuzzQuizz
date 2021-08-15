@@ -30,7 +30,7 @@ function processQuizzes(response) {
 
   communityQuizzes.innerHTML = "";
   communityQuizzList.forEach((quizz) => {
-    render(quizz, communityQuizzes);
+    render(quizz, communityQuizzes, false);
   });
 }
 
@@ -40,7 +40,7 @@ function renderUserQuizzes(userQuizzList, userQuizzes) {
 
   userQuizzes.innerHTML = "";
   userQuizzList.forEach((quizz) => {
-    render(quizz, userQuizzes);
+    render(quizz, userQuizzes, true);
   });
 }
 
@@ -53,16 +53,32 @@ function showFilledUserList(userQuizzes) {
 }
 
 //dynamically renders quizz list
-function render(quizz, quizzList) {
+function render(quizz, quizzList, isModifiable) {
+  let buttons;
+  if (isModifiable) {
+    buttons = addButtons(quizz);
+  } else {
+    buttons = ``;
+  }
   quizzList.innerHTML += `
         <li onclick="selectQuizz(${quizz.id});">
 				  <img src="${quizz.image}" />                                                                                                     
 				  <div class="gradient">
-					<p>
-					  ${quizz.title}
-					</p>
+            ${buttons}
+            <p>
+              ${quizz.title}
+            </p>
 				  </div>
 				</li>`;
+}
+
+function addButtons(quizz) {
+  let buttons = `<div class="modify-buttons">
+              <button onclick="editQuizz(${quizz.id});"> <ion-icon name="create"></ion-icon></button>
+              <button onclick="deleteQuizz(${quizz.id});"> <ion-icon name="trash"></ion-icon></ion-icon></button>
+            </div>`;
+
+  return buttons;
 }
 
 function handleError(error) {
@@ -113,14 +129,3 @@ function getIdList() {
     return [];
   }
 }
-
-//the following function stores ids in the localstorage
-// function storeId(promise) {
-//   let id = promise.data.id;
-//   let idList = getIdList();
-
-//   idList.push(id);
-
-//   localStorage.setItem("idList", JSON.stringify(idList));
-//   getQuizzes();
-// }
