@@ -16,11 +16,16 @@ function processQuizzes(response) {
   );
   const quizzes = response.data;
   const listId = getIdList();
-  const userQuizzList = quizzes.filter((quizz) => listId.includes(quizz));
-  const communityQuizzList = quizzes.filter((quizz) => !listId.includes(quizz));
+  console.log(listId);
+  const userQuizzList = quizzes.filter((quizz) => listId.includes(quizz.id));
+  const communityQuizzList = quizzes.filter(
+    (quizz) => !listId.includes(quizz.id)
+  );
+  const userQuizzes = document.querySelector(".user-quizzes .quizzes-list");
 
   if (listId.length > 0) {
-    renderUserQuizzes(userQuizzList);
+    console.log(userQuizzList, userQuizzes);
+    renderUserQuizzes(userQuizzList, userQuizzes);
   }
 
   communityQuizzes.innerHTML = "";
@@ -30,8 +35,8 @@ function processQuizzes(response) {
 }
 
 //renders user quizzes
-function renderUserQuizzes(userQuizzList) {
-  showFilledUserList();
+function renderUserQuizzes(userQuizzList, userQuizzes) {
+  showFilledUserList(userQuizzes);
 
   userQuizzes.innerHTML = "";
   userQuizzList.forEach((quizz) => {
@@ -40,8 +45,7 @@ function renderUserQuizzes(userQuizzList) {
 }
 
 //changes hides empty list and displays 'filled' user list design
-function showFilledUserList() {
-  const userQuizzes = document.querySelector(".user-quizzes .quizzes-list");
+function showFilledUserList(userQuizzes) {
   const userQuizzesEmpty = document.querySelector(".user-quizzes .empty");
 
   userQuizzes.parentNode.classList.remove("hidden");
@@ -98,10 +102,12 @@ getQuizzes();
 
 // gets id from local storage
 function getIdList() {
-  let idList = localStorage.getItem("ids");
+  let idObj = localStorage.getItem("ids");
+  let idList = [];
 
   if (idList !== null) {
-    idList = JSON.parse(idList);
+    idObj = JSON.parse(idObj);
+    idObj.forEach((item) => idList.push(item.id));
     return idList;
   } else {
     return [];
