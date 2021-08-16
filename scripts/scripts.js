@@ -83,6 +83,10 @@ function render(quizz, quizzList, isModifiable) {
             </p>
 				  </div>
 				</li>`;
+
+  if (isModifiable) {
+    stopParentFromFiring();
+  }
 }
 
 function addButtons(quizz) {
@@ -165,4 +169,5 @@ function stopParentFromFiring() {
 
 getQuizzes();
 
-document.addEventListener("DOMContentLoaded", stopParentFromFiring);
+const editButton = document.querySelector(".edit-button");
+editButton.addEventListener("DOMContentLoaded", stopParentFromFiring());
