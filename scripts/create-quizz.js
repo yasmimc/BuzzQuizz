@@ -616,7 +616,7 @@ function getQuiz(quizzInfo) {
   })
 }
 
-console.log(JSON.parse(localStorage.getItem("quizzInfos")));
+// console.log(JSON.parse(localStorage.getItem("quizzInfos")));
 
 let test = {id: 728, key: "a4741cac-5b08-4de6-939b-4cbd3e9a835c"};
 //editQuizz(test);
