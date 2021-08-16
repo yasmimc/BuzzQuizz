@@ -84,7 +84,7 @@ function validateInformation() {
 		document.querySelector(".input-image-quiz").classList.remove("color-err");
 	}
 
-	if (numberQuestions < 3 || typeof (numberQuestions) !== Number) {
+	if (numberQuestions < 3 ) {
 		amountQuestionErr.classList.remove("hidden");
 		document.querySelector(".input-amount-questions").classList.add("color-err");
 		validInformations = false;
@@ -93,7 +93,7 @@ function validateInformation() {
 		document.querySelector(".input-amount-questions").classList.remove("color-err");
 	}
 
-	if (numberLevels < 2 || typeof (numberLevels) !== Number) {
+	if (numberLevels < 2 ) {
 		amountLevelErr.classList.remove("hidden");
 		document.querySelector(".input-amount-levels").classList.add("color-err");
 		validInformations = false;
