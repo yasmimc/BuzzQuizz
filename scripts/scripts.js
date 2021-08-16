@@ -16,10 +16,11 @@ function processQuizzes(response) {
   );
   const quizzes = response.data;
   const listId = getIdList();
-  console.log(listId);
-  const userQuizzList = quizzes.filter((quizz) => listId.includes(quizz.id));
+  const userQuizzList = quizzes.filter((quizz) =>
+    isUserQuizz(quizz.id, listId)
+  );
   const communityQuizzList = quizzes.filter(
-    (quizz) => !listId.includes(quizz.id)
+    (quizz) => !isUserQuizz(quizz.id, listId)
   );
   const userQuizzes = document.querySelector(".user-quizzes .quizzes-list");
 
@@ -32,6 +33,19 @@ function processQuizzes(response) {
   communityQuizzList.forEach((quizz) => {
     render(quizz, communityQuizzes, false);
   });
+}
+//returns true if an id belongs to an user quizz
+function isUserQuizz(id, listId) {
+  if (listId.length === 0) {
+    return false;
+  }
+
+  console.log(listId.some((obj) => obj.id === id));
+  if (listId.some((obj) => obj.id === id)) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 //renders user quizzes
@@ -118,12 +132,9 @@ getQuizzes();
 
 // gets id from local storage
 function getIdList() {
-  let idObj = localStorage.getItem("ids");
-  let idList = [];
-
-  if (idObj !== null) {
-    idObj = JSON.parse(idObj);
-    idObj.forEach((item) => idList.push(item.id));
+  let idList = localStorage.getItem("ids");
+  if (idList !== null) {
+    idList = JSON.parse(idList);
     return idList;
   } else {
     return [];
