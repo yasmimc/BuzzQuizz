@@ -121,7 +121,7 @@ function getIdList() {
   let idObj = localStorage.getItem("ids");
   let idList = [];
 
-  if (idList !== null) {
+  if (idObj !== null) {
     idObj = JSON.parse(idObj);
     idObj.forEach((item) => idList.push(item.id));
     return idList;
