@@ -14,30 +14,30 @@ let isEditing = false;
 
 function createQuiz() {
 
-  document.querySelector(".screen-1").classList.add("hidden");
-  document.querySelector(".screen-3").classList.remove("hidden");
-  const screenInfos = document.querySelector(".create-questions-first-page");
-  screenInfos.classList.remove("hidden");
-  screenInfos.innerHTML = "";
+	document.querySelector(".screen-1").classList.add("hidden");
+	document.querySelector(".screen-3").classList.remove("hidden");
+	const screenInfos = document.querySelector(".create-questions-first-page");
+	screenInfos.classList.remove("hidden");
+	screenInfos.innerHTML = "";
 
-  let title;
-  let url;
-  let numberQuestion;
-  let numberLevels;
+	let title;
+	let url;
+	let numberQuestion;
+	let numberLevels;
 
-  if(isEditing){
-    title = `<input type="text" class="input-title-quiz" value="${titleQuiz}" placeholder="Título do seu quizz">`;
-    url = `<input type="url" class="input-image-quiz" value="${urlImageQuiz}" placeholder="URL da imagem do seu quizz">`;
-    numberQuestion = `<input type="text" class="input-amount-questions" value="${amountQuestions}" placeholder="Quantidade de perguntas do quizz">`;
-    numberLevels = `<input type="text" class="input-amount-levels" value="${amountLevels}" placeholder="Quantidade de níveis do quizz">`;
-  }else{
-    title = `<input type="text" class="input-title-quiz" placeholder="Título do seu quizz">`;
-    url = `<input type="url" class="input-image-quiz" placeholder="URL da imagem do seu quizz">`;
-    numberQuestion = `<input type="text" class="input-amount-questions" placeholder="Quantidade de perguntas do quizz">`;
-    numberLevels = `<input type="text" class="input-amount-levels" placeholder="Quantidade de níveis do quizz">`;
-  }
+	if (isEditing) {
+		title = `<input type="text" class="input-title-quiz" value="${titleQuiz}" placeholder="Título do seu quizz">`;
+		url = `<input type="url" class="input-image-quiz" value="${urlImageQuiz}" placeholder="URL da imagem do seu quizz">`;
+		numberQuestion = `<input type="text" class="input-amount-questions" value="${amountQuestions}" placeholder="Quantidade de perguntas do quizz">`;
+		numberLevels = `<input type="text" class="input-amount-levels" value="${amountLevels}" placeholder="Quantidade de níveis do quizz">`;
+	} else {
+		title = `<input type="text" class="input-title-quiz" placeholder="Título do seu quizz">`;
+		url = `<input type="url" class="input-image-quiz" placeholder="URL da imagem do seu quizz">`;
+		numberQuestion = `<input type="text" class="input-amount-questions" placeholder="Quantidade de perguntas do quizz">`;
+		numberLevels = `<input type="text" class="input-amount-levels" placeholder="Quantidade de níveis do quizz">`;
+	}
 
-  screenInfos.innerHTML = `<h1>Comece pelo começo</h1>
+	screenInfos.innerHTML = `<h1>Comece pelo começo</h1>
                                 <div class="basic-quiz-info">
                                     <div class="box-information">
                                         ${title}
@@ -61,11 +61,9 @@ function validateInformation() {
 	const numberLevels = Number(document.querySelector(".input-amount-levels").value);
 	const titleErr = document.querySelector(".title-err");
 	const urlErr = document.querySelector(".url-err");
-	const amountQuestionNotNumberErr = document.querySelector(".amount-question.not-number-err");
 	const amountQuestionErr = document.querySelector(".amount-question-err");
-	const amountLevelNotNumberErr = document.querySelector(".amount-level.not-number-err");
 	const amountLevelErr = document.querySelector(".amount-level-err");
-	
+
 	let validInformations = true;
 
 	if (title == "" || title.length < 20 || title.length > 65) {
@@ -86,7 +84,7 @@ function validateInformation() {
 		document.querySelector(".input-image-quiz").classList.remove("color-err");
 	}
 
-  if (numberQuestions < 3) {
+	if (numberQuestions < 3) {
 		amountQuestionErr.classList.remove("hidden");
 		document.querySelector(".input-amount-questions").classList.add("color-err");
 		validInformations = false;
@@ -95,7 +93,7 @@ function validateInformation() {
 		document.querySelector(".input-amount-questions").classList.remove("color-err");
 	}
 
-  if (numberLevels < 2) {
+	if (numberLevels < 2) {
 		amountLevelErr.classList.remove("hidden");
 		document.querySelector(".input-amount-levels").classList.add("color-err");
 		validInformations = false;
@@ -116,15 +114,14 @@ function validateInformation() {
 	}
 }
 
-// function checkUrl(urlString) {
-// 	let pattern = new RegExp("^(https?:\\/\\/)?" +
-// 		"((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
-// 		"((\\d{1,3}\\.){3}\\d{1,3}))" +
-// 		"(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
-// 		"(\\?[;&a-z\\d%_.~+=-]*)?" +
-// 		"(\\#[-a-z\\d_]*)?$", "i");
-// 	return !!pattern.test(urlString);
-// }
+function checkUrl(urlString) {
+	try {
+		new URL(urlString);
+	} catch (_) {
+		return false;
+	}
+	return true;
+}
 
 function renderBoxQuestion() {
 
@@ -579,21 +576,21 @@ function backHome() {
 
 function deleteQuizz(quizzInfo) {
 
-  if (window.confirm("Você realmente deseja apagar esse quizz?")) {
-    const request = axios.delete(`${URL_SERVER}/${quizzInfo.id}`,
-                                {headers:{ "Secret-Key": quizzInfo.key}});
+	if (window.confirm("Você realmente deseja apagar esse quizz?")) {
+		const request = axios.delete(`${URL_SERVER}/${quizzInfo.id}`,
+			{ headers: { "Secret-Key": quizzInfo.key } });
 
-    request.then((reponse)=>{
-      let userQuizzes = JSON.parse(localStorage.getItem("quizzInfos"));
-      let updatedQuizzesList = userQuizzes.filter(function(quizzes) { return quizzes.id !== quizzInfo.id;});
-      localStorage.setItem("quizzInfos", JSON.stringify(updatedQuizzesList));
-      getQuizzes();
-    })
-  
-    request.catch((err)=>{
-      alert("Erro ao apagar o quizz tente novamente");
-    })
-  }
+		request.then((reponse) => {
+			let userQuizzes = JSON.parse(localStorage.getItem("quizzInfos"));
+			let updatedQuizzesList = userQuizzes.filter(function (quizzes) { return quizzes.id !== quizzInfo.id; });
+			localStorage.setItem("quizzInfos", JSON.stringify(updatedQuizzesList));
+			getQuizzes();
+		})
+
+		request.catch((err) => {
+			alert("Erro ao apagar o quizz tente novamente");
+		})
+	}
 }
 
 function editQuizz(quizzInfo) {
@@ -616,14 +613,3 @@ function editQuizz(quizzInfo) {
 		alert("erro")
 	})
 }
-
-
-function checkUrl(string) {
-	try {
-	  new URL(string);
-	} catch (_) {
-	  return false;  
-	}
-  
-	return true;
-  }
