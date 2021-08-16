@@ -73,7 +73,12 @@ function validateInformation() {
 		amountQuestionNotNumberErr.classList.remove("hidden");
 		document.querySelector(".input-amount-questions").classList.add("color-err");
 		validInformations = false;
-	} else if (numberQuestions < 3) {
+	}else if(!amountQuestionNotNumberErr.classList.contains("hidden")){
+		amountQuestionNotNumberErr.classList.add("hidden");
+		document.querySelector(".input-amount-questions").classList.remove("color-err");
+	}
+	
+	if (numberQuestions < 3) {
 		amountQuestionErr.classList.remove("hidden");
 		document.querySelector(".input-amount-questions").classList.add("color-err");
 		validInformations = false;
@@ -86,7 +91,12 @@ function validateInformation() {
 		amountLevelNotNumberErr.classList.remove("hidden");
 		document.querySelector(".input-amount-levels").classList.add("color-err");
 		validInformations = false;
-	} else if (numberLevels < 2) {
+	} else if (!amountLevelNotNumberErr.classList.contains("hidden")) {
+		amountLevelNotNumberErr.classList.add("hidden");
+		document.querySelector(".input-amount-levels").classList.add("color-err");
+	}
+
+	if (numberLevels < 2) {
 		amountLevelErr.classList.remove("hidden");
 		document.querySelector(".input-amount-levels").classList.add("color-err");
 		validInformations = false;
@@ -107,15 +117,15 @@ function validateInformation() {
 	}
 }
 
-function checkUrl(urlString) {
-	let pattern = new RegExp("^(https?:\\/\\/)?" +
-		"((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
-		"((\\d{1,3}\\.){3}\\d{1,3}))" +
-		"(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
-		"(\\?[;&a-z\\d%_.~+=-]*)?" +
-		"(\\#[-a-z\\d_]*)?$", "i");
-	return !!pattern.test(urlString);
-}
+// function checkUrl(urlString) {
+// 	let pattern = new RegExp("^(https?:\\/\\/)?" +
+// 		"((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+// 		"((\\d{1,3}\\.){3}\\d{1,3}))" +
+// 		"(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+// 		"(\\?[;&a-z\\d%_.~+=-]*)?" +
+// 		"(\\#[-a-z\\d_]*)?$", "i");
+// 	return !!pattern.test(urlString);
+// }
 
 function renderBoxQuestion() {
 
@@ -609,3 +619,14 @@ function editQuizz(quizzInfo) {
 		alert("erro")
 	})
 }
+
+
+function checkUrl(string) {
+	try {
+	  new URL(string);
+	} catch (_) {
+	  return false;  
+	}
+  
+	return true;
+  }
