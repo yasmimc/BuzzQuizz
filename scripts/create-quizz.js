@@ -1,12 +1,15 @@
 let quizObject;
+let quizzInfos;
+let headers;
 let idQuiz;
 let keyQuiz;
 let urlImageQuiz = "";
 let titleQuiz = "";
 let questionsQuiz = [];
 let levelsQuiz = [];
-let amountQuestions = 0;
-let amountLevels = 0;
+let amountQuestions = "";
+let amountLevels = "";
+let isEditing = false;
 
 function createQuiz() {
 
@@ -17,13 +20,13 @@ function createQuiz() {
   screenInfos.innerHTML += `<h1>Comece pelo começo</h1>
                                 <div class="basic-quiz-info">
                                     <div class="box-information">
-                                        <input type="text" class="input-title-quiz" placeholder="Título do seu quizz">   
+                                        <input type="text" class="input-title-quiz" value="${titleQuiz}" placeholder="Título do seu quizz">   
                                         <p class="title-err hidden">O título deve ter entre 20-65 caracteres</p>                 
-                                        <input type="url" class="input-image-quiz" placeholder="URL da imagem do seu quizz">
+                                        <input type="url" class="input-image-quiz" value="${urlImageQuiz}" placeholder="URL da imagem do seu quizz">
                                         <p class="url-err hidden">O valor informado não é uma URL válida</p>
-                                        <input type="text" class="input-amount-questions" placeholder="Quantidade de perguntas do quizz">
+                                        <input type="text" class="input-amount-questions" value="${amountQuestions}" placeholder="Quantidade de perguntas do quizz">
                                         <p class="amount-question-err hidden">O quizz deve ter no mínimo 3 perguntas</p>
-                                        <input type="text" class="input-amount-levels" placeholder="Quantidade de níveis do quizz">
+                                        <input type="text" class="input-amount-levels" value="${amountLevels}" placeholder="Quantidade de níveis do quizz">
                                         <p class="amount-level-err hidden">O quizz deve ter no mínimo 2 níveis</p>
                                     </div>
                                 </div>
@@ -121,44 +124,94 @@ function selectedQuestion(element, questionNumber) {
   questionBox.classList.add("questions-info");
   questionBox.classList.remove("box-question");
   questionBox.innerHTML = "";
-  questionBox.innerHTML = `<div class="box-information  numberQuestion${questionNumber}">
-                                <div class="question-information">
-                                    <h2>Pergunta ${questionNumber}</h2>
-                                    <input type="text" class="question${questionNumber} title-question${questionNumber}" placeholder="Texto da pergunta">
-                                    <p class="text-question-err hidden">A pergunta precisa ter 20 ou mais caracteres!</p>
-                                    <input type="text" class="question${questionNumber} color-question${questionNumber}" placeholder="Cor de fundo da pergunta">
-                                    <p class="color-format-err hidden">Cor inválida (Formato da cor: #xxxxxx)</p>
-                                </div>
-                                <div class="rigth-answer">
-                                    <h2>Resposta correta</h2>
-                                    <input type="text" class="question${questionNumber} text-rigth-answer${questionNumber}" placeholder="Texto da pergunta">
-                                    <p class="rigth-answer-err hidden">É necessario uma resposta correta!</p>
-                                    <input type="url" class="question${questionNumber} url-rigth-answer${questionNumber}" placeholder="URL da imagem">
-                                    <p class="rigth-answer-url-err hidden">O valor informado não é uma URL válida</p>
-                                </div>
-                                <div class="wrong-answers">
-                                    <h2>Respostas incorretas</h2>
-                                    <div class="wrong-option1">
-                                        <input type="text" class="question${questionNumber} text-wrong-answer1" placeholder="Resposta incorreta 1">
-                                        <p class="wrong-answer-err1 hidden">É necessario uma resposta incorreta!</p>
-                                        <input type="url" class="question${questionNumber} url-wrong-answer1" placeholder="URL da imagem 1">
-                                        <p class="wrong-answer-url-err1 hidden">O valor informado não é uma URL válida</p>
-                                    </div>
-                                    <div class="wrong-option2">
-                                        <input type="text" class="question${questionNumber} text-wrong-answer2" placeholder="Resposta incorreta 2">
-                                        <input type="url" class="question${questionNumber} url-wrong-answer2" placeholder="URL da imagem 2">
-                                        <p class="wrong-answer-url-err2 hidden">O valor informado não é uma URL válida</p>
-                                    </div>
-                                    <div class="wrong-option3">
-                                        <input type="text" class="question${questionNumber} text-wrong-answer3" placeholder="Resposta incorreta 3">
-                                        <input type="url" class="question${questionNumber} url-wrong-answer3" placeholder="URL da imagem 3">
-                                        <p class="wrong-answer-url-err3 hidden">O valor informado não é uma URL válida</p>
-                                    </div>
-                                </div>
-                            </div>`;
+
+  let titleQuestion;
+  let colorQuestion;
+  let rigthAnswerText;
+  let rigthAnswerUrl;
+  let wrongAnswerText1;
+  let wrongAnswerUrl1;
+  let wrongAnswerText2;
+  let wrongAnswerUrl2;
+  let wrongAnswerText3;
+  let wrongAnswerUrl3;
+
+  if(isEditing){
+    titleQuestion =  `<input type="text" class="question${questionNumber} title-question${questionNumber}" value="${questionsQuiz[questionNumber-1].title}" placeholder="Texto da pergunta">`;
+    colorQuestion = `<input type="text" class="question${questionNumber} color-question${questionNumber}" value="${questionsQuiz[questionNumber-1].color}" placeholder="Cor de fundo da pergunta">`;
+    rigthAnswerText = `<input type="text" class="question${questionNumber} text-rigth-answer${questionNumber}" value="${questionsQuiz[questionNumber-1].answers[0].text}" placeholder="Texto da pergunta">`;
+    rigthAnswerUrl = `<input type="url" class="question${questionNumber} url-rigth-answer${questionNumber}" value="${questionsQuiz[questionNumber-1].answers[0].image}" placeholder="URL da imagem">`;
+    wrongAnswerText1 = `<input type="text" class="question${questionNumber} text-wrong-answer1" value="${questionsQuiz[questionNumber-1].answers[1].text}" placeholder="Resposta incorreta 1">`;
+    wrongAnswerUrl1 = `<input type="url" class="question${questionNumber} url-wrong-answer1" value="${questionsQuiz[questionNumber-1].answers[1].image}" placeholder="URL da imagem 1">`;
+    
+    if(questionsQuiz[questionNumber-1].answers.length > 2){
+       wrongAnswerText2 = `<input type="text" class="question${questionNumber} text-wrong-answer2" value="${questionsQuiz[questionNumber-1].answers[2].text}" placeholder="Resposta incorreta 1">`;
+       wrongAnswerUrl2 = `<input type="url" class="question${questionNumber} url-wrong-answer2" va1lue="${questionsQuiz[questionNumber-1].answers[2].image}" placeholder="URL da imagem 1">`;
+    }else{
+       wrongAnswerText2 = `<input type="text" class="question${questionNumber} text-wrong-answer2" placeholder="Resposta incorreta 1">`;
+       wrongAnswerUrl2 = `<input type="url" class="question${questionNumber} url-wrong-answer2" placeholder="URL da imagem 1">`;
+    }
+
+    if(questionsQuiz[questionNumber-1].answers.length > 3){
+      wrongAnswerText3 = `<input type="text" class="question${questionNumber} text-wrong-answer3" value="${questionsQuiz[questionNumber-1].answers[3].text}" placeholder="Resposta incorreta 1">`;
+      wrongAnswerUrl3 = `<input type="url" class="question${questionNumber} url-wrong-answer3" value="${questionsQuiz[questionNumber-1].answers[3].image}" placeholder="URL da imagem 1">`;
+    }else{
+      wrongAnswerText3 = `<input type="text" class="question${questionNumber} text-wrong-answer3" placeholder="Resposta incorreta 1">`;
+      wrongAnswerUrl3 = `<input type="url" class="question${questionNumber} url-wrong-answer3" placeholder="URL da imagem 1">`;
+    }
+  }else{
+    titleQuestion =  `<input type="text" class="question${questionNumber} title-question${questionNumber}" placeholder="Texto da pergunta">`;
+    colorQuestion = `<input type="text" class="question${questionNumber} color-question${questionNumber}" placeholder="Cor de fundo da pergunta">`;
+    rigthAnswerText = `<input type="text" class="question${questionNumber} text-rigth-answer${questionNumber}" placeholder="Texto da pergunta">`;
+    rigthAnswerUrl = `<input type="url" class="question${questionNumber} url-rigth-answer${questionNumber}" placeholder="URL da imagem">`;
+    wrongAnswerText1 = `<input type="text" class="question${questionNumber} text-wrong-answer1" placeholder="Resposta incorreta 1">`;
+    wrongAnswerUrl1 = `<input type="url" class="question${questionNumber} url-wrong-answer1" placeholder="URL da imagem 1">`;
+    wrongAnswerText2 = `<input type="text" class="question${questionNumber} text-wrong-answer2" placeholder="Resposta incorreta 1">`;
+    wrongAnswerUrl2 = `<input type="url" class="question${questionNumber} url-wrong-answer2" placeholder="URL da imagem 1">`;
+    wrongAnswerText3 = `<input type="text" class="question${questionNumber} text-wrong-answer3" placeholder="Resposta incorreta 1">`;
+    wrongAnswerUrl3 = `<input type="url" class="question${questionNumber} url-wrong-answer3" placeholder="URL da imagem 1">`;
+  }
+
+    questionBox.innerHTML = 
+          `<div class="box-information  numberQuestion${questionNumber}">
+            <div class="question-information">
+                <h2>Pergunta ${questionNumber}</h2>
+                ${titleQuestion}
+                <p class="text-question-err hidden">A pergunta precisa ter 20 ou mais caracteres!</p>
+                ${colorQuestion}
+                <p class="color-format-err hidden">Cor inválida (Formato da cor: #xxxxxx)</p>
+            </div>
+            <div class="rigth-answer">
+                <h2>Resposta correta</h2>
+                ${rigthAnswerText}
+                <p class="rigth-answer-err hidden">É necessario uma resposta correta!</p>
+                ${rigthAnswerUrl}
+                <p class="rigth-answer-url-err hidden">O valor informado não é uma URL válida</p>
+            </div>
+            <div class="wrong-answers">
+                <h2>Respostas incorretas</h2>
+                <div class="wrong-option1">
+                    ${wrongAnswerText1}
+                    <p class="wrong-answer-err1 hidden">É necessario uma resposta incorreta!</p>
+                    ${wrongAnswerUrl1}
+                    <p class="wrong-answer-url-err1 hidden">O valor informado não é uma URL válida</p>
+                </div>
+                <div class="wrong-option2">
+                    ${wrongAnswerText2}
+                    ${wrongAnswerUrl2}
+                    <p class="wrong-answer-url-err2 hidden">O valor informado não é uma URL válida</p>
+                </div>
+                <div class="wrong-option3">
+                    ${wrongAnswerText3}
+                    ${wrongAnswerUrl3}
+                    <p class="wrong-answer-url-err3 hidden">O valor informado não é uma URL válida</p>
+                </div>
+            </div>
+          </div>`;
 }
 
 function validateQuestions() {
+  questionsQuiz = [];
   let validQuestions = true;
   let haveAnswer2 = true;
   let haveAnswer3 = true;
@@ -251,7 +304,7 @@ function validateQuestions() {
 
     if (haveAnswer3 && !checkUrl(wrongAnswerUrl3)){
         wrongAnswerUrlErr3.classList.remove("hidden");
-        document.querySelector(`.question${i}.url-wrong-answer3`).classList.add("color-err");
+        document.querySelector(`.question${i}.urnaol-wrong-answer3`).classList.add("color-err");
         validQuestions = false;
     }
 
@@ -317,10 +370,42 @@ function renderBoxLevel() {
 }
 
 function selectedLevel(element, levelNumber) {
+
   const questionBox = element.parentNode;
   questionBox.classList.add("questions-info");
   questionBox.classList.remove("box-question");
   questionBox.innerHTML = "";
+  let titleLevel;
+  let hitLevel;
+  let urlLevel;
+  let descriptionLevel;
+
+  if(isEditing){
+    titleLevel = `<input type="text" class="title-level${levelNumber}" value="${levelsQuiz[levelNumber-1].title}" placeholder="Título do nível">`;
+    hitLevel = `<input type="text" class="hit-level${levelNumber}" value="${levelsQuiz[levelNumber-1].minValue}" placeholder="% de acerto mínima">`;
+    urlLevel = `<input type="text" class="url-level${levelNumber}" value="${levelsQuiz[levelNumber-1].image}" placeholder="URL da imagem do nível">`;
+    descriptionLevel = `<input type="text" class="description description-level${levelNumber}" value="${levelsQuiz[levelNumber-1].text}" placeholder="Descrição do nível">`;
+  }else{
+    titleLevel = `<input type="text" class="title-level${levelNumber}" placeholder="Título do nível">`;
+    hitLevel = `<input type="text" class="hit-level${levelNumber}" placeholder="% de acerto mínima">`;
+    urlLevel = `<input type="text" class="url-level${levelNumber}" placeholder="URL da imagem do nível">`;
+    descriptionLevel = `<input type="text" class="description description-level${levelNumber}" placeholder="Descrição do nível">`;
+  }
+
+  questionBox.innerHTML = `<div class="box-information nivel${levelNumber}">
+                                <div class="level-information">
+                                    <h2>Nível ${levelNumber}</h2>
+                                    ${titleLevel}
+                                    <p class="title-level-err hidden">O Título de ter pelo menos 10 caracteres</p>
+                                    ${hitLevel}
+                                    <p class="hit-level-err hidden">% de acerto deve ser um número entre 0 e 100</p>
+                                    ${urlLevel}
+                                    <p class="url-level-err hidden">O valor informado não é uma URL válida</p>
+                                    ${descriptionLevel}
+                                    <p class="description-level-err hidden">A descrição deve ter pelo menos 30 caracteres</p>
+                                </div>
+                            </div>`;
+/*
   questionBox.innerHTML = `<div class="box-information nivel${levelNumber}">
                                 <div class="level-information">
                                     <h2>Nível ${levelNumber}</h2>
@@ -333,10 +418,11 @@ function selectedLevel(element, levelNumber) {
                                     <input type="text" class="description description-level${levelNumber}"placeholder="Descrição do nível">
                                     <p class="description-level-err hidden">A descrição deve ter pelo menos 30 caracteres</p>
                                 </div>
-                            </div>`;
+                            </div>`;*/
 }
 
 function validateLevels() {
+  levelsQuiz = [];
   let validLevel = true;
   let minHit = false;
   let i = 1;
@@ -399,9 +485,13 @@ function validateLevels() {
   }
 
    if(minHit){
-    saveQuiz();
+
+     if(isEditing) saveModifiedQuizz();
+     else saveQuiz();
    }else {
+
     alert("Pelo menos um Título deve ter o mínimo de acerto de 0%");
+
     if(i-1==amountLevels){
         document.querySelector(".hit-level-err").classList.remove("hidden");
         document.querySelector(`.hit-level${i-1}`).classList.add("color-err");
@@ -425,68 +515,56 @@ function saveQuiz() {
   });
 }
 
-function renderFinalPage(response) {
+function saveModifiedQuizz() {
   
-    document.querySelector(".create-questions-third-page").classList.add("hidden");
-    const finalPage = document.querySelector(".create-questions-fourth-page");
-    finalPage.classList.remove("hidden");
+  quizObject = {
+    title: titleQuiz,
+    image: urlImageQuiz,
+    questions: questionsQuiz,
+    levels: levelsQuiz,
+  };
 
-    console.log(response)
-    console.log("key: ", response.data.key);
-    idQuiz = response.data.id;
-    console.log("id: ",idQuiz)
-    finalPage.innerHTML = `<h1>Seu quizz está pronto!</h1>
-                                <div class="box-image">
-                                <img src="assets/simpsons.jpg" alt="" />
-                                <span class="gradient"><p>${quizObject.title}</p></span>
-                            </div>
-                            <button class="access-quiz" onclick="accessQuiz();">Acessar Quizz</button>
-                            <button class="back-home" onclick="backHome();">Voltar pra home</button>`
-    document.querySelector(".box-image img").src = `${quizObject.image}`;
-    saveId();
-}
-
-function errorSaveQuizz() {
-   alert("erro ao postar quiz");
+  const request = axios.put("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes/"+quizzInfos.id, quizObject,
+  {headers:{ "Secret-Key": quizzInfos.key}});
+  request.then(renderFinalPage);
+  request.catch((err) => {
+    alert("erro ao postar quiz");
+  });
 }
 
 function renderFinalPage(response) {
 
   document.querySelector(".create-questions-third-page").classList.add("hidden");
-   const finalPage = document.querySelector(".create-questions-fourth-page");
-   finalPage.classList.remove("hidden");
+  const finalPage = document.querySelector(".create-questions-fourth-page");
+  finalPage.classList.remove("hidden");
+  idQuiz = response.data.id;
+  keyQuiz = response.data.key;
 
-   idQuiz = response.data.id;
-   keyQuiz = response.data.key;
-
-   finalPage.innerHTML = `<h1>Seu quizz está pronto!</h1>	
-                           <div class="box-image">
-                               <img src="assets/simpsons.jpg" alt="" />
-                               <span class="gradient"><p>${titleQuiz}</p></span>
-                           </div>
-                           <button class="access-quiz onclick="acessQuiz(${idQuiz});">Acessar Quizz</button>
-                           <button class="back-home" onclick="backHome();">Voltar pra home</button>`
-   document.querySelector(".box-image img").src = `https://http.cat/411.jpg`;
-   saveId();
-   saveKey();
+  finalPage.innerHTML = `<h1>Seu quizz está pronto!</h1>	
+                          <div class="box-image">
+                              <img src="assets/simpsons.jpg" alt="" />
+                              <span class="gradient"><p>${titleQuiz}</p></span>
+                          </div>
+                          <button class="access-quiz" onclick="acessQuiz();">Acessar Quizz</button>
+                          <button class="back-home" onclick="backHome();">Voltar pra home</button>`
+  document.querySelector(".box-image img").src = `https://http.cat/411.jpg`;
+  if(!isEditing) saveQuizzInfos();
+  //localStorage.clear();
 }
 
-
-function saveId() {
-  let ids = [];
-  if (JSON.parse(localStorage.getItem("ids"))) ids = JSON.parse(localStorage.getItem("ids"));
-
-  ids.push({ id: idQuiz });
-  localStorage.setItem("ids", JSON.stringify(ids));
+function acessQuiz() {
+  const finalPage = document.querySelector(".create-questions-fourth-page");
+  finalPage.classList.add("hidden");
+  selectQuizz(idQuiz);
 }
 
-function saveKey() {
-  let keys = [];
-  if (JSON.parse(localStorage.getItem("keys"))) keys = JSON.parse(localStorage.getItem("keys"));
+function saveQuizzInfos() {
+  if (JSON.parse(localStorage.getItem("quizzInfos"))) quizzInfos = JSON.parse(localStorage.getItem("quizzInfos"));
 
-  keys.push({ id: idQuiz, key: keyQuiz});
-  localStorage.setItem("keys", JSON.stringify(keys));
+  quizzInfos.push({ id: idQuiz, key: keyQuiz});
+  localStorage.setItem("quizzInfos", JSON.stringify(quizzInfos));
 }
+
 function backHome() {
   const finalPage = document.querySelector(".create-questions-fourth-page");
   finalPage.classList.add("hidden");
@@ -494,34 +572,54 @@ function backHome() {
   getQuizzes();
 }
 
-function accessQuiz() {
-    const finalPage = document.querySelector(".create-questions-fourth-page");
-    finalPage.classList.add("hidden");
-    selectQuizz(idQuiz);
+function deleteQuizz(quizzInfo) {
+
+  if (window.confirm("Você realmente deseja apagar esse quizz?")) {
+    const request = axios.delete("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes/"+quizzInfo.id,
+                                {headers:{ "Secret-Key": quizzInfo.key}});
+
+    request.then((reponse)=>{
+      console.log("apagado com sucesso");
+      let userQuizzes = JSON.parse(localStorage.getItem("quizzInfos"));
+      let updatedQuizzesList = userQuizzes.filter(function(quizzes) { return quizzes.id !== quizzInfo.id;});
+      localStorage.setItem("quizzInfos", JSON.stringify(updatedQuizzesList));
+    })
+  
+    request.catch((err)=>{
+      alert("Erro ao apagar o quizz tente novamente");
+    })
+  }
+
+    //getQuizzes();
 }
 
-function deleteQuizz(quizzId) {
-
-    if (window.confirm("Você realmente deseja apagar esse quizz?")) {
-      let keys = JSON.parse(localStorage.getItem("keys"));
-      let keyActual = keys.filter(function(keys) { return keys.id === quizzId;});
-      const response = axios.delete("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes/"+quizzId,
-                              {headers:{ "Secret-Key": keyActual[0].key}});
-
-      response.then((reponse)=>{
-        console.log("apagou com sucesso")
-        let userQuizzes = JSON.parse(localStorage.getItem("ids"));
-        let updatedIdList = userQuizzes.filter(function(ids) { return ids.id !== quizzId;});
-        let updatedKeyList = keys.filter(function(keys) { return keys.id !== quizzId;});
-
-        localStorage.setItem("ids", JSON.stringify(updatedIdList));
-        localStorage.setItem("keys", JSON.stringify(updatedKeyList));
-      })
-    
-      response.catch((err)=>{
-        alert("Erro ao apagar o quizz tente novamente");
-      })
-    }
-
-    getQuizzes();
+function editQuizz(quizzInfo){
+  quizzInfos = quizzInfo;
+  alert("funcionando")
+  getQuiz(quizzInfo)
 }
+
+function getQuiz(quizzInfo) {
+  const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes/"+quizzInfo.id);
+  request.then((response)=>{
+    urlImageQuiz = response.data.image;
+    titleQuiz = response.data.title;
+    questionsQuiz = response.data.questions;
+    levelsQuiz = response.data.levels;
+    amountQuestions = questionsQuiz.length;
+    amountLevels = levelsQuiz.length;
+    isEditing = true;
+  })
+
+  request.catch((err)=>{
+    alert("erro")
+  })
+}
+
+console.log(JSON.parse(localStorage.getItem("quizzInfos")));
+
+let test = {id: 728, key: "a4741cac-5b08-4de6-939b-4cbd3e9a835c"};
+//editQuizz(test);
+//deleteQuizz(test);
+
+//saveQuiz()
