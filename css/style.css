@@ -180,14 +180,6 @@ body {
 
 .hidden {
   display: none;
-  opacity: 0;
-}
-
-.screen-1,
-.screen-2,
-.screen-3 {
-  opacity: 1;
-  transition: all 1s ease-in;
 }
 
 @media (max-width: 1120px) {

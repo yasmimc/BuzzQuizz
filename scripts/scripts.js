@@ -16,10 +16,11 @@ function processQuizzes(response) {
   );
   const quizzes = response.data;
   const listId = getIdList();
-  console.log(listId);
-  const userQuizzList = quizzes.filter((quizz) => listId.includes(quizz.id));
+  const userQuizzList = quizzes.filter((quizz) =>
+    isUserQuizz(quizz.id, listId)
+  );
   const communityQuizzList = quizzes.filter(
-    (quizz) => !listId.includes(quizz.id)
+    (quizz) => !isUserQuizz(quizz.id, listId)
   );
   const userQuizzes = document.querySelector(".user-quizzes .quizzes-list");
 
@@ -32,6 +33,18 @@ function processQuizzes(response) {
   communityQuizzList.forEach((quizz) => {
     render(quizz, communityQuizzes, false);
   });
+}
+//returns true if an id belongs to an user quizz
+function isUserQuizz(id, listId) {
+  if (listId.length === 0) {
+    return false;
+  }
+
+  if (listId.some((obj) => obj.id === id)) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 //renders user quizzes
@@ -74,11 +87,22 @@ function render(quizz, quizzList, isModifiable) {
 
 function addButtons(quizz) {
   let buttons = `<div class="modify-buttons">
-              <button onclick="editQuizz(${quizz.id});"> <ion-icon name="create"></ion-icon></button>
-              <button onclick="deleteQuizz(${quizz.id});"> <ion-icon name="trash"></ion-icon></ion-icon></button>
+              <button onclick="qEdit(${quizz.id});"> <ion-icon name="create"></ion-icon></button>
+              <button onclick="qDelete(${quizz.id});"> <ion-icon name="trash"></ion-icon></ion-icon></button>
             </div>`;
-
   return buttons;
+}
+
+function qEdit(id) {
+  let userQuizz = getIdList().find((e) => id === e.id);
+
+  editQuizz(userQuizz);
+}
+
+function qDelete(id) {
+  let userQuizz = getIdList().find((e) => id === e.id);
+
+  deleteQuizz(userQuizz);
 }
 
 function handleError(error) {
@@ -100,7 +124,6 @@ function changeScreen(toScreenName) {
   const toScreen = document.querySelector(`.${toScreenName}`);
   const loading = document.querySelector(".loading");
 
-  console.log(fromScreen, toScreen);
   fromScreen.classList.add("hidden");
   loading.classList.remove("hidden");
 
@@ -109,7 +132,6 @@ function changeScreen(toScreenName) {
 
 function changeToScreen(screen) {
   const loading = document.querySelector(".loading");
-  console.log(screen);
   screen.classList.remove("hidden");
   loading.classList.add("hidden");
 }
@@ -118,12 +140,9 @@ getQuizzes();
 
 // gets id from local storage
 function getIdList() {
-  let idObj = localStorage.getItem("ids");
-  let idList = [];
-
+  let idList = localStorage.getItem("keys");
   if (idList !== null) {
-    idObj = JSON.parse(idObj);
-    idObj.forEach((item) => idList.push(item.id));
+    idList = JSON.parse(idList);
     return idList;
   } else {
     return [];
