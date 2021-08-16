@@ -33,6 +33,7 @@ function processQuizzes(response) {
     render(quizz, communityQuizzes, false);
   });
 }
+
 //returns true if an id belongs to an user quizz
 function isUserQuizz(id, listId) {
   if (listId.length === 0) {
@@ -104,11 +105,12 @@ function qDelete(id) {
   deleteQuizz(userQuizz);
 }
 
+//alerts generic errors
 function handleError(error) {
   alert(error.response.data);
 }
 
-//changes homescreen to quizz screen when you click on a quizz - UNCOMMENT the lines below to work
+//changes homescreen to quizz screen when you click on a quizz
 function selectQuizz(quizzID) {
   const promise = axios.get(`${URL_QUIZZES}/${quizzID}`);
 
@@ -150,14 +152,17 @@ function stopParentFromFiring() {
   const editButton = document.querySelector(".edit-button");
   const deleteButton = document.querySelector(".delete-button");
 
-  editButton.addEventListener("click", function (e) {
-    e.stopPropagation();
-  });
+  if (editButton !== null) {
+    editButton.addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
 
-  deleteButton.addEventListener("click", function (e) {
-    e.stopPropagation();
-  });
+    deleteButton.addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
+  }
 }
 
 getQuizzes();
-setTimeout(stopParentFromFiring, 1000);
+
+document.addEventListener("DOMContentLoaded", stopParentFromFiring);
