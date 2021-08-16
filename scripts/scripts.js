@@ -76,7 +76,9 @@ function render(quizz, quizzList, isModifiable) {
         <li onclick="selectQuizz(${quizz.id});">
 				  <img src="${quizz.image}" />                                                                                                     
 				  <div class="gradient">
+            <span class="ok">
             ${buttons}
+            </span>
             <p>
               ${quizz.title}
             </p>

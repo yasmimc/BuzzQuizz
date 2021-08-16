@@ -8,7 +8,7 @@ let urlImageQuiz = "";
 let titleQuiz = "";
 let questionsQuiz = [];
 let levelsQuiz = [];
-let amountQuestions = 2;
+let amountQuestions = "";
 let amountLevels = "";
 let isEditing = false;
 
@@ -18,16 +18,35 @@ function createQuiz() {
   document.querySelector(".screen-3").classList.remove("hidden");
   const screenInfos = document.querySelector(".create-questions-first-page");
   screenInfos.classList.remove("hidden");
-  screenInfos.innerHTML += `<h1>Comece pelo começo</h1>
+  screenInfos.innerHTML = "";
+
+  let title;
+  let url;
+  let numberQuestion;
+  let numberLevels;
+
+  if(isEditing){
+    title = `<input type="text" class="input-title-quiz" value="${titleQuiz}" placeholder="Título do seu quizz">`;
+    url = `<input type="url" class="input-image-quiz" value="${urlImageQuiz}" placeholder="URL da imagem do seu quizz">`;
+    numberQuestion = `<input type="text" class="input-amount-questions" value="${amountQuestions}" placeholder="Quantidade de perguntas do quizz">`;
+    numberLevels = `<input type="text" class="input-amount-levels" value="${amountLevels}" placeholder="Quantidade de níveis do quizz">`;
+  }else{
+    title = `<input type="text" class="input-title-quiz" placeholder="Título do seu quizz">`;
+    url = `<input type="url" class="input-image-quiz" placeholder="URL da imagem do seu quizz">`;
+    numberQuestion = `<input type="text" class="input-amount-questions" placeholder="Quantidade de perguntas do quizz">`;
+    numberLevels = `<input type="text" class="input-amount-levels" placeholder="Quantidade de níveis do quizz">`;
+  }
+
+  screenInfos.innerHTML = `<h1>Comece pelo começo</h1>
                                 <div class="basic-quiz-info">
                                     <div class="box-information">
-                                        <input type="text" class="input-title-quiz" value="${titleQuiz}" placeholder="Título do seu quizz">   
+                                        ${title}
                                         <p class="title-err hidden">O título deve ter entre 20-65 caracteres</p>                 
-                                        <input type="url" class="input-image-quiz" value="${urlImageQuiz}" placeholder="URL da imagem do seu quizz">
+                                        ${url}
                                         <p class="url-err hidden">O valor informado não é uma URL válida</p>
-                                        <input type="text" class="input-amount-questions" value="${amountQuestions}" placeholder="Quantidade de perguntas do quizz">
+                                        ${numberQuestion}
                                         <p class="amount-question-err hidden">O quizz deve ter no mínimo 3 perguntas</p>
-                                        <input type="text" class="input-amount-levels" value="${amountLevels}" placeholder="Quantidade de níveis do quizz">
+                                        ${numberLevels}
                                         <p class="amount-level-err hidden">O quizz deve ter no mínimo 2 níveis</p>
                                     </div>
                                 </div>
@@ -561,18 +580,16 @@ function deleteQuizz(quizzInfo) {
                                 {headers:{ "Secret-Key": quizzInfo.key}});
 
     request.then((reponse)=>{
-      console.log("apagado com sucesso");
       let userQuizzes = JSON.parse(localStorage.getItem("quizzInfos"));
       let updatedQuizzesList = userQuizzes.filter(function(quizzes) { return quizzes.id !== quizzInfo.id;});
       localStorage.setItem("quizzInfos", JSON.stringify(updatedQuizzesList));
+      getQuizzes();
     })
   
     request.catch((err)=>{
       alert("Erro ao apagar o quizz tente novamente");
     })
   }
-
-  getQuizzes();
 }
 
 function editQuizz(quizzInfo){
