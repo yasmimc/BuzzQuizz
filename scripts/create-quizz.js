@@ -1,5 +1,6 @@
+const URL_SERVER = "https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes";
 let quizObject;
-let quizzInfos;
+let quizzInfos = [];
 let headers;
 let idQuiz;
 let keyQuiz;
@@ -7,7 +8,7 @@ let urlImageQuiz = "";
 let titleQuiz = "";
 let questionsQuiz = [];
 let levelsQuiz = [];
-let amountQuestions = "";
+let amountQuestions = 2;
 let amountLevels = "";
 let isEditing = false;
 
@@ -86,6 +87,8 @@ function validateInformation() {
     urlImageQuiz = urlImage;
     amountQuestions = numberQuestions;
     amountLevels = numberLevels;
+    document.querySelector(".create-questions-first-page").classList.add("hidden");
+
     renderBoxQuestion();
   }
 }
@@ -102,7 +105,6 @@ function checkUrl(urlString) {
 
 function renderBoxQuestion() {
 
-  document.querySelector(".create-questions-first-page").classList.add("hidden");
   const screenQuestion = document.querySelector(".create-questions-second-page");
   screenQuestion.classList.remove("hidden");
 
@@ -120,6 +122,7 @@ function renderBoxQuestion() {
 }
 
 function selectedQuestion(element, questionNumber) {
+
   const questionBox = element.parentNode;
   questionBox.classList.add("questions-info");
   questionBox.classList.remove("box-question");
@@ -211,6 +214,7 @@ function selectedQuestion(element, questionNumber) {
 }
 
 function validateQuestions() {
+
   questionsQuiz = [];
   let validQuestions = true;
   let haveAnswer2 = true;
@@ -352,6 +356,7 @@ function checkColor(color) {
 }
 
 function renderBoxLevel() {
+
   document.querySelector(".create-questions-second-page").classList.add("hidden");
   const screenQuestion = document.querySelector(".create-questions-third-page");
   screenQuestion.classList.remove("hidden");
@@ -405,20 +410,6 @@ function selectedLevel(element, levelNumber) {
                                     <p class="description-level-err hidden">A descrição deve ter pelo menos 30 caracteres</p>
                                 </div>
                             </div>`;
-/*
-  questionBox.innerHTML = `<div class="box-information nivel${levelNumber}">
-                                <div class="level-information">
-                                    <h2>Nível ${levelNumber}</h2>
-                                    <input type="text" class="title-level${levelNumber}"placeholder="Título do nível">
-                                    <p class="title-level-err hidden">O Título de ter pelo menos 10 caracteres</p>
-                                    <input type="text" class="hit-level${levelNumber}"placeholder="% de acerto mínima">
-                                    <p class="hit-level-err hidden">% de acerto deve ser um número entre 0 e 100</p>
-                                    <input type="text" class="url-level${levelNumber}"placeholder="URL da imagem do nível">
-                                    <p class="url-level-err hidden">O valor informado não é uma URL válida</p>
-                                    <input type="text" class="description description-level${levelNumber}"placeholder="Descrição do nível">
-                                    <p class="description-level-err hidden">A descrição deve ter pelo menos 30 caracteres</p>
-                                </div>
-                            </div>`;*/
 }
 
 function validateLevels() {
@@ -501,13 +492,9 @@ function validateLevels() {
 }
 
 function saveQuiz() {
-  quizObject = {
-    title: titleQuiz,
-    image: urlImageQuiz,
-    questions: questionsQuiz,
-    levels: levelsQuiz,
-  };
-  const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes", quizObject);
+
+  quizObject = { title: titleQuiz, image: urlImageQuiz, questions: questionsQuiz, levels: levelsQuiz};
+  const request = axios.post(URL_SERVER, quizObject);
 
   request.then(renderFinalPage);
   request.catch((err) => {
@@ -517,15 +504,11 @@ function saveQuiz() {
 
 function saveModifiedQuizz() {
   
-  quizObject = {
-    title: titleQuiz,
-    image: urlImageQuiz,
-    questions: questionsQuiz,
-    levels: levelsQuiz,
-  };
+  quizObject = { title: titleQuiz, image: urlImageQuiz, questions: questionsQuiz, levels: levelsQuiz};
 
-  const request = axios.put("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes/"+quizzInfos.id, quizObject,
-  {headers:{ "Secret-Key": quizzInfos.key}});
+  const request = axios.put(`${URL_SERVER}/${quizzInfos.id}`, quizObject,
+                            {headers:{ "Secret-Key": quizzInfos.key}});
+                            
   request.then(renderFinalPage);
   request.catch((err) => {
     alert("erro ao postar quiz");
@@ -549,7 +532,6 @@ function renderFinalPage(response) {
                           <button class="back-home" onclick="backHome();">Voltar pra home</button>`
   document.querySelector(".box-image img").src = `https://http.cat/411.jpg`;
   if(!isEditing) saveQuizzInfos();
-  //localStorage.clear();
 }
 
 function acessQuiz() {
@@ -575,7 +557,7 @@ function backHome() {
 function deleteQuizz(quizzInfo) {
 
   if (window.confirm("Você realmente deseja apagar esse quizz?")) {
-    const request = axios.delete("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes/"+quizzInfo.id,
+    const request = axios.delete(`${URL_SERVER}/${quizzInfo.id}`,
                                 {headers:{ "Secret-Key": quizzInfo.key}});
 
     request.then((reponse)=>{
@@ -590,17 +572,14 @@ function deleteQuizz(quizzInfo) {
     })
   }
 
-    //getQuizzes();
+  getQuizzes();
 }
 
 function editQuizz(quizzInfo){
-  quizzInfos = quizzInfo;
-  alert("funcionando")
-  getQuiz(quizzInfo)
-}
 
-function getQuiz(quizzInfo) {
-  const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes/"+quizzInfo.id);
+  quizzInfos = quizzInfo;
+  const request = axios.get(`${URL_SERVER}/${quizzInfo.id}`);
+
   request.then((response)=>{
     urlImageQuiz = response.data.image;
     titleQuiz = response.data.title;
@@ -609,17 +588,11 @@ function getQuiz(quizzInfo) {
     amountQuestions = questionsQuiz.length;
     amountLevels = levelsQuiz.length;
     isEditing = true;
+    createQuiz();
   })
 
   request.catch((err)=>{
     alert("erro")
   })
 }
-
 console.log(JSON.parse(localStorage.getItem("quizzInfos")));
-
-let test = {id: 728, key: "a4741cac-5b08-4de6-939b-4cbd3e9a835c"};
-//editQuizz(test);
-//deleteQuizz(test);
-
-//saveQuiz()
