@@ -55,147 +55,151 @@ function createQuiz() {
 
 function validateInformation() {
 
-  const title = document.querySelector(".input-title-quiz").value;
-  const urlImage = document.querySelector(".input-image-quiz").value;
-  const numberQuestions = Number(document.querySelector(".input-amount-questions").value);
-  const numberLevels = Number(document.querySelector(".input-amount-levels").value);
-  const titleErr = document.querySelector(".title-err");
-  const urlErr = document.querySelector(".url-err");
-  const amountQuestionErr = document.querySelector(".amount-question-err");
-  const amountLevelErr = document.querySelector(".amount-level-err");
-  let validInformations = true;
+	const title = document.querySelector(".input-title-quiz").value;
+	const urlImage = document.querySelector(".input-image-quiz").value;
+	const numberQuestions = Number(document.querySelector(".input-amount-questions").value);
+	const numberLevels = Number(document.querySelector(".input-amount-levels").value);
+	const titleErr = document.querySelector(".title-err");
+	const urlErr = document.querySelector(".url-err");
+	const amountQuestionNotNumberErr = document.querySelector(".amount-question.not-number-err");
+	const amountQuestionErr = document.querySelector(".amount-question-err");
+	const amountLevelNotNumberErr = document.querySelector(".amount-level.not-number-err");
+	const amountLevelErr = document.querySelector(".amount-level-err");
+	
+	let validInformations = true;
 
-  if (title == "" || title.length < 20 || title.length > 65){
-    titleErr.classList.remove("hidden");
-    document.querySelector(".input-title-quiz").classList.add("color-err");
-    validInformations = false;
-  }else if(!titleErr.classList.contains("hidden")){
-    titleErr.classList.add("hidden");
-    document.querySelector(".input-title-quiz").classList.remove("color-err");
-  }
+	if (title == "" || title.length < 20 || title.length > 65) {
+		titleErr.classList.remove("hidden");
+		document.querySelector(".input-title-quiz").classList.add("color-err");
+		validInformations = false;
+	} else if (!titleErr.classList.contains("hidden")) {
+		titleErr.classList.add("hidden");
+		document.querySelector(".input-title-quiz").classList.remove("color-err");
+	}
 
-  if (!checkUrl(urlImage)){
-    urlErr.classList.remove("hidden");
-    document.querySelector(".input-image-quiz").classList.add("color-err");
-    validInformations = false;
-  }else if(!urlErr.classList.contains("hidden")){
-    urlErr.classList.add("hidden");
-    document.querySelector(".input-image-quiz").classList.remove("color-err");
-  }
+	if (!checkUrl(urlImage)) {
+		urlErr.classList.remove("hidden");
+		document.querySelector(".input-image-quiz").classList.add("color-err");
+		validInformations = false;
+	} else if (!urlErr.classList.contains("hidden")) {
+		urlErr.classList.add("hidden");
+		document.querySelector(".input-image-quiz").classList.remove("color-err");
+	}
 
-  if (numberQuestions < 3){
-    amountQuestionErr.classList.remove("hidden");
-    document.querySelector(".input-amount-questions").classList.add("color-err");
-    validInformations = false;
-  }else if(!amountQuestionErr.classList.contains("hidden")){
-    amountQuestionErr.classList.add("hidden");
-    document.querySelector(".input-amount-questions").classList.remove("color-err");
-  }
+  if (numberQuestions < 3) {
+		amountQuestionErr.classList.remove("hidden");
+		document.querySelector(".input-amount-questions").classList.add("color-err");
+		validInformations = false;
+	} else if (!amountQuestionErr.classList.contains("hidden")) {
+		amountQuestionErr.classList.add("hidden");
+		document.querySelector(".input-amount-questions").classList.remove("color-err");
+	}
 
-  if (numberLevels < 2){
-    amountLevelErr.classList.remove("hidden");
-    document.querySelector(".input-amount-levels").classList.add("color-err");
-    validInformations = false;
-  }else if(!amountLevelErr.classList.contains("hidden")){
-    amountLevelErr.classList.add("hidden");
-    document.querySelector(".input-amount-levels").classList.add("color-err");
-  }
+  if (numberLevels < 2) {
+		amountLevelErr.classList.remove("hidden");
+		document.querySelector(".input-amount-levels").classList.add("color-err");
+		validInformations = false;
+	} else if (!amountLevelErr.classList.contains("hidden")) {
+		amountLevelErr.classList.add("hidden");
+		document.querySelector(".input-amount-levels").classList.add("color-err");
+	}
 
-  if (validInformations) {
-    titleQuiz = title;
-    urlImageQuiz = urlImage;
-    amountQuestions = numberQuestions;
-    amountLevels = numberLevels;
-    document.querySelector(".create-questions-first-page").classList.add("hidden");
 
-    renderBoxQuestion();
-  }
+	if (validInformations) {
+		titleQuiz = title;
+		urlImageQuiz = urlImage;
+		amountQuestions = numberQuestions;
+		amountLevels = numberLevels;
+		document.querySelector(".create-questions-first-page").classList.add("hidden");
+
+		renderBoxQuestion();
+	}
 }
 
 function checkUrl(urlString) {
-  let pattern = new RegExp("^(https?:\\/\\/)?" +
-                           "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
-                           "((\\d{1,3}\\.){3}\\d{1,3}))" +
-                           "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
-                           "(\\?[;&a-z\\d%_.~+=-]*)?" +
-                           "(\\#[-a-z\\d_]*)?$","i");
-  return !!pattern.test(urlString);
+	let pattern = new RegExp("^(https?:\\/\\/)?" +
+		"((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+		"((\\d{1,3}\\.){3}\\d{1,3}))" +
+		"(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+		"(\\?[;&a-z\\d%_.~+=-]*)?" +
+		"(\\#[-a-z\\d_]*)?$", "i");
+	return !!pattern.test(urlString);
 }
 
 function renderBoxQuestion() {
 
-  const screenQuestion = document.querySelector(".create-questions-second-page");
-  screenQuestion.classList.remove("hidden");
+	const screenQuestion = document.querySelector(".create-questions-second-page");
+	screenQuestion.classList.remove("hidden");
 
-  screenQuestion.innerHTML = `<h1>Crie suas perguntas</h1>`;
-  for (let i = 1; i <= amountQuestions; ++i) {
-    let questionBox = `	<div class="box-question">
+	screenQuestion.innerHTML = `<h1>Crie suas perguntas</h1>`;
+	for (let i = 1; i <= amountQuestions; ++i) {
+		let questionBox = `	<div class="box-question">
                                 <span>Pergunta ${i}</span>
                                 <span class="create-icon" onclick="selectedQuestion(this, ${i})"><ion-icon name="create-outline"></ion-icon></span>
                             </div>`;
-    screenQuestion.innerHTML += questionBox;
-  }
+		screenQuestion.innerHTML += questionBox;
+	}
 
-  let button = `<button onclick="validateQuestions();">Prosseguir pra criar níveis</button>`;
-  screenQuestion.innerHTML += button;
+	let button = `<button onclick="validateQuestions();">Prosseguir pra criar níveis</button>`;
+	screenQuestion.innerHTML += button;
 }
 
 function selectedQuestion(element, questionNumber) {
 
-  const questionBox = element.parentNode;
-  questionBox.classList.add("questions-info");
-  questionBox.classList.remove("box-question");
-  questionBox.innerHTML = "";
+	const questionBox = element.parentNode;
+	questionBox.classList.add("questions-info");
+	questionBox.classList.remove("box-question");
+	questionBox.innerHTML = "";
 
-  let titleQuestion;
-  let colorQuestion;
-  let rigthAnswerText;
-  let rigthAnswerUrl;
-  let wrongAnswerText1;
-  let wrongAnswerUrl1;
-  let wrongAnswerText2;
-  let wrongAnswerUrl2;
-  let wrongAnswerText3;
-  let wrongAnswerUrl3;
+	let titleQuestion;
+	let colorQuestion;
+	let rigthAnswerText;
+	let rigthAnswerUrl;
+	let wrongAnswerText1;
+	let wrongAnswerUrl1;
+	let wrongAnswerText2;
+	let wrongAnswerUrl2;
+	let wrongAnswerText3;
+	let wrongAnswerUrl3;
 
-  if(isEditing){
-    titleQuestion =  `<input type="text" class="question${questionNumber} title-question${questionNumber}" value="${questionsQuiz[questionNumber-1].title}" placeholder="Texto da pergunta">`;
-    colorQuestion = `<input type="text" class="question${questionNumber} color-question${questionNumber}" value="${questionsQuiz[questionNumber-1].color}" placeholder="Cor de fundo da pergunta">`;
-    rigthAnswerText = `<input type="text" class="question${questionNumber} text-rigth-answer${questionNumber}" value="${questionsQuiz[questionNumber-1].answers[0].text}" placeholder="Texto da pergunta">`;
-    rigthAnswerUrl = `<input type="url" class="question${questionNumber} url-rigth-answer${questionNumber}" value="${questionsQuiz[questionNumber-1].answers[0].image}" placeholder="URL da imagem">`;
-    wrongAnswerText1 = `<input type="text" class="question${questionNumber} text-wrong-answer1" value="${questionsQuiz[questionNumber-1].answers[1].text}" placeholder="Resposta incorreta 1">`;
-    wrongAnswerUrl1 = `<input type="url" class="question${questionNumber} url-wrong-answer1" value="${questionsQuiz[questionNumber-1].answers[1].image}" placeholder="URL da imagem 1">`;
-    
-    if(questionsQuiz[questionNumber-1].answers.length > 2){
-       wrongAnswerText2 = `<input type="text" class="question${questionNumber} text-wrong-answer2" value="${questionsQuiz[questionNumber-1].answers[2].text}" placeholder="Resposta incorreta 1">`;
-       wrongAnswerUrl2 = `<input type="url" class="question${questionNumber} url-wrong-answer2" va1lue="${questionsQuiz[questionNumber-1].answers[2].image}" placeholder="URL da imagem 1">`;
-    }else{
-       wrongAnswerText2 = `<input type="text" class="question${questionNumber} text-wrong-answer2" placeholder="Resposta incorreta 1">`;
-       wrongAnswerUrl2 = `<input type="url" class="question${questionNumber} url-wrong-answer2" placeholder="URL da imagem 1">`;
-    }
+	if (isEditing) {
+		titleQuestion = `<input type="text" class="question${questionNumber} title-question${questionNumber}" value="${questionsQuiz[questionNumber - 1].title}" placeholder="Texto da pergunta">`;
+		colorQuestion = `<input type="text" class="question${questionNumber} color-question${questionNumber}" value="${questionsQuiz[questionNumber - 1].color}" placeholder="Cor de fundo da pergunta">`;
+		rigthAnswerText = `<input type="text" class="question${questionNumber} text-rigth-answer${questionNumber}" value="${questionsQuiz[questionNumber - 1].answers[0].text}" placeholder="Texto da pergunta">`;
+		rigthAnswerUrl = `<input type="url" class="question${questionNumber} url-rigth-answer${questionNumber}" value="${questionsQuiz[questionNumber - 1].answers[0].image}" placeholder="URL da imagem">`;
+		wrongAnswerText1 = `<input type="text" class="question${questionNumber} text-wrong-answer1" value="${questionsQuiz[questionNumber - 1].answers[1].text}" placeholder="Resposta incorreta 1">`;
+		wrongAnswerUrl1 = `<input type="url" class="question${questionNumber} url-wrong-answer1" value="${questionsQuiz[questionNumber - 1].answers[1].image}" placeholder="URL da imagem 1">`;
 
-    if(questionsQuiz[questionNumber-1].answers.length > 3){
-      wrongAnswerText3 = `<input type="text" class="question${questionNumber} text-wrong-answer3" value="${questionsQuiz[questionNumber-1].answers[3].text}" placeholder="Resposta incorreta 1">`;
-      wrongAnswerUrl3 = `<input type="url" class="question${questionNumber} url-wrong-answer3" value="${questionsQuiz[questionNumber-1].answers[3].image}" placeholder="URL da imagem 1">`;
-    }else{
-      wrongAnswerText3 = `<input type="text" class="question${questionNumber} text-wrong-answer3" placeholder="Resposta incorreta 1">`;
-      wrongAnswerUrl3 = `<input type="url" class="question${questionNumber} url-wrong-answer3" placeholder="URL da imagem 1">`;
-    }
-  }else{
-    titleQuestion =  `<input type="text" class="question${questionNumber} title-question${questionNumber}" placeholder="Texto da pergunta">`;
-    colorQuestion = `<input type="text" class="question${questionNumber} color-question${questionNumber}" placeholder="Cor de fundo da pergunta">`;
-    rigthAnswerText = `<input type="text" class="question${questionNumber} text-rigth-answer${questionNumber}" placeholder="Texto da pergunta">`;
-    rigthAnswerUrl = `<input type="url" class="question${questionNumber} url-rigth-answer${questionNumber}" placeholder="URL da imagem">`;
-    wrongAnswerText1 = `<input type="text" class="question${questionNumber} text-wrong-answer1" placeholder="Resposta incorreta 1">`;
-    wrongAnswerUrl1 = `<input type="url" class="question${questionNumber} url-wrong-answer1" placeholder="URL da imagem 1">`;
-    wrongAnswerText2 = `<input type="text" class="question${questionNumber} text-wrong-answer2" placeholder="Resposta incorreta 1">`;
-    wrongAnswerUrl2 = `<input type="url" class="question${questionNumber} url-wrong-answer2" placeholder="URL da imagem 1">`;
-    wrongAnswerText3 = `<input type="text" class="question${questionNumber} text-wrong-answer3" placeholder="Resposta incorreta 1">`;
-    wrongAnswerUrl3 = `<input type="url" class="question${questionNumber} url-wrong-answer3" placeholder="URL da imagem 1">`;
-  }
+		if (questionsQuiz[questionNumber - 1].answers.length > 2) {
+			wrongAnswerText2 = `<input type="text" class="question${questionNumber} text-wrong-answer2" value="${questionsQuiz[questionNumber - 1].answers[2].text}" placeholder="Resposta incorreta 1">`;
+			wrongAnswerUrl2 = `<input type="url" class="question${questionNumber} url-wrong-answer2" va1lue="${questionsQuiz[questionNumber - 1].answers[2].image}" placeholder="URL da imagem 1">`;
+		} else {
+			wrongAnswerText2 = `<input type="text" class="question${questionNumber} text-wrong-answer2" placeholder="Resposta incorreta 1">`;
+			wrongAnswerUrl2 = `<input type="url" class="question${questionNumber} url-wrong-answer2" placeholder="URL da imagem 1">`;
+		}
 
-    questionBox.innerHTML = 
-          `<div class="box-information  numberQuestion${questionNumber}">
+		if (questionsQuiz[questionNumber - 1].answers.length > 3) {
+			wrongAnswerText3 = `<input type="text" class="question${questionNumber} text-wrong-answer3" value="${questionsQuiz[questionNumber - 1].answers[3].text}" placeholder="Resposta incorreta 1">`;
+			wrongAnswerUrl3 = `<input type="url" class="question${questionNumber} url-wrong-answer3" value="${questionsQuiz[questionNumber - 1].answers[3].image}" placeholder="URL da imagem 1">`;
+		} else {
+			wrongAnswerText3 = `<input type="text" class="question${questionNumber} text-wrong-answer3" placeholder="Resposta incorreta 1">`;
+			wrongAnswerUrl3 = `<input type="url" class="question${questionNumber} url-wrong-answer3" placeholder="URL da imagem 1">`;
+		}
+	} else {
+		titleQuestion = `<input type="text" class="question${questionNumber} title-question${questionNumber}" placeholder="Texto da pergunta">`;
+		colorQuestion = `<input type="text" class="question${questionNumber} color-question${questionNumber}" placeholder="Cor de fundo da pergunta">`;
+		rigthAnswerText = `<input type="text" class="question${questionNumber} text-rigth-answer${questionNumber}" placeholder="Texto da pergunta">`;
+		rigthAnswerUrl = `<input type="url" class="question${questionNumber} url-rigth-answer${questionNumber}" placeholder="URL da imagem">`;
+		wrongAnswerText1 = `<input type="text" class="question${questionNumber} text-wrong-answer1" placeholder="Resposta incorreta 1">`;
+		wrongAnswerUrl1 = `<input type="url" class="question${questionNumber} url-wrong-answer1" placeholder="URL da imagem 1">`;
+		wrongAnswerText2 = `<input type="text" class="question${questionNumber} text-wrong-answer2" placeholder="Resposta incorreta 1">`;
+		wrongAnswerUrl2 = `<input type="url" class="question${questionNumber} url-wrong-answer2" placeholder="URL da imagem 1">`;
+		wrongAnswerText3 = `<input type="text" class="question${questionNumber} text-wrong-answer3" placeholder="Resposta incorreta 1">`;
+		wrongAnswerUrl3 = `<input type="url" class="question${questionNumber} url-wrong-answer3" placeholder="URL da imagem 1">`;
+	}
+
+	questionBox.innerHTML =
+		`<div class="box-information  numberQuestion${questionNumber}">
             <div class="question-information">
                 <h2>Pergunta ${questionNumber}</h2>
                 ${titleQuestion}
@@ -234,189 +238,189 @@ function selectedQuestion(element, questionNumber) {
 
 function validateQuestions() {
 
-  questionsQuiz = [];
-  let validQuestions = true;
-  let haveAnswer2 = true;
-  let haveAnswer3 = true;
-  let i = 1;
+	questionsQuiz = [];
+	let validQuestions = true;
+	let haveAnswer2 = true;
+	let haveAnswer3 = true;
+	let i = 1;
 
-  while(i <= amountQuestions && validQuestions){
+	while (i <= amountQuestions && validQuestions) {
 
-    const titleQuestion = document.querySelector(`.question${i}.title-question${i}`).value;
-    const colorQuestion = document.querySelector(`.question${i}.color-question${i}`).value;
-    const rigthAnswerText = document.querySelector(`.question${i}.text-rigth-answer${i}`).value;
-    const rigthAnswerUrl = document.querySelector(`.question${i}.url-rigth-answer${i}`).value;
-    const wrongAnswerText1 = document.querySelector(`.question${i}.text-wrong-answer1`).value;
-    const wrongAnswerUrl1 = document.querySelector(`.question${i}.url-wrong-answer1`).value;
-    const wrongAnswerText2 = document.querySelector(`.question${i}.text-wrong-answer2`).value;
-    const wrongAnswerUrl2 = document.querySelector(`.question${i}.url-wrong-answer2`).value;
-    const wrongAnswerText3 = document.querySelector(`.question${i}.text-wrong-answer3`).value;
-    const wrongAnswerUrl3 = document.querySelector(`.question${i}.url-wrong-answer3`).value;
+		const titleQuestion = document.querySelector(`.question${i}.title-question${i}`).value;
+		const colorQuestion = document.querySelector(`.question${i}.color-question${i}`).value;
+		const rigthAnswerText = document.querySelector(`.question${i}.text-rigth-answer${i}`).value;
+		const rigthAnswerUrl = document.querySelector(`.question${i}.url-rigth-answer${i}`).value;
+		const wrongAnswerText1 = document.querySelector(`.question${i}.text-wrong-answer1`).value;
+		const wrongAnswerUrl1 = document.querySelector(`.question${i}.url-wrong-answer1`).value;
+		const wrongAnswerText2 = document.querySelector(`.question${i}.text-wrong-answer2`).value;
+		const wrongAnswerUrl2 = document.querySelector(`.question${i}.url-wrong-answer2`).value;
+		const wrongAnswerText3 = document.querySelector(`.question${i}.text-wrong-answer3`).value;
+		const wrongAnswerUrl3 = document.querySelector(`.question${i}.url-wrong-answer3`).value;
 
-    const textQuestionErr = document.querySelector(`.numberQuestion${i} .text-question-err`);
-    const colorFormatErr = document.querySelector(`.numberQuestion${i} .color-format-err`);
-    const rigthAnswerErr = document.querySelector(`.numberQuestion${i} .rigth-answer-err`);
-    const rigthAnswerUrlErr = document.querySelector(`.numberQuestion${i} .rigth-answer-url-err`);
-    const wrongAnswerErr1 = document.querySelector(`.numberQuestion${i} .wrong-answer-err1`);
-    const wrongAnswerUrlErr1 = document.querySelector(`.numberQuestion${i} .wrong-answer-url-err1`);
-    const wrongAnswerUrlErr2 = document.querySelector(`.numberQuestion${i} .wrong-answer-url-err2`);
-    const wrongAnswerUrlErr3 = document.querySelector(`.numberQuestion${i} .wrong-answer-url-err3`);
+		const textQuestionErr = document.querySelector(`.numberQuestion${i} .text-question-err`);
+		const colorFormatErr = document.querySelector(`.numberQuestion${i} .color-format-err`);
+		const rigthAnswerErr = document.querySelector(`.numberQuestion${i} .rigth-answer-err`);
+		const rigthAnswerUrlErr = document.querySelector(`.numberQuestion${i} .rigth-answer-url-err`);
+		const wrongAnswerErr1 = document.querySelector(`.numberQuestion${i} .wrong-answer-err1`);
+		const wrongAnswerUrlErr1 = document.querySelector(`.numberQuestion${i} .wrong-answer-url-err1`);
+		const wrongAnswerUrlErr2 = document.querySelector(`.numberQuestion${i} .wrong-answer-url-err2`);
+		const wrongAnswerUrlErr3 = document.querySelector(`.numberQuestion${i} .wrong-answer-url-err3`);
 
-    if(titleQuestion.length < 20){
-        textQuestionErr.classList.remove("hidden");
-        document.querySelector(`.question${i}.title-question${i}`).classList.add("color-err");
-        validQuestions = false;
-    }else if(!textQuestionErr.classList.contains("hidden")){
-        textQuestionErr.classList.add("hidden");
-        document.querySelector(`.question${i}.title-question${i}`).classList.remove("color-err");
-    }
+		if (titleQuestion.length < 20) {
+			textQuestionErr.classList.remove("hidden");
+			document.querySelector(`.question${i}.title-question${i}`).classList.add("color-err");
+			validQuestions = false;
+		} else if (!textQuestionErr.classList.contains("hidden")) {
+			textQuestionErr.classList.add("hidden");
+			document.querySelector(`.question${i}.title-question${i}`).classList.remove("color-err");
+		}
 
-    if(!checkColor(colorQuestion)){
-        colorFormatErr.classList.remove("hidden");
-        document.querySelector(`.question${i}.color-question${i}`).classList.add("color-err");
-        validQuestions = false;
-    }else if(!colorFormatErr.classList.contains("hidden")){
-        colorFormatErr.classList.add("hidden");
-        document.querySelector(`.question${i}.color-question${i}`).classList.remove("color-err");
-    }
+		if (!checkColor(colorQuestion)) {
+			colorFormatErr.classList.remove("hidden");
+			document.querySelector(`.question${i}.color-question${i}`).classList.add("color-err");
+			validQuestions = false;
+		} else if (!colorFormatErr.classList.contains("hidden")) {
+			colorFormatErr.classList.add("hidden");
+			document.querySelector(`.question${i}.color-question${i}`).classList.remove("color-err");
+		}
 
-    if(rigthAnswerText === ""){
-        rigthAnswerErr.classList.remove("hidden");
-        document.querySelector(`.question${i}.text-rigth-answer${i}`).classList.add("color-err");
-        validQuestions = false;
-    }else if(!rigthAnswerErr.classList.contains("hidden")){
-        rigthAnswerErr.classList.add("hidden");
-        document.querySelector(`.question${i}.text-rigth-answer${i}`).classList.remove("color-err");
-    }
+		if (rigthAnswerText === "") {
+			rigthAnswerErr.classList.remove("hidden");
+			document.querySelector(`.question${i}.text-rigth-answer${i}`).classList.add("color-err");
+			validQuestions = false;
+		} else if (!rigthAnswerErr.classList.contains("hidden")) {
+			rigthAnswerErr.classList.add("hidden");
+			document.querySelector(`.question${i}.text-rigth-answer${i}`).classList.remove("color-err");
+		}
 
-    if(!checkUrl(rigthAnswerUrl)){
-        rigthAnswerUrlErr.classList.remove("hidden");
-        document.querySelector(`.question${i}.url-rigth-answer${i}`).classList.add("color-err")
-        validQuestions = false;
-    }else if(!rigthAnswerUrlErr.classList.contains("hidden")){
-        rigthAnswerUrlErr.classList.add("hidden");
-        document.querySelector(`.question${i}.url-rigth-answer${i}`).classList.remove("color-err")
-    }
+		if (!checkUrl(rigthAnswerUrl)) {
+			rigthAnswerUrlErr.classList.remove("hidden");
+			document.querySelector(`.question${i}.url-rigth-answer${i}`).classList.add("color-err")
+			validQuestions = false;
+		} else if (!rigthAnswerUrlErr.classList.contains("hidden")) {
+			rigthAnswerUrlErr.classList.add("hidden");
+			document.querySelector(`.question${i}.url-rigth-answer${i}`).classList.remove("color-err")
+		}
 
-    if(wrongAnswerText1 === ""){
-        wrongAnswerErr1.classList.remove("hidden");
-        document.querySelector(`.question${i}.text-wrong-answer1`).classList.add("color-err")
-        validQuestions = false;
-    }else if(!wrongAnswerErr1.classList.contains("hidden")){
-        wrongAnswerErr1.classList.add("hidden");
-        document.querySelector(`.question${i}.text-wrong-answer1`).classList.remove("color-err")
-    }
+		if (wrongAnswerText1 === "") {
+			wrongAnswerErr1.classList.remove("hidden");
+			document.querySelector(`.question${i}.text-wrong-answer1`).classList.add("color-err")
+			validQuestions = false;
+		} else if (!wrongAnswerErr1.classList.contains("hidden")) {
+			wrongAnswerErr1.classList.add("hidden");
+			document.querySelector(`.question${i}.text-wrong-answer1`).classList.remove("color-err")
+		}
 
-    if(!checkUrl(wrongAnswerUrl1)){
-        wrongAnswerUrlErr1.classList.remove("hidden");
-        document.querySelector(`.question${i}.url-wrong-answer1`).classList.add("color-err")
-        validQuestions = false;
-    }else if(!wrongAnswerUrlErr1.classList.contains("hidden")){
-        wrongAnswerUrlErr1.classList.add("hidden");
-        document.querySelector(`.question${i}.url-wrong-answer1`).classList.remove("color-err")
-    }
-  
-    if (wrongAnswerText2 === "") haveAnswer2 = false;
-    if (wrongAnswerText3 === "") haveAnswer3 = false;
+		if (!checkUrl(wrongAnswerUrl1)) {
+			wrongAnswerUrlErr1.classList.remove("hidden");
+			document.querySelector(`.question${i}.url-wrong-answer1`).classList.add("color-err")
+			validQuestions = false;
+		} else if (!wrongAnswerUrlErr1.classList.contains("hidden")) {
+			wrongAnswerUrlErr1.classList.add("hidden");
+			document.querySelector(`.question${i}.url-wrong-answer1`).classList.remove("color-err")
+		}
 
-    if (haveAnswer2 && !checkUrl(wrongAnswerUrl2)){
-        wrongAnswerUrlErr2.classList.remove("hidden");
-        document.querySelector(`.question${i}.url-wrong-answer2`).classList.add("color-err");
-        validQuestions = false;
-    }
+		if (wrongAnswerText2 === "") haveAnswer2 = false;
+		if (wrongAnswerText3 === "") haveAnswer3 = false;
 
-    if (haveAnswer3 && !checkUrl(wrongAnswerUrl3)){
-        wrongAnswerUrlErr3.classList.remove("hidden");
-        document.querySelector(`.question${i}.urnaol-wrong-answer3`).classList.add("color-err");
-        validQuestions = false;
-    }
+		if (haveAnswer2 && !checkUrl(wrongAnswerUrl2)) {
+			wrongAnswerUrlErr2.classList.remove("hidden");
+			document.querySelector(`.question${i}.url-wrong-answer2`).classList.add("color-err");
+			validQuestions = false;
+		}
 
-    if (validQuestions) {
-      let answers = [];
-      answers.push({ text: rigthAnswerText, image: rigthAnswerUrl, isCorrectAnswer: true },
-                   { text: wrongAnswerText1, image: wrongAnswerUrl1, isCorrectAnswer: false});
+		if (haveAnswer3 && !checkUrl(wrongAnswerUrl3)) {
+			wrongAnswerUrlErr3.classList.remove("hidden");
+			document.querySelector(`.question${i}.urnaol-wrong-answer3`).classList.add("color-err");
+			validQuestions = false;
+		}
 
-      if (haveAnswer2){
-        answers.push({ text: wrongAnswerText2, image: wrongAnswerUrl2, isCorrectAnswer: false});
-        if(!wrongAnswerUrlErr2.classList.contains("hidden")){
-            wrongAnswerUrlErr2.classList.add("hidden");
-            document.querySelector(`.question${i}.url-wrong-answer2`).classList.remove("color-err");
-        }
-      }
+		if (validQuestions) {
+			let answers = [];
+			answers.push({ text: rigthAnswerText, image: rigthAnswerUrl, isCorrectAnswer: true },
+				{ text: wrongAnswerText1, image: wrongAnswerUrl1, isCorrectAnswer: false });
 
-      if (haveAnswer3){
-        answers.push({ text: wrongAnswerText3, image: wrongAnswerUrl3, isCorrectAnswer: false});
-        if(!wrongAnswerUrlErr3.classList.contains("hidden")){
-            wrongAnswerUrlErr3.classList.add("hidden");
-            document.querySelector(`.question${i}.url-wrong-answer3`).classList.remove("color-err");
-        }
-      }
+			if (haveAnswer2) {
+				answers.push({ text: wrongAnswerText2, image: wrongAnswerUrl2, isCorrectAnswer: false });
+				if (!wrongAnswerUrlErr2.classList.contains("hidden")) {
+					wrongAnswerUrlErr2.classList.add("hidden");
+					document.querySelector(`.question${i}.url-wrong-answer2`).classList.remove("color-err");
+				}
+			}
 
-      questionsQuiz.push({ title: titleQuestion, color: colorQuestion, answers: answers,});
-      answers = [];
-    }
-    ++i;
-  }
+			if (haveAnswer3) {
+				answers.push({ text: wrongAnswerText3, image: wrongAnswerUrl3, isCorrectAnswer: false });
+				if (!wrongAnswerUrlErr3.classList.contains("hidden")) {
+					wrongAnswerUrlErr3.classList.add("hidden");
+					document.querySelector(`.question${i}.url-wrong-answer3`).classList.remove("color-err");
+				}
+			}
 
-    if(validQuestions) {
-        renderBoxLevel();
-    }else {
-        questionsQuiz = [];
-        alert("informações inválidas, tente novamente");
-    }
+			questionsQuiz.push({ title: titleQuestion, color: colorQuestion, answers: answers, });
+			answers = [];
+		}
+		++i;
+	}
+
+	if (validQuestions) {
+		renderBoxLevel();
+	} else {
+		questionsQuiz = [];
+		alert("informações inválidas, tente novamente");
+	}
 }
 
 function checkColor(color) {
-  if (color.length === 7) {
-    let pattern = new RegExp(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/gim);
-    return !!pattern.test(color);
-  }
-  return false;
+	if (color.length === 7) {
+		let pattern = new RegExp(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/gim);
+		return !!pattern.test(color);
+	}
+	return false;
 }
 
 function renderBoxLevel() {
 
-  document.querySelector(".create-questions-second-page").classList.add("hidden");
-  const screenQuestion = document.querySelector(".create-questions-third-page");
-  screenQuestion.classList.remove("hidden");
+	document.querySelector(".create-questions-second-page").classList.add("hidden");
+	const screenQuestion = document.querySelector(".create-questions-third-page");
+	screenQuestion.classList.remove("hidden");
 
-  screenQuestion.innerHTML += `<h1>Agora, decida os níveis</h1>`;
-  for (let i = 1; i <= amountLevels; ++i) {
-    let questionBox = `	<div class="box-question">
+	screenQuestion.innerHTML += `<h1>Agora, decida os níveis</h1>`;
+	for (let i = 1; i <= amountLevels; ++i) {
+		let questionBox = `	<div class="box-question">
                                 <span>Nível ${i}</span>
                                 <span class="create-icon" onclick="selectedLevel(this, ${i})"><ion-icon name="create-outline"></ion-icon></span>
                             </div>`;
-    screenQuestion.innerHTML += questionBox;
-  }
+		screenQuestion.innerHTML += questionBox;
+	}
 
-  let button = `<button onclick="validateLevels();">Finalizar Quizz</button>`;
-  screenQuestion.innerHTML += button;
+	let button = `<button onclick="validateLevels();">Finalizar Quizz</button>`;
+	screenQuestion.innerHTML += button;
 }
 
 function selectedLevel(element, levelNumber) {
 
-  const questionBox = element.parentNode;
-  questionBox.classList.add("questions-info");
-  questionBox.classList.remove("box-question");
-  questionBox.innerHTML = "";
-  let titleLevel;
-  let hitLevel;
-  let urlLevel;
-  let descriptionLevel;
+	const questionBox = element.parentNode;
+	questionBox.classList.add("questions-info");
+	questionBox.classList.remove("box-question");
+	questionBox.innerHTML = "";
+	let titleLevel;
+	let hitLevel;
+	let urlLevel;
+	let descriptionLevel;
 
-  if(isEditing){
-    titleLevel = `<input type="text" class="title-level${levelNumber}" value="${levelsQuiz[levelNumber-1].title}" placeholder="Título do nível">`;
-    hitLevel = `<input type="text" class="hit-level${levelNumber}" value="${levelsQuiz[levelNumber-1].minValue}" placeholder="% de acerto mínima">`;
-    urlLevel = `<input type="text" class="url-level${levelNumber}" value="${levelsQuiz[levelNumber-1].image}" placeholder="URL da imagem do nível">`;
-    descriptionLevel = `<input type="text" class="description description-level${levelNumber}" value="${levelsQuiz[levelNumber-1].text}" placeholder="Descrição do nível">`;
-  }else{
-    titleLevel = `<input type="text" class="title-level${levelNumber}" placeholder="Título do nível">`;
-    hitLevel = `<input type="text" class="hit-level${levelNumber}" placeholder="% de acerto mínima">`;
-    urlLevel = `<input type="text" class="url-level${levelNumber}" placeholder="URL da imagem do nível">`;
-    descriptionLevel = `<input type="text" class="description description-level${levelNumber}" placeholder="Descrição do nível">`;
-  }
+	if (isEditing) {
+		titleLevel = `<input type="text" class="title-level${levelNumber}" value="${levelsQuiz[levelNumber - 1].title}" placeholder="Título do nível">`;
+		hitLevel = `<input type="text" class="hit-level${levelNumber}" value="${levelsQuiz[levelNumber - 1].minValue}" placeholder="% de acerto mínima">`;
+		urlLevel = `<input type="text" class="url-level${levelNumber}" value="${levelsQuiz[levelNumber - 1].image}" placeholder="URL da imagem do nível">`;
+		descriptionLevel = `<input type="text" class="description description-level${levelNumber}" value="${levelsQuiz[levelNumber - 1].text}" placeholder="Descrição do nível">`;
+	} else {
+		titleLevel = `<input type="text" class="title-level${levelNumber}" placeholder="Título do nível">`;
+		hitLevel = `<input type="text" class="hit-level${levelNumber}" placeholder="% de acerto mínima">`;
+		urlLevel = `<input type="text" class="url-level${levelNumber}" placeholder="URL da imagem do nível">`;
+		descriptionLevel = `<input type="text" class="description description-level${levelNumber}" placeholder="Descrição do nível">`;
+	}
 
-  questionBox.innerHTML = `<div class="box-information nivel${levelNumber}">
+	questionBox.innerHTML = `<div class="box-information nivel${levelNumber}">
                                 <div class="level-information">
                                     <h2>Nível ${levelNumber}</h2>
                                     ${titleLevel}
@@ -432,145 +436,145 @@ function selectedLevel(element, levelNumber) {
 }
 
 function validateLevels() {
-  levelsQuiz = [];
-  let validLevel = true;
-  let minHit = false;
-  let i = 1;
+	levelsQuiz = [];
+	let validLevel = true;
+	let minHit = false;
+	let i = 1;
 
-  while(i <= amountLevels && validLevel) {
-    let minValue = document.querySelector(`.hit-level${i}`).value;
-    const titleLevel = document.querySelector(`.title-level${i}`).value;
-    const urlLevelImage = document.querySelector(`.url-level${i}`).value;
-    const descriptionLevel = document.querySelector(`.description-level${i}`).value;
+	while (i <= amountLevels && validLevel) {
+		let minValue = document.querySelector(`.hit-level${i}`).value;
+		const titleLevel = document.querySelector(`.title-level${i}`).value;
+		const urlLevelImage = document.querySelector(`.url-level${i}`).value;
+		const descriptionLevel = document.querySelector(`.description-level${i}`).value;
 
-    const titleErr = document.querySelector(`.nivel${i} .title-level-err`);
-    const hitErr = document.querySelector(`.nivel${i} .hit-level-err`);
-    const urlErr = document.querySelector(`.nivel${i} .url-level-err`);
-    const descriptionErr = document.querySelector(`.nivel${i} .description-level-err`);
+		const titleErr = document.querySelector(`.nivel${i} .title-level-err`);
+		const hitErr = document.querySelector(`.nivel${i} .hit-level-err`);
+		const urlErr = document.querySelector(`.nivel${i} .url-level-err`);
+		const descriptionErr = document.querySelector(`.nivel${i} .description-level-err`);
 
-    if(titleLevel.length < 10){
-        titleErr.classList.remove("hidden");
-        document.querySelector(`.title-level${i}`).classList.add("color-err");
-        validLevel = false;
-    }else if(!titleErr.classList.contains("hidden")){
-        titleErr.classList.add("hidden");
-        document.querySelector(`.title-level${i}`).classList.remove("color-err");
-    }
+		if (titleLevel.length < 10) {
+			titleErr.classList.remove("hidden");
+			document.querySelector(`.title-level${i}`).classList.add("color-err");
+			validLevel = false;
+		} else if (!titleErr.classList.contains("hidden")) {
+			titleErr.classList.add("hidden");
+			document.querySelector(`.title-level${i}`).classList.remove("color-err");
+		}
 
-    if(minValue === "" || Number(minValue) < 0 || Number(minValue) > 100){
-        hitErr.classList.remove("hidden");
-        document.querySelector(`.hit-level${i}`).classList.add("color-err");
-        validLevel = false;
-    }else if(!hitErr.classList.contains("hidden")){
-        hitErr.classList.add("hidden");
-        document.querySelector(`.hit-level${i}`).classList.remove("color-err");
-    }
-    
-    if(!checkUrl(urlLevelImage)){
-        urlErr.classList.remove("hidden");
-        document.querySelector(`.url-level${i}`).classList.add("color-err");
-        validLevel = false;
-    }else if(!urlErr.classList.contains("hidden")){
-        urlErr.classList.add("hidden");
-        document.querySelector(`.url-level${i}`).classList.remove("color-err");
-    }
+		if (minValue === "" || Number(minValue) < 0 || Number(minValue) > 100) {
+			hitErr.classList.remove("hidden");
+			document.querySelector(`.hit-level${i}`).classList.add("color-err");
+			validLevel = false;
+		} else if (!hitErr.classList.contains("hidden")) {
+			hitErr.classList.add("hidden");
+			document.querySelector(`.hit-level${i}`).classList.remove("color-err");
+		}
 
-    if(descriptionLevel.length < 30){
-        descriptionErr.classList.remove("hidden");
-        document.querySelector(`.description-level${i}`).classList.add("color-err");
-        validLevel = false;
-    }else if(!descriptionErr.classList.contains("hidden")){
-        descriptionErr.classList.add("hidden");
-        document.querySelector(`.description-level${i}`).classList.remove("color-err");
-    }
+		if (!checkUrl(urlLevelImage)) {
+			urlErr.classList.remove("hidden");
+			document.querySelector(`.url-level${i}`).classList.add("color-err");
+			validLevel = false;
+		} else if (!urlErr.classList.contains("hidden")) {
+			urlErr.classList.add("hidden");
+			document.querySelector(`.url-level${i}`).classList.remove("color-err");
+		}
 
-    if (validLevel) {
-      minValue = Number(minValue);
-      let level = { title: titleLevel, image: urlLevelImage, text: descriptionLevel, minValue: minValue};
-      levelsQuiz.push(level);
-    }
+		if (descriptionLevel.length < 30) {
+			descriptionErr.classList.remove("hidden");
+			document.querySelector(`.description-level${i}`).classList.add("color-err");
+			validLevel = false;
+		} else if (!descriptionErr.classList.contains("hidden")) {
+			descriptionErr.classList.add("hidden");
+			document.querySelector(`.description-level${i}`).classList.remove("color-err");
+		}
 
-    if (minValue === 0) minHit = true;
-    ++i;
-  }
+		if (validLevel) {
+			minValue = Number(minValue);
+			let level = { title: titleLevel, image: urlLevelImage, text: descriptionLevel, minValue: minValue };
+			levelsQuiz.push(level);
+		}
 
-   if(minHit){
+		if (minValue === 0) minHit = true;
+		++i;
+	}
 
-     if(isEditing) saveModifiedQuizz();
-     else saveQuiz();
-   }else {
+	if (minHit) {
 
-    alert("Pelo menos um Título deve ter o mínimo de acerto de 0%");
+		if (isEditing) saveModifiedQuizz();
+		else saveQuiz();
+	} else {
 
-    if(i-1==amountLevels){
-        document.querySelector(".hit-level-err").classList.remove("hidden");
-        document.querySelector(`.hit-level${i-1}`).classList.add("color-err");
-    }
-    levelsQuiz = [];
-   }
+		alert("Pelo menos um Título deve ter o mínimo de acerto de 0%");
+
+		if (i - 1 == amountLevels) {
+			document.querySelector(".hit-level-err").classList.remove("hidden");
+			document.querySelector(`.hit-level${i - 1}`).classList.add("color-err");
+		}
+		levelsQuiz = [];
+	}
 }
 
 function saveQuiz() {
 
-  quizObject = { title: titleQuiz, image: urlImageQuiz, questions: questionsQuiz, levels: levelsQuiz};
-  const request = axios.post(URL_SERVER, quizObject);
+	quizObject = { title: titleQuiz, image: urlImageQuiz, questions: questionsQuiz, levels: levelsQuiz };
+	const request = axios.post(URL_SERVER, quizObject);
 
-  request.then(renderFinalPage);
-  request.catch((err) => {
-    alert("erro ao postar quiz");
-  });
+	request.then(renderFinalPage);
+	request.catch((err) => {
+		alert("erro ao postar quiz");
+	});
 }
 
 function saveModifiedQuizz() {
-  
-  quizObject = { title: titleQuiz, image: urlImageQuiz, questions: questionsQuiz, levels: levelsQuiz};
 
-  const request = axios.put(`${URL_SERVER}/${quizzInfos.id}`, quizObject,
-                            {headers:{ "Secret-Key": quizzInfos.key}});
-                            
-  request.then(renderFinalPage);
-  request.catch((err) => {
-    alert("erro ao postar quiz");
-  });
+	quizObject = { title: titleQuiz, image: urlImageQuiz, questions: questionsQuiz, levels: levelsQuiz };
+
+	const request = axios.put(`${URL_SERVER}/${quizzInfos.id}`, quizObject,
+		{ headers: { "Secret-Key": quizzInfos.key } });
+
+	request.then(renderFinalPage);
+	request.catch((err) => {
+		alert("erro ao postar quiz");
+	});
 }
 
 function renderFinalPage(response) {
 
-  document.querySelector(".create-questions-third-page").classList.add("hidden");
-  const finalPage = document.querySelector(".create-questions-fourth-page");
-  finalPage.classList.remove("hidden");
-  idQuiz = response.data.id;
-  keyQuiz = response.data.key;
+	document.querySelector(".create-questions-third-page").classList.add("hidden");
+	const finalPage = document.querySelector(".create-questions-fourth-page");
+	finalPage.classList.remove("hidden");
+	idQuiz = response.data.id;
+	keyQuiz = response.data.key;
 
-  finalPage.innerHTML = `<h1>Seu quizz está pronto!</h1>	
+	finalPage.innerHTML = `<h1>Seu quizz está pronto!</h1>	
                           <div class="box-image">
                               <img src="assets/simpsons.jpg" alt="" />
                               <span class="gradient"><p>${titleQuiz}</p></span>
                           </div>
                           <button class="access-quiz" onclick="acessQuiz();">Acessar Quizz</button>
                           <button class="back-home" onclick="backHome();">Voltar pra home</button>`
-  document.querySelector(".box-image img").src = `https://http.cat/411.jpg`;
-  if(!isEditing) saveQuizzInfos();
+	document.querySelector(".box-image img").src = `https://http.cat/411.jpg`;
+	if (!isEditing) saveQuizzInfos();
 }
 
 function acessQuiz() {
-  const finalPage = document.querySelector(".create-questions-fourth-page");
-  finalPage.classList.add("hidden");
-  selectQuizz(idQuiz);
+	const finalPage = document.querySelector(".create-questions-fourth-page");
+	finalPage.classList.add("hidden");
+	selectQuizz(idQuiz);
 }
 
 function saveQuizzInfos() {
-  if (JSON.parse(localStorage.getItem("quizzInfos"))) quizzInfos = JSON.parse(localStorage.getItem("quizzInfos"));
+	if (JSON.parse(localStorage.getItem("quizzInfos"))) quizzInfos = JSON.parse(localStorage.getItem("quizzInfos"));
 
-  quizzInfos.push({ id: idQuiz, key: keyQuiz});
-  localStorage.setItem("quizzInfos", JSON.stringify(quizzInfos));
+	quizzInfos.push({ id: idQuiz, key: keyQuiz });
+	localStorage.setItem("quizzInfos", JSON.stringify(quizzInfos));
 }
 
 function backHome() {
-  const finalPage = document.querySelector(".create-questions-fourth-page");
-  finalPage.classList.add("hidden");
-  document.querySelector(".screen-1").classList.remove("hidden");
-  getQuizzes();
+	const finalPage = document.querySelector(".create-questions-fourth-page");
+	finalPage.classList.add("hidden");
+	document.querySelector(".screen-1").classList.remove("hidden");
+	getQuizzes();
 }
 
 function deleteQuizz(quizzInfo) {
@@ -592,23 +596,23 @@ function deleteQuizz(quizzInfo) {
   }
 }
 
-function editQuizz(quizzInfo){
+function editQuizz(quizzInfo) {
 
-  quizzInfos = quizzInfo;
-  const request = axios.get(`${URL_SERVER}/${quizzInfo.id}`);
+	quizzInfos = quizzInfo;
+	const request = axios.get(`${URL_SERVER}/${quizzInfo.id}`);
 
-  request.then((response)=>{
-    urlImageQuiz = response.data.image;
-    titleQuiz = response.data.title;
-    questionsQuiz = response.data.questions;
-    levelsQuiz = response.data.levels;
-    amountQuestions = questionsQuiz.length;
-    amountLevels = levelsQuiz.length;
-    isEditing = true;
-    createQuiz();
-  })
+	request.then((response) => {
+		urlImageQuiz = response.data.image;
+		titleQuiz = response.data.title;
+		questionsQuiz = response.data.questions;
+		levelsQuiz = response.data.levels;
+		amountQuestions = questionsQuiz.length;
+		amountLevels = levelsQuiz.length;
+		isEditing = true;
+		createQuiz();
+	})
 
-  request.catch((err)=>{
-    alert("erro")
-  })
+	request.catch((err) => {
+		alert("erro")
+	})
 }
