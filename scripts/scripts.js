@@ -88,8 +88,8 @@ function render(quizz, quizzList, isModifiable) {
 
 function addButtons(quizz) {
   let buttons = `<div class="modify-buttons">
-              <button onclick="editQuizz(${quizz.id});"> <ion-icon name="create"></ion-icon></button>
-              <button onclick="deleteQuizz(${quizz.id});"> <ion-icon name="trash"></ion-icon></ion-icon></button>
+              <button onclick="editQuizz(${quizz});"> <ion-icon name="create"></ion-icon></button>
+              <button onclick="deleteQuizz(${quizz});"> <ion-icon name="trash"></ion-icon></ion-icon></button>
             </div>`;
 
   return buttons;
