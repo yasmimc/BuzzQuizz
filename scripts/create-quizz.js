@@ -1,11 +1,12 @@
 let quizObject;
 let idQuiz;
+let keyQuiz;
 let urlImageQuiz = "";
 let titleQuiz = "";
 let questionsQuiz = [];
 let levelsQuiz = [];
 let amountQuestions = 0;
-let amountLevels = 2;
+let amountLevels = 0;
 
 function createQuiz() {
 
@@ -408,7 +409,7 @@ function validateLevels() {
     levelsQuiz = [];
    }
 }
-
+/*
 function saveQuiz() {
   quizObject = {
     title: titleQuiz,
@@ -416,10 +417,7 @@ function saveQuiz() {
     questions: questionsQuiz,
     levels: levelsQuiz,
   };
-  const request = axios.post(
-    "https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes",
-    quizObject
-  );
+  const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes", quizObject);
 
   request.then(renderFinalPage);
   request.catch((err) => {
@@ -434,6 +432,7 @@ function renderFinalPage(response) {
     finalPage.classList.remove("hidden");
 
     console.log(response)
+    console.log("key: ", response.data.key);
     idQuiz = response.data.id;
     console.log("id: ",idQuiz)
     finalPage.innerHTML = `<h1>Seu quizz está pronto!</h1>
@@ -446,16 +445,126 @@ function renderFinalPage(response) {
     document.querySelector(".box-image img").src = `${quizObject.image}`;
     saveId();
 }
+*/
+
+function saveQuiz() {
+  let test =  {
+       title: "Título do mustange",
+       image: "https://http.cat/411.jpg",
+       questions: [
+           {
+               title: "Título da pergunta 1",
+               color: "#123456",
+               answers: [
+                   {
+                       text: "Texto da resposta 1",
+                       image: "https://http.cat/411.jpg",
+                       isCorrectAnswer: true
+                   },
+                   {
+                       text: "Texto da resposta 2",
+                       image: "https://http.cat/412.jpg",
+                       isCorrectAnswer: false
+                   }
+               ]
+           },
+           {
+               title: "Título da pergunta 2",
+               color: "#123456",
+               answers: [
+                   {
+                       text: "Texto da resposta 1",
+                       image: "https://http.cat/411.jpg",
+                       isCorrectAnswer: true
+                   },
+                   {
+                       text: "Texto da resposta 2",
+                       image: "https://http.cat/412.jpg",
+                       isCorrectAnswer: false
+                   }
+               ]
+           },
+           {
+               title: "Título da pergunta 3",
+               color: "#123456",
+               answers: [
+                   {
+                       text: "Texto da resposta 1",
+                       image: "https://http.cat/411.jpg",
+                       isCorrectAnswer: true
+                   },
+                   {
+                       text: "Texto da resposta 2",
+                       image: "https://http.cat/412.jpg",
+                       isCorrectAnswer: false
+                   }
+               ]
+           }
+       ],
+       levels: [
+           {
+               title: "Título do nível 1",
+               image: "https://http.cat/411.jpg",
+               text: "Descrição do nível 1",
+               minValue: 0
+           },
+           {
+               title: "Título do nível 2",
+               image: "https://http.cat/412.jpg",
+               text: "Descrição do nível 2",
+               minValue: 50
+           }
+       ]
+   };
+   
+   titleQuiz = test.title;
+   const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes", test)
+
+   request.then(renderFinalPage);
+   request.catch(errorSaveQuizz);
+}
+
+function errorSaveQuizz() {
+   alert("erro ao postar quiz");
+}
+
+function renderFinalPage(response) {
+
+  document.querySelector(".create-questions-third-page").classList.add("hidden");
+   const finalPage = document.querySelector(".create-questions-fourth-page");
+   finalPage.classList.remove("hidden");
+
+   idQuiz = response.data.id;
+   keyQuiz = response.data.key;
+
+   finalPage.innerHTML = `<h1>Seu quizz está pronto!</h1>	
+                           <div class="box-image">
+                               <img src="assets/simpsons.jpg" alt="" />
+                               <span class="gradient"><p>${titleQuiz}</p></span>
+                           </div>
+                           <button class="access-quiz onclick="acessQuiz(${idQuiz});">Acessar Quizz</button>
+                           <button class="back-home" onclick="backHome();">Voltar pra home</button>`
+   document.querySelector(".box-image img").src = `https://http.cat/411.jpg`;
+   saveId();
+   saveKey();
+}
+
 
 function saveId() {
   let ids = [];
-  if (JSON.parse(localStorage.getItem("ids")))
-    ids = JSON.parse(localStorage.getItem("ids"));
+  if (JSON.parse(localStorage.getItem("ids"))) ids = JSON.parse(localStorage.getItem("ids"));
 
   ids.push({ id: idQuiz });
   localStorage.setItem("ids", JSON.stringify(ids));
 }
 
+function saveKey() {
+  let keys = [];
+  if (JSON.parse(localStorage.getItem("keys"))) keys = JSON.parse(localStorage.getItem("keys"));
+
+  keys.push({ id: idQuiz, key: keyQuiz});
+  localStorage.setItem("keys", JSON.stringify(keys));
+}
 function backHome() {
   const finalPage = document.querySelector(".create-questions-fourth-page");
   finalPage.classList.add("hidden");
@@ -468,3 +577,31 @@ function accessQuiz() {
     finalPage.classList.add("hidden");
     selectQuizz(idQuiz);
 }
+
+function deleteQuizz(quizzId) {
+
+    if (window.confirm("Você realmente deseja apagar esse quizz?")) {
+      let keys = JSON.parse(localStorage.getItem("keys"));
+      let keyActual = keys.filter(function(keys) { return keys.id === quizzId;});
+      const response = axios.delete("https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes/"+quizzId,
+                              {headers:{ "Secret-Key": keyActual[0].key}});
+
+      response.then((reponse)=>{
+        console.log("apagou com sucesso")
+        let userQuizzes = JSON.parse(localStorage.getItem("ids"));
+        let updatedIdList = userQuizzes.filter(function(ids) { return ids.id !== quizzId;});
+        let updatedKeyList = keys.filter(function(keys) { return keys.id !== quizzId;});
+
+        localStorage.setItem("ids", JSON.stringify(updatedIdList));
+        localStorage.setItem("keys", JSON.stringify(updatedKeyList));
+      })
+    
+      response.catch((err)=>{
+        alert("Erro ao apagar o quizz tente novamente");
+      })
+    }
+
+    getQuizzes();
+}
+//deleteQuizz(619);
+//saveQuiz() 
