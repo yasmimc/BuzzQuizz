@@ -82,7 +82,6 @@ function render(quizz, quizzList, isModifiable) {
             </p>
 				  </div>
 				</li>`;
-  stopParentFromFiring();
 }
 
 function addButtons(quizz) {
@@ -161,3 +160,4 @@ function stopParentFromFiring() {
 }
 
 getQuizzes();
+setTimeout(stopParentFromFiring, 1000);
