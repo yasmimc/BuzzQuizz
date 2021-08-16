@@ -595,4 +595,3 @@ function editQuizz(quizzInfo){
     alert("erro")
   })
 }
-console.log(JSON.parse(localStorage.getItem("quizzInfos")));

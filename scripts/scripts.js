@@ -11,10 +11,11 @@ function getQuizzes() {
 
 // filters which quizz belongs to user and which doesn't
 function processQuizzes(response) {
+  const quizzes = response.data;
   const communityQuizzes = document.querySelector(
     ".community-quizzes .quizzes-list"
   );
-  const quizzes = response.data;
+  const userQuizzes = document.querySelector(".user-quizzes .quizzes-list");
   const listId = getIdList();
   const userQuizzList = quizzes.filter((quizz) =>
     isUserQuizz(quizz.id, listId)
@@ -22,10 +23,8 @@ function processQuizzes(response) {
   const communityQuizzList = quizzes.filter(
     (quizz) => !isUserQuizz(quizz.id, listId)
   );
-  const userQuizzes = document.querySelector(".user-quizzes .quizzes-list");
 
   if (listId.length > 0) {
-    console.log(userQuizzList, userQuizzes);
     renderUserQuizzes(userQuizzList, userQuizzes);
   }
 
@@ -87,8 +86,8 @@ function render(quizz, quizzList, isModifiable) {
 
 function addButtons(quizz) {
   let buttons = `<div class="modify-buttons">
-              <button onclick="qEdit(${quizz.id});"> <ion-icon name="create"></ion-icon></button>
-              <button onclick="qDelete(${quizz.id});"> <ion-icon name="trash"></ion-icon></ion-icon></button>
+              <button class="edit-button" onclick="qEdit(${quizz.id});"> <ion-icon name="create"></ion-icon></button>
+              <button class="delete-button" onclick="qDelete(${quizz.id});"> <ion-icon name="trash"></ion-icon></ion-icon></button>
             </div>`;
   return buttons;
 }
@@ -136,8 +135,6 @@ function changeToScreen(screen) {
   loading.classList.add("hidden");
 }
 
-getQuizzes();
-
 // gets id from local storage
 function getIdList() {
   let idList = localStorage.getItem("quizzInfos");
@@ -148,3 +145,19 @@ function getIdList() {
     return [];
   }
 }
+
+function stopParentFromFiring() {
+  const editButton = document.querySelector(".edit-button");
+  const deleteButton = document.querySelector(".delete-button");
+
+  editButton.addEventListener("click", function (e) {
+    e.stopPropagation();
+  });
+
+  deleteButton.addEventListener("click", function (e) {
+    e.stopPropagation();
+  });
+}
+
+getQuizzes();
+setTimeout(stopParentFromFiring, 1000);
