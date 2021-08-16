@@ -116,15 +116,15 @@ function validateInformation() {
 	}
 }
 
-function checkUrl(urlString) {
-	let pattern = new RegExp("^(https?:\\/\\/)?" +
-		"((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
-		"((\\d{1,3}\\.){3}\\d{1,3}))" +
-		"(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
-		"(\\?[;&a-z\\d%_.~+=-]*)?" +
-		"(\\#[-a-z\\d_]*)?$", "i");
-	return !!pattern.test(urlString);
-}
+// function checkUrl(urlString) {
+// 	let pattern = new RegExp("^(https?:\\/\\/)?" +
+// 		"((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+// 		"((\\d{1,3}\\.){3}\\d{1,3}))" +
+// 		"(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+// 		"(\\?[;&a-z\\d%_.~+=-]*)?" +
+// 		"(\\#[-a-z\\d_]*)?$", "i");
+// 	return !!pattern.test(urlString);
+// }
 
 function renderBoxQuestion() {
 
@@ -616,3 +616,14 @@ function editQuizz(quizzInfo) {
 		alert("erro")
 	})
 }
+
+
+function checkUrl(string) {
+	try {
+	  new URL(string);
+	} catch (_) {
+	  return false;  
+	}
+  
+	return true;
+  }
