@@ -27,7 +27,7 @@ function markQuestionAsAnswerd(selectedOption) {
 		if (option !== selectedOption) {
 			option.classList.add("blur");
 		}
-		//Removed on click on all options
+		//Remove on click on all options
 		option.removeAttribute("onclick");
 
 		//Change the colors of the answer texts
@@ -47,8 +47,8 @@ function clearQuizzScreen() {
 	hits = 0;
 	answerdQuestions = 0;
 	levels = [];
-	quizzScreen.innerHTML = 
-	`<main class="container ">
+	quizzScreen.innerHTML =
+		`<main class="container ">
 		<div class="selected-quizz">
 			<div class="banner"></div>
 			<h1></h1>
@@ -74,8 +74,8 @@ function homeBtn() {
 
 function renderizeResultBox(result, resultPercent) {
 	const quizz = quizzScreen.querySelector(".quizz");
-	quizz.innerHTML += 
-	`<div class="result"> 
+	quizz.innerHTML +=
+		`<div class="result"> 
 		<h1 style="background-color: red">${resultPercent}% de acerto: ${result.title}</h1>
 		<div class="content">
 			<img src="${result.image}">
@@ -96,7 +96,7 @@ let hits = 0;
 function showResult(totalQuestions) {
 	const resultPercent = Math.round((hits / totalQuestions) * 100);
 	const result = levels.find((level) => resultPercent >= level.minValue);
-	console.log (result)
+	console.log(result)
 	renderizeResultBox(result, resultPercent);
 	const resultBox = quizzScreen.querySelector(".quizz .result");
 	resultBox.scrollIntoView({
@@ -160,8 +160,8 @@ function renderizeAnswers(question, questionId, quizz) {
 	answers.sort(() => Math.random() - 0.5);
 
 	answers.forEach(function (answer, answerId) {
-		options.innerHTML += 
-		`<button class="option" id="${answerId}" onclick="selectAnswer(this)">
+		options.innerHTML +=
+			`<button class="option" id="${answerId}" onclick="selectAnswer(this)">
 			<img src="${answer.image}">
 			<p>${answer.text}</p>
 		</button>`;
@@ -175,8 +175,8 @@ function loadQuizzQuestions(selectedQuizz) {
 	const quizz = quizzScreen.querySelector(".quizz");
 
 	quizzQuestions.forEach(function (question, questionId) {
-		quizz.innerHTML += 
-		`<div class="question" id="${questionId}"> 
+		quizz.innerHTML +=
+			`<div class="question" id="${questionId}"> 
 			<h1 style="background-color: ${question.color}">${question.title}</h1>
 			<div class="options">
 			</div>
@@ -191,7 +191,7 @@ function saveLevels(selectedQuizz) {
 	selectedQuizz.data.levels.forEach((level) => {
 		levels.push(level);
 	});
-	levels.sort((previous, next)=> next.minValue-previous.minValue);
+	levels.sort((previous, next) => next.minValue - previous.minValue);
 	console.log(levels)
 }
 
